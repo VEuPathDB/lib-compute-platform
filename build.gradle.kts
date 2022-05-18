@@ -31,6 +31,10 @@ dependencies {
   api("org.veupathdb.lib.s3:s34k-minio:0.2.0+s34k-0.4.0")
   implementation("io.minio:minio:8.3.9")
 
+  // Rabbit
+  api("org.veupathdb.lib:rabbit-job-queue:1.0.1")
+  implementation("com.rabbitmq:amqp-client:5.14.0")
+
   // Testing
   testImplementation(kotlin("test"))
 }
