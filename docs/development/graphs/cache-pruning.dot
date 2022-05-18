@@ -1,0 +1,85 @@
+digraph {
+  node [shape=rect]
+  graph [nodesep=0.5]
+
+  Start [
+    shape=circle
+  ]
+
+  S3GetObjects [
+    label="List all objects\nin S3 bucket"
+  ]
+
+  Loop [
+    label="Iterate over results"
+  ]
+
+  HasNext [
+    label="Has next\nresult?"
+    shape=diamond
+  ]
+
+  IsLastAccessObject [
+    label="Is last-accessed\nobject?",
+    shape=diamond
+  ]
+
+  IsCreatedBefore [
+    label="Was created before\ntimeout window?",
+    shape=diamond
+  ]
+
+  GetNext [
+    label="Get next result"
+  ]
+
+  Collect [
+    label="Collect for deletion"
+  ]
+  
+  S3DeleteObjects [
+    label="Chunked bulk delete\nobjects from S3 bucket"
+  ]
+
+  S3PutExpiredMarker [
+    label="Write expired marker\nobject to S3 bucket"
+  ]
+
+  Expand [
+    label="Expand result to\ninclude all target\nobject names"
+  ]
+
+  DBMark [
+    label="Mark jobs as\nexpired in the DB"
+  ]
+
+  Done [
+    shape=circle
+  ]
+
+  Start -> S3GetObjects
+  S3GetObjects -> Loop
+  Loop -> HasNext
+
+  HasNext -> GetNext [color=green]
+  S3DeleteObjects -> HasNext [color=red, dir=back]
+
+  GetNext -> IsLastAccessObject
+
+  IsLastAccessObject -> IsCreatedBefore [color=green]
+  IsLastAccessObject -> HasNext [color=red]
+
+  IsCreatedBefore -> S3PutExpiredMarker [color=green]
+  IsCreatedBefore -> HasNext [color=red]
+
+  S3PutExpiredMarker -> Expand
+  Collect -> Expand [dir=back]
+  Collect -> HasNext
+
+  S3DeleteObjects -> DBMark
+  DBMark -> Done
+
+  { rank=same; HasNext; GetNext; S3DeleteObjects }
+  { rank=same; Collect; Expand }
+  { rank=sink; Done }
+}

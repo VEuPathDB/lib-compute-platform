@@ -1,0 +1,148 @@
+digraph {
+  node [shape=rect]
+
+  Start [
+    shape=circle
+  ]
+
+  DBLookup [
+    label="Lookup job in DB"
+  ]
+
+  JobInDB [
+    label="Job exists\nin DB?",
+    shape=diamond
+  ]
+
+  S3Lookup [
+    label="Lookup job in S3"
+  ]
+  
+  JobInS3 [
+    label="Job exists\nin S3?",
+    shape=diamond
+  ]
+
+  FlagQueuedExists [
+    label="Queued\nflag exists?",
+    shape=diamond
+  ]
+  
+  FlagInProExists [
+    label="In-progress\nflag exists?",
+    shape=diamond
+  ]
+  
+  FlagCompleteExists [
+    label="Complete\nflag exists?",
+    shape=diamond
+  ]
+  
+  FlagFailedExists [
+    label="Failed\nflag exists?",
+    shape=diamond
+  ]
+  
+  FlagExpiredExists [
+    label="Expired\nflag exists?",
+    shape=diamond
+  ]
+  
+  WriteLastAccess [
+    label="Write\nlast-accessed\nmarker"
+  ]
+
+  StatPos [
+    label="status = {queue-position}"
+  ]
+
+  StatDB [
+    label="status = {db-status}"
+  ]
+
+  StatQueued [
+    label="status = queued"
+  ]
+
+  StatInProgress [
+    label="status = in-progres"
+  ]
+
+  StatComplete [
+    label="status = complete"
+  ]
+
+  StatFailed [
+    label="status = failed"
+  ]
+
+  StatExpired [
+    label="status = expired"
+  ]
+
+  IsDbQueued [
+    label="Status is\nqueued?",
+    shape=diamond
+  ]
+
+  200 [
+    shape=circle,
+    color=green
+  ]
+
+  404 [
+    shape=circle
+    color=red
+  ]
+
+  500 [
+    shape=circle,
+    color=red
+  ]
+
+  Start    -> DBLookup
+  DBLookup -> JobInDB
+
+  JobInDB -> IsDbQueued [color=green]
+  JobInDB -> S3Lookup   [color=red]
+
+  IsDbQueued -> StatPos [color=green]
+  IsDbQueued -> StatDB  [color=red]
+
+  S3Lookup -> JobInS3
+
+  StatPos -> WriteLastAccess
+  StatDB  -> WriteLastAccess
+
+  JobInS3 -> FlagQueuedExists [color=green]
+  JobInS3 -> 404              [color=red]
+
+  FlagQueuedExists -> StatQueued      [color=green]
+  FlagQueuedExists -> FlagInProExists [color=red]
+
+  StatQueued -> WriteLastAccess
+
+  FlagInProExists -> StatInProgress     [color=green]
+  FlagInProExists -> FlagCompleteExists [color=red]
+
+  StatInProgress -> WriteLastAccess
+
+  FlagCompleteExists -> StatComplete     [color=green]
+  FlagCompleteExists -> FlagFailedExists [color = red]
+
+  StatComplete -> WriteLastAccess
+
+  FlagFailedExists -> StatFailed        [color=green]
+  FlagFailedExists -> FlagExpiredExists [color=red]
+
+  StatFailed -> WriteLastAccess
+
+  FlagExpiredExists -> StatExpired [color=green]
+  FlagExpiredExists -> 500 [color=red]
+
+  StatExpired -> WriteLastAccess
+
+  WriteLastAccess -> 200
+
+  { rank=same; 200; 404; 500 }
+}

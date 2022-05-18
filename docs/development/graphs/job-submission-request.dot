@@ -1,0 +1,52 @@
+digraph {
+  node [shape=rect]
+
+  Start        [shape=circle]
+  HashConfig   [label="Hash config"]
+  DBLookup     [label="Lookup job\nin DB"]
+  DBJobExists  [label="Job exists\nin DB?", shape=diamond]
+  S3Lookup     [label="Lookup job\nin S3"]
+  S3JobExists  [label="Job exists\nin S3?", shape=diamond]
+  DBJobExpired [label="Job is\nexpired?", shape=diamond]
+  CreateDBJob  [label="Create job\nrecord in DB"]
+  CreateS3WS   [label="Create job\nworkspace in S3"]
+  CreateQFlag  [label="Create 'queued'\nflag in S3\nworkspace"]
+  WrLastAccess [label="Write last-accessed\nmarker to S3\nworkspace"]
+  MarkDBQueued [label="Mark job as\n'queued'\nin the DB"]
+  ValidConfig  [label="Validate config"]
+  IsValid      [label="Config is\nvalid?", shape=diamond]
+  WriteConfig  [label="Write config\nto S3 workspace"]
+  Submit2Queue [label="Submit job\nto queue"]
+  200          [shape=circle, color=green]
+  422          [shape=circle, color=red]
+
+  Start       -> HashConfig
+  HashConfig  -> DBLookup
+  DBLookup    -> DBJobExists
+
+  DBJobExists -> DBJobExpired [color=green]
+  DBJobExists -> S3Lookup     [color=red]
+
+  DBJobExpired -> MarkDBQueued [color=green]
+  DBJobExpired -> 200          [color=red]
+
+  S3Lookup -> S3JobExists
+
+  S3JobExists -> 200         [color=green]
+  S3JobExists -> ValidConfig [color=red]
+
+  ValidConfig -> IsValid
+
+  IsValid -> CreateDBJob [color=green]
+  IsValid -> 422         [color=red]
+
+  CreateDBJob  -> CreateS3WS
+  MarkDBQueued -> CreateS3WS
+  CreateS3WS   -> CreateQFlag
+  CreateQFlag  -> WrLastAccess
+  WrLastAccess -> WriteConfig
+  WriteConfig  -> Submit2Queue
+  Submit2Queue -> 200
+
+  { rank=same; 200; 422 }
+}

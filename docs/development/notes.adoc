@@ -1,0 +1,119 @@
+= Development / Design Notes
+:toc:
+
+
+== TODO
+
+* Job inputs and outputs. +
+  These are per service, so we need some way to determine/know what those
+  inputs and outputs are. +
+  The inputs are less of a problem than the outputs (unless the service wants
+  to persist the inputs?)
+** As part of the service configuration, they have to be registered?
+** Provide methods/hooks to be implemented that choose the files?
+* Services may have their own queue setups.  For example, eda-compute will have
+  at least 2 queues (6 channels), but other services may only want one or may
+  want more.  Specifically in the case of eda-compute, the queue will be
+  determined by the plugin, but how would other services decide things like
+  this?
+** Queue callbacks... These have to be configured per queue unless... well we
+   could provide default callbacks and have hook points to perform custom logic
+   on success/fail?
+
+
+== Configuration
+
+TODO!
+
+
+== Workflows
+
+
+=== Job Submission Request
+
+image::graphs/job-submission-request.png[]
+
+
+=== Job Status Request
+
+image::graphs/job-status-request.png[]
+
+
+=== Service Startup
+
+
+=== Cache Pruning
+
+image::graphs/cache-pruning.png[]
+
+
+
+== Workspaces
+
+
+=== S3
+
+
+==== Flags & Markers
+
+`.complete`::
+Flag object whose presence indicates that the job represented by the containing
+workspace has finished successfully.
++
+This flag should not coexist with any other flag objects (but will coexist with
+the `.last-accessed` marker object).
+
+`.expired`::
+Flag object whose presence indicates that the job represented by the containing
+workspace has expired.
++
+If this flag exists, no other workspace objects should exist.
+
+`.failed`::
+Flag object whose presence indicates that the job represented by the containing
+workspace has finished unsuccessfully.
++
+This flag should not coexist with any other flag objects (but will coexist with
+the `.last-accessed` marker object).
+
+`.in-progress`::
+Flag object whose presence indicates that the job represented by the containing
+workspace is currently running.
++
+This flag should not coexist with any other flag objects (but will coexist with
+the `.last-accessed` marker object).
+
+`.last-accessed`::
+Marker object that is used to indicate when the job represented by the
+containing workspace was last accessed.  This object will be overwritten on
+every request to an instance of the owning async service for this job.
+
+`.queued`::
+Flag object whose presence indicates that the job represented by the containing
+workspace is currently queued.
++
+This flag should not coexist with any other flag objects (but will coexist with
+the `.last-accessed` marker object).
+
+
+==== Job Outputs
+
+TODO!
+
+
+=== Local Scratch Workspace
+
+
+==== Inputs & Outputs
+
+TODO!
+
+== Components
+
+=== Service
+
+=== RabbitMQ
+
+=== PostgreSQL
+
+=== S3

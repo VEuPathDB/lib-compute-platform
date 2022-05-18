@@ -31,6 +31,7 @@ dependencies {
   api("org.veupathdb.lib.s3:s34k-minio:0.2.0+s34k-0.4.0")
   implementation("io.minio:minio:8.3.9")
 
+  // Testing
   testImplementation(kotlin("test"))
 }
 
