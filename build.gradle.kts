@@ -27,13 +27,14 @@ dependencies {
   implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.17.2")
 
   // S3
-  api("org.veupathdb.lib.s3:s34k:0.4.0")
-  api("org.veupathdb.lib.s3:s34k-minio:0.2.0+s34k-0.4.0")
-  implementation("io.minio:minio:8.3.9")
+  api("org.veupathdb.lib.s3:s34k-minio:0.3.1+s34k-0.7.0")
 
   // Rabbit
   api("org.veupathdb.lib:rabbit-job-queue:1.0.1")
   implementation("com.rabbitmq:amqp-client:5.14.0")
+
+  // Job IDs
+  api("org.veupathdb.lib:hash-id:1.0.2")
 
   // Testing
   testImplementation(kotlin("test"))
