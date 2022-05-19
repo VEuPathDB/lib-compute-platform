@@ -33,8 +33,9 @@ dependencies {
   api("org.veupathdb.lib:rabbit-job-queue:1.0.1")
   implementation("com.rabbitmq:amqp-client:5.14.0")
 
-  // Job IDs
+  // Misc & Utils
   api("org.veupathdb.lib:hash-id:1.0.2")
+  implementation("io.foxcapades.lib:env-access:1.0.0")
 
   // Testing
   testImplementation(kotlin("test"))
