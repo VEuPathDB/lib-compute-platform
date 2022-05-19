@@ -58,6 +58,8 @@ class CachePruner(
       // Filter out entries that do not end with the flag object name
       .filter { it.path.endsWith(objName) }
       // Filter out entries that are not older than our cutoff
+      // Since this is a 'get' operation on S3, the lastModified value should be
+      // non-null.
       .filter { it.lastModified!!.isBefore(cutoff) }
       // Get the "directory" name from the path
       .map { it.dirName }
