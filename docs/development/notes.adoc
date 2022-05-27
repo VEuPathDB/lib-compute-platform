@@ -60,8 +60,7 @@ image::graphs/cache-pruning.png[]
 Flag object whose presence indicates that the job represented by the containing
 workspace has finished successfully.
 +
-This flag should not coexist with any other flag objects (but will coexist with
-the `.last-accessed` marker object).
+This flag should not coexist with any other flag objects.
 
 `.expired`::
 Flag object whose presence indicates that the job represented by the containing
@@ -73,20 +72,13 @@ If this flag exists, no other workspace objects should exist.
 Flag object whose presence indicates that the job represented by the containing
 workspace has finished unsuccessfully.
 +
-This flag should not coexist with any other flag objects (but will coexist with
-the `.last-accessed` marker object).
+This flag should not coexist with any other flag objects.
 
 `.in-progress`::
 Flag object whose presence indicates that the job represented by the containing
 workspace is currently running.
 +
-This flag should not coexist with any other flag objects (but will coexist with
-the `.last-accessed` marker object).
-
-`.last-accessed`::
-Marker object that is used to indicate when the job represented by the
-containing workspace was last accessed.  This object will be overwritten on
-every request to an instance of the owning async service for this job.
+This flag should not coexist with any other flag objects.
 
 `.queued`::
 Flag object whose presence indicates that the job represented by the containing
@@ -121,3 +113,38 @@ TODO!
 TODO: Document debug user.
 
 === S3
+
+
+== Notes & Thoughts
+
+Unordered development notes.
+
+=== Thoughts
+
+* A failed job should not expire.  It should stay failed until manually cleared.
+* Each campus should only prune jobs that they "own".
+* Job executor provider/factory.  Need some hook to get a job executor when we
+  pop a job from the queue.
+* Need to be able to have an arbitrary number of queues.
+** How do we determine what queue a job goes to?  If multiple queues are baked
+   into the platform itself we need some sort of identifier for each queue.  It
+   will have to be part of the platform configuration.
+* Platform configuration?
+** Should this be a config file?  Should it be programmatic?  May need to be
+   statically available.
+
+=== Queries
+
+* Insert new job
+* Update job status
+** Update from queued to grabbed
+** Update from grabbed to finished (failed or complete)
+** Update from grabbed to queued (dead job)
+** Update from finished to expired (except failed stays in failed status)
+* Get job status
+* Get job queue position
+
+=== Volumes
+
+* postgres
+

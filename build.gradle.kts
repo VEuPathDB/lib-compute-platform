@@ -21,10 +21,15 @@ repositories {
 }
 
 dependencies {
+
   // Logging
   implementation("org.slf4j:slf4j-api:1.7.36")
   implementation("org.apache.logging.log4j:log4j-core:2.17.2")
   implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.17.2")
+
+  // Jackson
+  implementation(platform("com.fasterxml.jackson:jackson-bom:2.13.3"))
+  implementation("com.fasterxml.jackson.core:jackson-databind")
 
   // S3
   api("org.veupathdb.lib.s3:s34k-minio:0.3.1+s34k-0.7.0")
@@ -32,6 +37,10 @@ dependencies {
   // Rabbit
   api("org.veupathdb.lib:rabbit-job-queue:1.0.1")
   implementation("com.rabbitmq:amqp-client:5.14.0")
+
+  // Metrics
+  implementation("io.prometheus:simpleclient:0.15.0")
+  implementation("io.prometheus:simpleclient_common:0.15.0")
 
   // Misc & Utils
   api("org.veupathdb.lib:hash-id:1.0.2")
