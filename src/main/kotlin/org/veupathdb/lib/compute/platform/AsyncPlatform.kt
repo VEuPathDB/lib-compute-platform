@@ -2,8 +2,8 @@ package org.veupathdb.lib.compute.platform
 
 import com.fasterxml.jackson.databind.JsonNode
 import org.veupathdb.lib.compute.platform.conf.AsyncPlatformConfig
-import org.veupathdb.lib.compute.platform.job.JobExecutors
-import org.veupathdb.lib.compute.platform.queues.JobQueues
+import org.veupathdb.lib.compute.platform.internal.jobs.JobExecutors
+import org.veupathdb.lib.compute.platform.internal.queues.JobQueues
 import org.veupathdb.lib.hash_id.HashID
 
 object AsyncPlatform {

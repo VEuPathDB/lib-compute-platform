@@ -1,4 +1,4 @@
-package org.veupathdb.lib.compute.platform.queues
+package org.veupathdb.lib.compute.platform.internal.queues
 
 import com.fasterxml.jackson.databind.JsonNode
 import org.veupathdb.lib.compute.platform.conf.AsyncPlatformConfig

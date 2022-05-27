@@ -1,6 +1,6 @@
 @file:JvmName("S3Consts")
 
-package org.veupathdb.lib.compute.platform.s3
+package org.veupathdb.lib.compute.platform.internal.s3
 
 /**
  * Name of the `queued` status indication flag object.

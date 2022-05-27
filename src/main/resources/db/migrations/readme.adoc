@@ -1,0 +1,98 @@
+= Database Migrations
+:source-highlighter: highlightjs
+
+On initialization, this library will automatically attempt to apply any database
+migrations necessary to update its PostgreSQL database to the latest expected
+schema.
+
+This may happen when updating a project's dependency on this library to a new
+version with DB schema changes.
+
+Once the library has been upgraded and migrations applied, the library may no
+longer be safely downgraded.
+
+== Startup
+
+On initialization, this library will scan the contents of this `migrations`
+directory and determine what, if any, migrations are `new` relative to the
+currently known library version.  If any new migrations are detected, they will
+be applied in order to build/update the PostgreSQL database to the expected
+state before operation.
+
+The current database version for the library is stored in the PostgreSQL
+database in an internal key-value pair table `compute.meta`.  There the database
+version is kept under the key `version`.
+
+== Migration Directories
+
+Each migration directory should be named with the version that the migration
+will migrate _to_.  For example, the migration directory `1.1.0` would be
+expected to migrate the database from the previous version to version `1.1.0`.
+
+The contents of the directory *MUST* be one or more SQL files containing a
+single statement each.  These files *SHOULD* be named with a series of numbers
+followed by the `.sql` extension.  These SQL files will be executed in ascending
+order by file name.
+
+Each filename *MUST* contain the same number of characters as the file names are
+sorted as strings and differing lengths may cause unexpected behavior.
+
+By convention, the last statement/SQL file in the migration directory *SHOULD*
+be the statement that updates the database version information.  This may be
+named something like `999.sql` to ensure it is the last statement executed.
+
+.Example Migration Directory
+[source]
+----
+db/migrations/1.0.0/
+  |- 000.sql
+  |- 001.sql
+  |- 002.sql
+  |- 999.sql
+----
+
+== Migration SQL Files
+
+Each migration file should contain a single statement.  These files may contain
+comments and may end in a semicolon, but neither are required.
+
+The SQL dialect used is PostgreSQL.
+
+.Example Migrations
+--
+.000.sql
+[source, sql]
+----
+CREATE SCHEMA IF NOT EXISTS someschema;
+----
+
+.001.sql
+[source, sql]
+----
+CREATE TABLE IF NOT EXISTS someschema.table (
+  my_id SERIAL PRIMARY KEY,
+  field VARCHAR NOT NULL
+)
+----
+
+.002.sql
+[source, sql]
+----
+INSERT INTO
+  someschema.table (field)
+VALUES
+  ('hello')
+, ('world')
+----
+
+.999.sql
+[source, sql]
+----
+UPDATE
+  compute.meta
+SET
+  value = '1.1.0'
+WHERE
+  key = 'version'
+----
+--

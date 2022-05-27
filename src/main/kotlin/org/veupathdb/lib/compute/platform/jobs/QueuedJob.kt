@@ -1,4 +1,4 @@
-package org.veupathdb.lib.compute.platform.job
+package org.veupathdb.lib.compute.platform.jobs
 
 import org.veupathdb.lib.hash_id.HashID
 import java.time.OffsetDateTime

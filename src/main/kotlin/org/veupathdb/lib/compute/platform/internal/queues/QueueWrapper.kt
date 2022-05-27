@@ -1,12 +1,12 @@
-package org.veupathdb.lib.compute.platform.queues
+package org.veupathdb.lib.compute.platform.internal.queues
 
 import com.fasterxml.jackson.databind.JsonNode
 import org.slf4j.LoggerFactory
 import org.veupathdb.lib.compute.platform.conf.AsyncQueueConfig
-import org.veupathdb.lib.compute.platform.job.JobExecutors
-import org.veupathdb.lib.compute.platform.job.JobResultStatus
-import org.veupathdb.lib.compute.platform.mtx.JobMetrics
-import org.veupathdb.lib.compute.platform.mtx.QueueMetrics
+import org.veupathdb.lib.compute.platform.internal.jobs.JobExecutors
+import org.veupathdb.lib.compute.platform.jobs.JobResultStatus
+import org.veupathdb.lib.compute.platform.internal.mtx.JobMetrics
+import org.veupathdb.lib.compute.platform.internal.mtx.QueueMetrics
 import org.veupathdb.lib.hash_id.HashID
 import org.veupathdb.lib.rabbit.jobs.QueueConfig
 import org.veupathdb.lib.rabbit.jobs.QueueDispatcher

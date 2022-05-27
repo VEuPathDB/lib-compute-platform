@@ -1,4 +1,4 @@
-package org.veupathdb.lib.compute.platform.mtx
+package org.veupathdb.lib.compute.platform.internal.mtx
 
 import io.prometheus.client.Counter
 

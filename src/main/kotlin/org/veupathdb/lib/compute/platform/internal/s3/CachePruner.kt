@@ -1,4 +1,4 @@
-package org.veupathdb.lib.compute.platform.s3
+package org.veupathdb.lib.compute.platform.internal.s3
 
 import org.slf4j.LoggerFactory
 import org.veupathdb.lib.hash_id.HashID
