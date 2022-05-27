@@ -1,4 +1,4 @@
-package org.veupathdb.lib.compute.platform.internal.mtx
+package org.veupathdb.lib.compute.platform.intern.mtx
 
 import io.prometheus.client.Gauge
 import io.prometheus.client.Histogram

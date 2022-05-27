@@ -1,4 +1,4 @@
-package org.veupathdb.lib.compute.platform.jobs
+package org.veupathdb.lib.compute.platform
 
 /**
  * Async Job Executor

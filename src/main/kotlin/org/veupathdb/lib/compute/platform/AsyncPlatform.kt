@@ -1,9 +1,9 @@
 package org.veupathdb.lib.compute.platform
 
 import com.fasterxml.jackson.databind.JsonNode
-import org.veupathdb.lib.compute.platform.conf.AsyncPlatformConfig
-import org.veupathdb.lib.compute.platform.internal.jobs.JobExecutors
-import org.veupathdb.lib.compute.platform.internal.queues.JobQueues
+import org.veupathdb.lib.compute.platform.intern.db.QueueDB
+import org.veupathdb.lib.compute.platform.intern.jobs.JobExecutors
+import org.veupathdb.lib.compute.platform.intern.queues.JobQueues
 import org.veupathdb.lib.hash_id.HashID
 
 object AsyncPlatform {
@@ -17,6 +17,7 @@ object AsyncPlatform {
 
     JobQueues.init(config)
     JobExecutors.init(config)
+    QueueDB.init(config)
 
     initialized = true
   }
@@ -25,5 +26,14 @@ object AsyncPlatform {
   @JvmOverloads
   fun submitJob(queue: String, jobID: HashID, rawConfig: JsonNode? = null) {
     JobQueues.submitJob(queue, jobID, rawConfig)
+  }
+
+  @JvmStatic
+  fun getJob(jobID: HashID): AsyncJob? {
+    // Check db for job
+    //   if exists return job
+    // Check s3 for job
+    //   if exists return job
+    // return null
   }
 }

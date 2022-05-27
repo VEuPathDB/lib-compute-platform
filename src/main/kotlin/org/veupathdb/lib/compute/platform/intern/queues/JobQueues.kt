@@ -1,11 +1,10 @@
-package org.veupathdb.lib.compute.platform.internal.queues
+package org.veupathdb.lib.compute.platform.intern.queues
 
 import com.fasterxml.jackson.databind.JsonNode
-import org.veupathdb.lib.compute.platform.conf.AsyncPlatformConfig
+import org.veupathdb.lib.compute.platform.AsyncPlatformConfig
 import org.veupathdb.lib.hash_id.HashID
-import org.veupathdb.lib.rabbit.jobs.model.JobDispatch
 
-object JobQueues {
+internal object JobQueues {
 
   private var initialized = false
 
@@ -28,6 +27,6 @@ object JobQueues {
     if (queue !in queues)
       throw IllegalStateException("Attempted to submit job to unregistered queue '$queue'")
 
-    queues[queue]!!.dispatch.dispatch(JobDispatch(jobID, "", rawConfig))
+    queues[queue]!!.submitJob(jobID, rawConfig)
   }
 }

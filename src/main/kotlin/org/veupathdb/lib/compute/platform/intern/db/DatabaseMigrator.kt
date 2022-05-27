@@ -1,4 +1,4 @@
-package org.veupathdb.lib.compute.platform.internal.db
+package org.veupathdb.lib.compute.platform.intern.db
 
 import org.slf4j.LoggerFactory
 import java.util.zip.ZipInputStream
@@ -24,10 +24,13 @@ internal class DatabaseMigrator : Runnable {
     Log.debug("Found {} migrations", migs.size)
 
     if (migs.isNotEmpty()) {
-      QueueDB.ds
+      QueueDB.ds!!.connection.use { con ->
+        migs.forEach {
+          Log.info("Executing database migration script: {}", it)
+          con.createStatement().use { stmt -> stmt.execute(loadSQL(it)) }
+        }
+      }
     }
-
-
   }
 
   private fun listMigrations(version: String): List<String> {
@@ -51,7 +54,29 @@ internal class DatabaseMigrator : Runnable {
     return migrations
   }
 
-  private fun migVersion(path: String) = path.substring(MigrationPath.length, path.length-4)
+  /**
+   * Parse the migration version number out of the path string.
+   *
+   * Expected input: `db/migrations/1.0.0/000.sql`
+   *
+   * Expected output: `1.0.0`
+   *
+   * @param path Path from which the migration version should be parsed.
+   *
+   * @return Migration version.
+   */
+  @Suppress("NOTHING_TO_INLINE")
+  private inline fun migVersion(path: String) =
+    path.substring(MigrationPath.length, path.lastIndexOf('/'))
 
-
+  /**
+   * Reads the SQL contents out of a given resource path.
+   *
+   * @param path Path to the SQL resource to read.
+   *
+   * @return The contents of the SQL resource.
+   */
+  @Suppress("NOTHING_TO_INLINE")
+  private inline fun loadSQL(path: String) =
+    String(this::class.java.getResourceAsStream(path)!!.readAllBytes())
 }

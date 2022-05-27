@@ -1,5 +1,11 @@
 package org.veupathdb.lib.compute.platform
 
+/**
+ * Async Job Status
+ *
+ * @author Elizabeth Paige Harper [https://github.com/foxcapades]
+ * @since 1.0.0
+ */
 enum class JobStatus {
   Queued,
   InProgress,

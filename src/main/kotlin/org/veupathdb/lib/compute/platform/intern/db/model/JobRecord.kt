@@ -1,4 +1,4 @@
-package org.veupathdb.lib.compute.platform.internal.db.model
+package org.veupathdb.lib.compute.platform.intern.db.model
 
 import com.fasterxml.jackson.databind.JsonNode
 import org.veupathdb.lib.compute.platform.JobStatus
@@ -32,8 +32,6 @@ import java.time.OffsetDateTime
  * @param finished Timestamp of when this job finished (successfully or not).
  *
  * This will be `null` if the job has not yet finished.
- *
- * @param ext Extra data attached to this job.
  */
 data class JobRecord (
   val jobID:    HashID,
@@ -43,5 +41,4 @@ data class JobRecord (
   val created:  OffsetDateTime,
   val grabbed:  OffsetDateTime?,
   val finished: OffsetDateTime?,
-  val ext:      Map<String, String>,
 )

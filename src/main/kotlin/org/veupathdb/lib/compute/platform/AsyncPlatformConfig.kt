@@ -1,6 +1,4 @@
-package org.veupathdb.lib.compute.platform.conf
-
-import org.veupathdb.lib.compute.platform.jobs.JobExecutorFactory
+package org.veupathdb.lib.compute.platform
 
 class AsyncPlatformConfig private constructor(
   internal val queues: List<AsyncQueueConfig>,

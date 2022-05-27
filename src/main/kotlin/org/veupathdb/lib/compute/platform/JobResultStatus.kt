@@ -1,4 +1,4 @@
-package org.veupathdb.lib.compute.platform.jobs
+package org.veupathdb.lib.compute.platform
 
 enum class JobResultStatus {
   Success,

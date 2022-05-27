@@ -1,4 +1,4 @@
-package org.veupathdb.lib.compute.platform.conf
+package org.veupathdb.lib.compute.platform
 
 /**
  * Configuration entry for a single RabbitMQ queue.
