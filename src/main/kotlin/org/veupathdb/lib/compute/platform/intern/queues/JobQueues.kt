@@ -1,7 +1,7 @@
 package org.veupathdb.lib.compute.platform.intern.queues
 
 import com.fasterxml.jackson.databind.JsonNode
-import org.veupathdb.lib.compute.platform.AsyncPlatformConfig
+import org.veupathdb.lib.compute.platform.config.AsyncPlatformConfig
 import org.veupathdb.lib.hash_id.HashID
 
 internal object JobQueues {

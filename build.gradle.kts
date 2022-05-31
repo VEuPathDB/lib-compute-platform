@@ -30,17 +30,18 @@ dependencies {
   // Jackson
   implementation(platform("com.fasterxml.jackson:jackson-bom:2.13.3"))
   implementation("com.fasterxml.jackson.core:jackson-databind")
+  implementation("org.veupathdb.lib:jackson-singleton:2.3.0")
 
   // DB
   implementation("com.zaxxer:HikariCP:5.0.1")
   implementation("org.postgresql:postgresql:42.3.6")
 
   // S3
-  api("org.veupathdb.lib.s3:s34k-minio:0.3.1+s34k-0.7.0")
+  implementation("org.veupathdb.lib.s3:s34k-minio:0.3.1+s34k-0.7.0")
+  implementation("org.veupathdb.lib.s3:workspaces:2.3.0")
 
   // Rabbit
-  api("org.veupathdb.lib:rabbit-job-queue:1.0.1")
-  implementation("com.rabbitmq:amqp-client:5.14.0")
+  implementation("org.veupathdb.lib:rabbit-job-queue:1.1.0")
 
   // Metrics
   implementation("io.prometheus:simpleclient:0.15.0")

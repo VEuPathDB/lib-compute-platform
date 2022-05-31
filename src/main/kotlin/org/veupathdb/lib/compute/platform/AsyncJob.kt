@@ -45,6 +45,10 @@ interface AsyncJob {
    */
   val grabbed: OffsetDateTime?
 
-
+  /**
+   * Timestamp for when this job was completed (successfully or not).
+   *
+   * If this job
+   */
   val finished: OffsetDateTime?
 }

@@ -31,3 +31,5 @@ const val FlagExpired = ".expired"
  * Name of the last-accessed marker object.
  */
 const val MarkerLastAccessed = ".last-accessed"
+
+const val FileConfig = "input-config"

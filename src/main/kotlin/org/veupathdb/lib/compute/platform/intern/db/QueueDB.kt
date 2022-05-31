@@ -3,11 +3,14 @@ package org.veupathdb.lib.compute.platform.intern.db
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import org.postgresql.Driver
-import org.veupathdb.lib.compute.platform.AsyncDBConfig
-import org.veupathdb.lib.compute.platform.intern.db.model.JobRecord
+import org.slf4j.LoggerFactory
+import org.veupathdb.lib.compute.platform.config.AsyncDBConfig
+import org.veupathdb.lib.compute.platform.intern.db.queries.GrabJob
 import org.veupathdb.lib.hash_id.HashID
 
 internal object QueueDB {
+
+  private val Log = LoggerFactory.getLogger(this::class.java)
 
   private var initialized = false
 
@@ -23,22 +26,20 @@ internal object QueueDB {
       it.driverClassName = Driver::class.java.name
       it.username        = config.user
       it.password        = config.pass
-      it.maximumPoolSize = config.poolSize
+      it.maximumPoolSize = config.pool
     })
 
     initialized = true
   }
 
   @JvmStatic
-  fun hasJob(jobID: HashID): Boolean {
-
+  fun grabJob(jobID: HashID) {
+    Log.debug("Marking job {} as grabbed", jobID)
+    ds!!.connection.use { GrabJob(it, jobID) }
   }
 
   @JvmStatic
   operator fun contains(jobID: HashID) = hasJob(jobID)
-
-  @JvmStatic
-  fun getJob(jobID: HashID): JobRecord? {}
 
   @JvmStatic
   operator fun get(jobID: HashID) = getJob(jobID)

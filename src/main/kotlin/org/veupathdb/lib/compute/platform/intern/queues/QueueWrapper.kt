@@ -2,7 +2,7 @@ package org.veupathdb.lib.compute.platform.intern.queues
 
 import com.fasterxml.jackson.databind.JsonNode
 import org.slf4j.LoggerFactory
-import org.veupathdb.lib.compute.platform.AsyncQueueConfig
+import org.veupathdb.lib.compute.platform.config.AsyncQueueConfig
 import org.veupathdb.lib.compute.platform.intern.jobs.JobExecutors
 import org.veupathdb.lib.compute.platform.JobResultStatus
 import org.veupathdb.lib.compute.platform.intern.mtx.JobMetrics
@@ -14,6 +14,8 @@ import org.veupathdb.lib.rabbit.jobs.QueueWorker
 import org.veupathdb.lib.rabbit.jobs.model.ErrorNotification
 import org.veupathdb.lib.rabbit.jobs.model.JobDispatch
 import org.veupathdb.lib.rabbit.jobs.model.SuccessNotification
+import java.time.OffsetDateTime
+import java.time.temporal.ChronoUnit
 
 internal class QueueWrapper(conf: AsyncQueueConfig) {
 
@@ -49,9 +51,11 @@ internal class QueueWrapper(conf: AsyncQueueConfig) {
   }
 
   private fun onJob(job: JobDispatch) {
+    // Decrement the queued job counter.
     QueueMetrics.Queued.dec()
+    // Record the time this job spent in the queue.
+    QueueMetrics.Time.observe(job.dispatched.until(OffsetDateTime.now(), ChronoUnit.MILLIS).toDouble() / 1000.0)
 
-    // TODO: get the queue time and record it
     // TODO: mark job as grabbed in the DB
 
     try {

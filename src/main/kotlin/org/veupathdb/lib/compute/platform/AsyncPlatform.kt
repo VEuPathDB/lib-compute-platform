@@ -1,6 +1,7 @@
 package org.veupathdb.lib.compute.platform
 
 import com.fasterxml.jackson.databind.JsonNode
+import org.veupathdb.lib.compute.platform.config.AsyncPlatformConfig
 import org.veupathdb.lib.compute.platform.intern.db.QueueDB
 import org.veupathdb.lib.compute.platform.intern.jobs.JobExecutors
 import org.veupathdb.lib.compute.platform.intern.queues.JobQueues
@@ -17,7 +18,7 @@ object AsyncPlatform {
 
     JobQueues.init(config)
     JobExecutors.init(config)
-    QueueDB.init(config)
+    QueueDB.init(config.dbConfig)
 
     initialized = true
   }
