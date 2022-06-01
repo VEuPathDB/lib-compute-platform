@@ -30,7 +30,7 @@ dependencies {
   // Jackson
   implementation(platform("com.fasterxml.jackson:jackson-bom:2.13.3"))
   implementation("com.fasterxml.jackson.core:jackson-databind")
-  implementation("org.veupathdb.lib:jackson-singleton:2.3.0")
+  implementation("org.veupathdb.lib:jackson-singleton:3.0.0")
 
   // DB
   implementation("com.zaxxer:HikariCP:5.0.1")
@@ -38,7 +38,7 @@ dependencies {
 
   // S3
   implementation("org.veupathdb.lib.s3:s34k-minio:0.3.1+s34k-0.7.0")
-  implementation("org.veupathdb.lib.s3:workspaces:2.3.0")
+  implementation("org.veupathdb.lib.s3:workspaces:3.0.0")
 
   // Rabbit
   implementation("org.veupathdb.lib:rabbit-job-queue:1.1.0")

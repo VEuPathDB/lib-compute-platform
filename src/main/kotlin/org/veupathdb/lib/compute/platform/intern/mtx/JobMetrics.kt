@@ -4,6 +4,9 @@ import io.prometheus.client.Counter
 
 object JobMetrics {
 
+  /**
+   * Counter of the number of jobs that have failed since last startup.
+   */
   @JvmStatic
   val Failures: Counter = Counter.build()
     .name("job_failures")
@@ -11,6 +14,10 @@ object JobMetrics {
     .labelNames("queue")
     .register()
 
+  /**
+   * Counter of the number of jobs that completed successfully since last
+   * startup.
+   */
   @JvmStatic
   val Successes: Counter = Counter.build()
     .name("job_successes")

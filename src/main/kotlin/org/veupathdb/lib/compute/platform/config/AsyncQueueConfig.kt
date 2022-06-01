@@ -24,7 +24,7 @@ package org.veupathdb.lib.compute.platform.config
  *
  * Defaults to `10`.
  */
-data class AsyncQueueConfig @JvmOverloads constructor(
+class AsyncQueueConfig @JvmOverloads constructor(
   internal val id: String,
   internal val username: String,
   internal val password: String,

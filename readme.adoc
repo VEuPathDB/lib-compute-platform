@@ -9,25 +9,3 @@ TODO!!
 == Configuration
 
 TODO!!
-
-.Java
-[source, java]
-----
-var config = AsyncPlatformConfig.builder()
-  .dbConfig(AsyncDbConfig("somehost", "someuser", "somepass", "my_app_db"))
-  .s3Config(AsyncS3Config.builder()
-    .host("somehost")
-    .bucket("some_bucket")
-    .accessToken("sometoken")
-    .secretKey("somekey")
-    .build())
-  .jobConfig(AsyncJobConfig.builder()
-    .executorFactory(new MyExecutorFactory())
-    .persistableFiles("myoutput.txt")
-    .build())
-  .addQueues(
-    AsyncQueueConfig("my-queue-1", "someuser", "somepass", "somehost1"),
-    AsyncQueueConfig("my-queue-2", "someuser", "somepass", "somehost2")
-  )
-  .build()
-----

@@ -22,6 +22,21 @@ class AsyncJobConfig(
   persistableFiles: List<String> = emptyList()
 ) {
 
+  /**
+   * Creates a new [AsyncJobConfig] instance.
+   *
+   * @param executorFactory Provider for [JobExecutor] instances that will be used
+   * to process individual jobs.
+   *
+   * @param persistableFiles List of files that, if present in a job workspace on
+   * job completion, will be persisted to the S3 store.
+   *
+   * If this list is empty, all files that exist in a job's scratch space on job
+   * completion will be persisted.
+   */
+  constructor(executorFactory: JobExecutorFactory, vararg persistableFiles: String) :
+    this(executorFactory, persistableFiles.asList())
+
   class Builder {
 
     var executorFactory: JobExecutorFactory? = null

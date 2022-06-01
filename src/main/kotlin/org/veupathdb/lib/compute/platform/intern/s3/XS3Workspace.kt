@@ -1,5 +1,6 @@
 package org.veupathdb.lib.compute.platform.intern.s3
 
+import com.fasterxml.jackson.databind.JsonNode
 import org.veupathdb.lib.compute.platform.JobStatus
 import org.veupathdb.lib.jackson.Json
 import org.veupathdb.lib.s3.s34k.errors.S34KError
@@ -107,7 +108,7 @@ class XS3Workspace(private val raw: S3Workspace) : S3Workspace by raw {
   @Throws(S34KError::class)
   fun getConfig() =
     if (FileConfig in raw) {
-      raw.open(FileConfig).use { Json.from(it) }
+      raw.open(FileConfig).use { Json.parse<JsonNode>(it) }
     } else {
       null
     }
