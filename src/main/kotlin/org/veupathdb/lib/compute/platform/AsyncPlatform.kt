@@ -43,7 +43,7 @@ object AsyncPlatform {
     Log.info("Resubmitting queued jobs")
     QueueDB.getQueuedJobs().use { stream ->
       stream.forEach {
-        S3.requeueJob(it.jobID)
+        S3.resetWorkspace(it.jobID)
         JobQueues.submitJob(it.queue, it.jobID, it.config)
       }
     }
@@ -69,7 +69,7 @@ object AsyncPlatform {
     QueueDB.submitJob(queue, jobID, rawConfig?.toString())
 
     // Create a workspace for the new job in S3
-    S3.submitJob(jobID, rawConfig)
+    S3.submitWorkspace(jobID, rawConfig)
 
     // Submit the new job to the target job queue
     JobQueues.submitJob(queue, jobID, rawConfig)

@@ -58,7 +58,7 @@ internal object S3 {
     val files = ws.files()
 
     // Instantiate our output list
-    val out   = ArrayList<JobResultReference>(files.size)
+    val out = ArrayList<JobResultReference>(files.size)
 
     // Iterate through the files in the S3 workspace
     files.forEach {
@@ -73,14 +73,14 @@ internal object S3 {
   }
 
   @JvmStatic
-  fun deleteJob(jobID: HashID) {
+  fun deleteWorkspace(jobID: HashID) {
     Log.debug("Deleting workspace for job {} in S3", jobID)
     wsf!![jobID]?.delete()
   }
 
 
   @JvmStatic
-  fun expireJob(jobID: HashID) {
+  fun expireWorkspace(jobID: HashID) {
     Log.debug("Expiring workspace for job {} in S3", jobID)
 
     // Load the workspace
@@ -91,6 +91,7 @@ internal object S3 {
       // If the target file is not a flag file
       if (!IsFlagFilename(it.name)) {
         // delete it
+        Log.debug("Deleting S3 object {}", it.absolutePath)
         it.delete()
       }
     }
@@ -99,8 +100,16 @@ internal object S3 {
     ws.touch(FlagExpired)
   }
 
+  /**
+   * Returns a job workspace back to its initial `queued` state (the state it
+   * was in just after creation).
+   *
+   * @param jobID ID of the workspace to reset/requeue.
+   *
+   * @throws IllegalStateException If the target workspace does not exist in S3.
+   */
   @JvmStatic
-  fun requeueJob(jobID: HashID) {
+  fun resetWorkspace(jobID: HashID) {
     Log.debug("'Requeuing' workspace for job {} in S3", jobID)
 
     val ws = wsf!![jobID] ?: throw IllegalStateException("Attempted to requeue nonexistent workspace $jobID")
@@ -110,6 +119,7 @@ internal object S3 {
       // If the target file is not the input config and is not the queued flag
       if (it.name != FileConfig && it.name != FlagQueued) {
         // delete it
+        Log.debug("Deleting S3 object {}", it.absolutePath)
         it.delete()
       }
     }
@@ -131,7 +141,7 @@ internal object S3 {
    * @param conf Optional JSON configuration to write to the workspace.
    */
   @JvmStatic
-  fun submitJob(jobID: HashID, conf: JsonNode? = null) {
+  fun submitWorkspace(jobID: HashID, conf: JsonNode? = null) {
     Log.debug("Creating workspace for job {} in S3", jobID)
 
     val ws = wsf!!.create(jobID)
