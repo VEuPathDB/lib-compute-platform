@@ -1,15 +1,18 @@
 package org.veupathdb.lib.compute.platform
 
 import com.fasterxml.jackson.databind.JsonNode
+import org.slf4j.LoggerFactory
 import org.veupathdb.lib.compute.platform.config.AsyncPlatformConfig
 import org.veupathdb.lib.compute.platform.intern.db.DatabaseMigrator
 import org.veupathdb.lib.compute.platform.intern.db.QueueDB
 import org.veupathdb.lib.compute.platform.intern.jobs.JobExecutors
 import org.veupathdb.lib.compute.platform.intern.queues.JobQueues
-import org.veupathdb.lib.compute.platform.intern.s3.QueueS3
+import org.veupathdb.lib.compute.platform.intern.s3.S3
 import org.veupathdb.lib.hash_id.HashID
 
 object AsyncPlatform {
+
+  private val Log = LoggerFactory.getLogger(javaClass)
 
   private var initialized = false
 
@@ -20,20 +23,30 @@ object AsyncPlatform {
 
     initialized = true
 
+    Log.info("Initializing async platform")
+
     // Initialize components.
     JobQueues.init(config)
     JobExecutors.init(config)
     QueueDB.init(config.dbConfig)
-    QueueS3.init(config.s3Config)
+    S3.init(config.s3Config)
 
     // Perform database setup/migrations
+    Log.info("Performing database migrations")
     DatabaseMigrator().run()
 
     // Cleanup dead jobs
-    TODO("dead job cleanup")
+    Log.info("Cleaning up dead jobs")
+    QueueDB.deadJobCleanup()
 
-    // Resubmit jobs to the queues
-    QueueDB.getQueuedJobs().use(JobQueues::resubmitAll)
+    // Requeue everything
+    Log.info("Resubmitting queued jobs")
+    QueueDB.getQueuedJobs().use { stream ->
+      stream.forEach {
+        S3.requeueJob(it.jobID)
+        JobQueues.submitJob(it.queue, it.jobID, it.config)
+      }
+    }
   }
 
   /**
@@ -46,6 +59,8 @@ object AsyncPlatform {
   @JvmStatic
   @JvmOverloads
   fun submitJob(queue: String, jobID: HashID, rawConfig: JsonNode? = null) {
+    Log.info("Submitting job {} to the async platform.", jobID)
+
     // If the target queue doesn't exist, halt here.
     if (queue !in JobQueues)
       throw IllegalStateException("Attempted to submit a job to nonexistent queue '$queue'.")
@@ -54,7 +69,7 @@ object AsyncPlatform {
     QueueDB.submitJob(queue, jobID, rawConfig?.toString())
 
     // Create a workspace for the new job in S3
-    QueueS3.submitJob(jobID, rawConfig)
+    S3.submitJob(jobID, rawConfig)
 
     // Submit the new job to the target job queue
     JobQueues.submitJob(queue, jobID, rawConfig)
@@ -70,8 +85,19 @@ object AsyncPlatform {
    * @return The target job, if it exists, otherwise `null`.
    */
   @JvmStatic
-  fun getJob(jobID: HashID) = QueueDB.getJob(jobID) ?: QueueS3.getJob(jobID)
+  fun getJob(jobID: HashID): AsyncJob? {
+    Log.debug("Looking up job {} from either the managed DB or S3", jobID)
+
+    val out = QueueDB.getJob(jobID) ?: S3.getJob(jobID)
+
+    if (out == null)
+      Log.debug("Job not found in either location.")
+
+    return out
+  }
 
   @JvmStatic
-  fun getJobResults(jobID: HashID): List<ResultReference>
+  fun getJobResults(jobID: HashID): List<JobResultReference> {
+
+  }
 }

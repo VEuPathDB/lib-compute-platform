@@ -27,9 +27,15 @@ const val FlagFailed = ".failed"
  */
 const val FlagExpired = ".expired"
 
-/**
- * Name of the last-accessed marker object.
- */
-const val MarkerLastAccessed = ".last-accessed"
-
 const val FileConfig = "input-config"
+
+internal fun IsFlagFilename(name: String): Boolean {
+  return when(name) {
+    FlagQueued     -> true
+    FlagInProgress -> true
+    FlagComplete   -> true
+    FlagFailed     -> true
+    FlagExpired    -> true
+    else           -> false
+  }
+}

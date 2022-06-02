@@ -21,7 +21,6 @@ class AsyncJobConfig(
   executorFactory: JobExecutorFactory,
   persistableFiles: List<String> = emptyList()
 ) {
-
   /**
    * Creates a new [AsyncJobConfig] instance.
    *
