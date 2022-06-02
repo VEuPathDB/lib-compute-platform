@@ -191,6 +191,9 @@ Unordered development notes.
    statically available.
 * Can directories be persisted?
 ** How to handle this?
+* Only the instance that created the job can re-run it once expired?
+** If this wasn't the case there could be issues with multiple campuses trying
+   to manage (prune) the workspace
 
 
 ==== Handled

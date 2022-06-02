@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory
 import org.veupathdb.lib.compute.platform.config.AsyncQueueConfig
 import org.veupathdb.lib.compute.platform.intern.jobs.JobExecutors
 import org.veupathdb.lib.compute.platform.JobResultStatus
+import org.veupathdb.lib.compute.platform.intern.db.QueueDB
 import org.veupathdb.lib.compute.platform.intern.mtx.JobMetrics
 import org.veupathdb.lib.compute.platform.intern.mtx.QueueMetrics
 import org.veupathdb.lib.hash_id.HashID
@@ -56,7 +57,8 @@ internal class QueueWrapper(conf: AsyncQueueConfig) {
     // Record the time this job spent in the queue.
     QueueMetrics.Time.observe(job.dispatched.until(OffsetDateTime.now(), ChronoUnit.MILLIS).toDouble() / 1000.0)
 
-    // TODO: mark job as grabbed in the DB
+    // Mark the job as grabbed in the database.
+    QueueDB.grabJob(job.jobID)
 
     try {
       when (JobExecutors.new(job.jobID, job.body).execute()) {

@@ -62,8 +62,8 @@ internal object S3 {
 
     // Iterate through the files in the S3 workspace
     files.forEach {
-      // If the file is not a flag file
-      if (!IsFlagFilename(it.name)) {
+      // If the file is not a flag file and is not the input config
+      if (!IsFlagFilename(it.name) && it.name != FileConfig) {
         // Add it to the output list
         out.add(JobResultReferenceImpl(it))
       }
@@ -79,6 +79,16 @@ internal object S3 {
   }
 
 
+  /**
+   * Clears out the target workspace and marks it as `expired`.
+   *
+   * All files apart from the flag files and config file will be deleted from
+   * the workspace and an empty [FlagExpired] flag will be written.
+   *
+   * @param jobID Hash ID of the workspace to mark as expired.
+   *
+   * @throws IllegalStateException If the target workspace does not exist in S3.
+   */
   @JvmStatic
   fun expireWorkspace(jobID: HashID) {
     Log.debug("Expiring workspace for job {} in S3", jobID)
@@ -100,6 +110,7 @@ internal object S3 {
     ws.touch(FlagExpired)
   }
 
+
   /**
    * Returns a job workspace back to its initial `queued` state (the state it
    * was in just after creation).
@@ -110,9 +121,9 @@ internal object S3 {
    */
   @JvmStatic
   fun resetWorkspace(jobID: HashID) {
-    Log.debug("'Requeuing' workspace for job {} in S3", jobID)
+    Log.debug("Resetting workspace for job {} in S3", jobID)
 
-    val ws = wsf!![jobID] ?: throw IllegalStateException("Attempted to requeue nonexistent workspace $jobID")
+    val ws = wsf!![jobID] ?: throw IllegalStateException("Attempted to reset nonexistent workspace $jobID")
 
     // Iterate through the files in the workspace
     ws.files().forEach {

@@ -16,6 +16,19 @@ object AsyncPlatform {
 
   private var initialized = false
 
+  /**
+   * Initializes the async compute platform library.
+   *
+   * Initialization steps:
+   * * configuration
+   * * database migration
+   * * dead job cleanup
+   * * queue repopulation
+   *
+   * @param config Platform configuration.
+   *
+   * @throws IllegalStateException If this method is called more than once.
+   */
   @JvmStatic
   fun init(config: AsyncPlatformConfig) {
     if (initialized)
@@ -96,8 +109,22 @@ object AsyncPlatform {
     return out
   }
 
+  /**
+   * Fetches the results files for the target job.
+   *
+   * This method makes no attempt to verify that the target job is actually
+   * complete.  That check should be performed before calling this method.
+   *
+   * @param jobID Hash ID of the job whose results should be retrieved.
+   *
+   * @return List of result files in the job workspace.
+   *
+   * These files will be any non-flag, non-input-config file that exist in the
+   * workspace.
+   */
   @JvmStatic
   fun getJobResults(jobID: HashID): List<JobResultReference> {
-
+    Log.debug("Fetching results for job {}", jobID)
+    return S3.getResultFiles(jobID)
   }
 }
