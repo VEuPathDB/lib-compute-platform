@@ -7,20 +7,20 @@ private const val SQL = """
   UPDATE
     compute.jobs
   SET
-    status = 'grabbed'
-  , grabbed = now()
+    last_accessed = now()
   WHERE
     job_id = ?
 """
 
 /**
- * Marks the target job as grabbed.
+ * Updates the last_accessed field on the target job row with the current
+ * timestamp.
  *
- * @param con Open database connection to use for the query.
+ * @param con Open database connection the query will be executed on.
  *
- * @param jobID Hash ID of the target job that will be marked as a grabbed.
+ * @param jobID Hash ID of the job whose record should be updated.
  */
-internal fun MarkJobGrabbed(con: Connection, jobID: HashID) {
+fun UpdateDBLastAccessed(con: Connection, jobID: HashID) {
   con.prepareStatement(SQL).use { ps ->
     ps.setBytes(1, jobID.bytes)
     ps.execute()

@@ -36,22 +36,13 @@ import java.time.OffsetDateTime
  * This will be `null` if the job has not yet finished.
  */
 internal data class JobRecord (
-  val jobID:    HashID,
-  val status:   JobStatus,
-  val queue:    String,
-  val config:   JsonNode?,
-  val created:  OffsetDateTime,
-  val grabbed:  OffsetDateTime?,
-  val finished: OffsetDateTime?,
+  val jobID:        HashID,
+  val status:       JobStatus,
+  val queue:        String,
+  val config:       JsonNode?,
+  val created:      OffsetDateTime,
+  val lastAccessed: OffsetDateTime,
+  val grabbed:      OffsetDateTime?,
+  val finished:     OffsetDateTime?,
 )
 
-internal fun ParseJobRecord(rs: ResultSet) =
-  JobRecord(
-    HashID(rs.getBytes(1)),
-    JobStatus.fromString(rs.getString(2)),
-    rs.getString(3),
-    rs.getString(4)?.let(Json::parse),
-    rs.getObject(5, OffsetDateTime::class.java),
-    rs.getObject(6, OffsetDateTime::class.java),
-    rs.getObject(7, OffsetDateTime::class.java)
-  )

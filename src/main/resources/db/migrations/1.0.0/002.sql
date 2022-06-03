@@ -19,6 +19,8 @@ CREATE TABLE IF NOT EXISTS compute.jobs (
   created TIMESTAMP WITH TIME ZONE
     NOT NULL,
   -- Timestamp for when the job was pulled from the queue to be run.
+  last_accessed TIMESTAMP WITH TIME ZONE
+    NOT NULL,
   grabbed TIMESTAMP WITH TIME ZONE
     NOT NULL,
   -- Timestamp for when the job finished (successfully or not)

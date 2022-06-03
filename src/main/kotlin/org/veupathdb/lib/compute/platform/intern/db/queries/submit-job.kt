@@ -11,11 +11,23 @@ private const val SQL = """
     , queue
     , config
     , created
+    , last_accessed
     )
   VALUES
-    (?, 'queued', ?, ?, now())
+    (?, 'queued', ?, ?, now(), now())
 """
 
+/**
+ * Records a new job in the database.
+ *
+ * @param con Open database to be used for executing the query.
+ *
+ * @param jobID Hash ID of the job to record.
+ *
+ * @param queue Name/ID of the queue this job was/will be submitted to.
+ *
+ * @param config Optional raw configuration for the job to record.
+ */
 internal fun RecordNewJob(con: Connection, jobID: HashID, queue: String, config: String?) {
   con.prepareStatement(SQL).use { ps ->
     ps.setBytes(1, jobID.bytes)

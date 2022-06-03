@@ -44,9 +44,21 @@ internal object S3 {
 
   @JvmStatic
   fun getJob(jobID: HashID): AsyncJob? {
-    wsf!![jobID]?.let(::XS3Workspace)
+    Log.debug("Fetching workspace {} from S3", jobID)
+    return wsf!![jobID]?.let(::XS3Workspace)?.let(::AsyncS3Job)
   }
 
+
+  /**
+   * Fetches the result files from the target workspace.
+   *
+   * @param jobID Hash ID of the workspace from which the files should be
+   * retrieved.
+   *
+   * @return The list of files present in the workspace.
+   *
+   * This list will not include any flag files or the input config file.
+   */
   @JvmStatic
   fun getResultFiles(jobID: HashID): List<JobResultReference> {
     Log.debug("Fetching result files from workspace {} in S3", jobID)
@@ -72,6 +84,12 @@ internal object S3 {
     return out
   }
 
+
+  /**
+   * Deletes the target workspace.
+   *
+   * @param jobID Hash ID of the workspace to delete.
+   */
   @JvmStatic
   fun deleteWorkspace(jobID: HashID) {
     Log.debug("Deleting workspace for job {} in S3", jobID)

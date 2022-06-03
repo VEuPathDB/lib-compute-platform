@@ -3,6 +3,7 @@ package org.veupathdb.lib.compute.platform
 import com.fasterxml.jackson.databind.JsonNode
 import org.slf4j.LoggerFactory
 import org.veupathdb.lib.compute.platform.config.AsyncPlatformConfig
+import org.veupathdb.lib.compute.platform.intern.JobPruner
 import org.veupathdb.lib.compute.platform.intern.db.DatabaseMigrator
 import org.veupathdb.lib.compute.platform.intern.db.QueueDB
 import org.veupathdb.lib.compute.platform.intern.jobs.JobExecutors
@@ -41,7 +42,7 @@ object AsyncPlatform {
     // Initialize components.
     JobQueues.init(config)
     JobExecutors.init(config)
-    QueueDB.init(config.dbConfig)
+    QueueDB.init(config)
     S3.init(config.s3Config)
 
     // Perform database setup/migrations
@@ -60,6 +61,9 @@ object AsyncPlatform {
         JobQueues.submitJob(it.queue, it.jobID, it.config)
       }
     }
+
+    // Schedule the expired job pruner
+    JobPruner.schedule()
   }
 
   /**
@@ -101,12 +105,26 @@ object AsyncPlatform {
   fun getJob(jobID: HashID): AsyncJob? {
     Log.debug("Looking up job {} from either the managed DB or S3", jobID)
 
-    val out = QueueDB.getJob(jobID) ?: S3.getJob(jobID)
+    // Check to see if the job exists in the managed DB
+    QueueDB.getJob(jobID)?.also {
+      // It does...
+      Log.debug("Job found in the managed database")
+      // update it's last accessed date
+      QueueDB.updateJobLastAccessed(jobID)
+      // and return it
+      return it
+    }
 
-    if (out == null)
-      Log.debug("Job not found in either location.")
+    // Check to see if the job exists in S3
+    S3.getJob(jobID)?.also {
+      // it does
+      Log.debug("Job found in S3")
+      // return it
+      return it
+    }
 
-    return out
+    // Job wasn't found in either the managed DB or in S3
+    return null
   }
 
   /**

@@ -18,11 +18,17 @@ private const val SQL = """
     compute.jobs
   WHERE
     status = 'queued'
-    AND cutoff < (SELECT created FROM cutoff)
+    AND cutoff < coalesce((SELECT created FROM cutoff), now())
 """
 
 /**
  * Fetches the current queue position for the target job.
+ *
+ * @param con Open database connection to use for the query.
+ *
+ * @param jobID Hash ID of the job whose queue position should be fetched.
+ *
+ * @return The current queue position of the target job.
  */
 internal fun GetJobQueuePosition(con: Connection, jobID: HashID) =
   con.prepareStatement(SQL).use { ps ->

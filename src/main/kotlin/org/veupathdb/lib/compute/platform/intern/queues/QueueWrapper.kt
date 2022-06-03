@@ -58,7 +58,7 @@ internal class QueueWrapper(conf: AsyncQueueConfig) {
     QueueMetrics.Time.observe(job.dispatched.until(OffsetDateTime.now(), ChronoUnit.MILLIS).toDouble() / 1000.0)
 
     // Mark the job as grabbed in the database.
-    QueueDB.grabJob(job.jobID)
+    QueueDB.markJobAsGrabbed(job.jobID)
 
     try {
       when (JobExecutors.new(job.jobID, job.body).execute()) {
