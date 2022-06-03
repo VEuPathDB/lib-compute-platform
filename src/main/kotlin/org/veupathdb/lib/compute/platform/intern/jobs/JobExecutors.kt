@@ -17,7 +17,7 @@ internal object JobExecutors {
     if (initialized)
       throw IllegalStateException("Attempted to initialize JobExecutors more than once!")
 
-    provider = config.jobExecutorFactory
+    provider = config.jobConfig.executorFactory
 
     initialized = true
   }

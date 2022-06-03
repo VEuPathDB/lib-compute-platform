@@ -17,32 +17,46 @@ package org.veupathdb.lib.compute.platform.config
  *
  * Defaults to `5432`.
  *
- * @param user Connection credentials username.
+ * @param username Connection credentials username.
  *
- * @param pass Connection credentials password.
+ * @param password Connection credentials password.
  *
  * @param name PostgreSQL database name.
  *
- * @param pool Max connection pool size.
+ * @param poolSize Max connection pool size.
  *
  * Defaults to `10`.
  */
 class AsyncDBConfig @JvmOverloads constructor(
   internal val name: String,
-  internal val user: String,
-  internal val pass: String,
+  internal val username: String,
+  internal val password: String,
   internal val host: String,
   internal val port: Int = 5432,
-  internal val pool: Int = 10,
+  internal val poolSize: Int = 10,
 ) {
 
+  companion object {
+    @JvmStatic
+    fun builder() = Builder()
+
+    @JvmStatic
+    inline fun build(fn: Builder.() -> Unit) = Builder().also(fn).build()
+  }
+
   class Builder {
+
     var host: String? = null
-    var port: Int     = 5432
-    var user: String? = null
-    var pass: String? = null
+
+    var port: Int = 5432
+
+    var username: String? = null
+
+    var password: String? = null
+
     var name: String? = null
-    var pool: Int     = 10
+
+    var poolSize: Int = 10
 
     /**
      * Sets the hostname setting for the PostgreSQL database.
@@ -64,7 +78,7 @@ class AsyncDBConfig @JvmOverloads constructor(
      * Sets the connection credentials username.
      */
     fun username(u: String): Builder {
-      user = u
+      username = u
       return this
     }
 
@@ -72,7 +86,7 @@ class AsyncDBConfig @JvmOverloads constructor(
      * Sets the connection credentials password.
      */
     fun password(p: String): Builder {
-      pass = p
+      password = p
       return this
     }
 
@@ -88,27 +102,20 @@ class AsyncDBConfig @JvmOverloads constructor(
      * Sets the max pool size.
      */
     fun poolSize(s: Int): Builder {
-      pool = s
+      poolSize = s
       return this
     }
 
     fun build(): AsyncDBConfig {
       return AsyncDBConfig(
         name ?: throw IllegalStateException("Cannot construct an AsyncDBConfig instance with no DB name set!"),
-        user ?: throw IllegalStateException("Cannot construct an AsyncDBConfig instance with no DB username set!"),
-        pass ?: throw IllegalStateException("Cannot construct an AsyncDBConfig instance with no DB password set!"),
+        username ?: throw IllegalStateException("Cannot construct an AsyncDBConfig instance with no DB username set!"),
+        password ?: throw IllegalStateException("Cannot construct an AsyncDBConfig instance with no DB password set!"),
         host ?: throw IllegalStateException("Cannot construct an AsyncDBConfig instance with no DB hostname set!"),
         port,
-        pool
+        poolSize
       )
     }
   }
 
-  companion object {
-    @JvmStatic
-    fun builder() = Builder()
-
-    @JvmStatic
-    fun build(fn: Builder.() -> Unit) = Builder().also(fn).build()
-  }
 }

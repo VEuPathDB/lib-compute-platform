@@ -22,22 +22,22 @@ package org.veupathdb.lib.compute.platform.config
  * @param bucket Name of the S3 bucket that will be operated on by this async
  * compute application.
  *
- * @param access Access token for the S3 store.
+ * @param accessToken Access token for the S3 store.
  *
- * @param secret Secret key for the S3 store.
+ * @param secretKey Secret key for the S3 store.
  *
- * @param root Root 'directory' in which workspaces will be created.
+ * @param rootPath Root 'directory' in which workspaces will be created.
  *
  * Defaults to the root of the bucket.
  */
 class AsyncS3Config(
-  internal val host:   String,
-  internal val port:   Int = 80,
-  internal val https:  Boolean = false,
+  internal val host: String,
+  internal val port: Int = 80,
+  internal val https: Boolean = false,
   internal val bucket: String,
-  internal val access: String,
-  internal val secret: String,
-  internal val root:   String = "/",
+  internal val accessToken: String,
+  internal val secretKey: String,
+  internal val rootPath: String = "/",
 ) {
 
   /**
@@ -74,14 +74,30 @@ class AsyncS3Config(
   constructor(host: String, bucket: String, access: String, secret: String, root: String) :
     this(host, 80, false, bucket, access, secret, root)
 
+
+  companion object {
+    @JvmStatic
+    fun builder() = Builder()
+
+    @JvmStatic
+    inline fun build(fn: Builder.() -> Unit) = Builder().also(fn).build()
+  }
+
   class Builder {
-    var host:   String? = null
-    var port:   Int = 80
-    var https:  Boolean = false
+
+    var host: String? = null
+
+    var port: Int = 80
+
+    var https: Boolean = false
+
     var bucket: String? = null
-    var access: String? = null
-    var secret: String? = null
-    var root:   String = "/"
+
+    var accessToken: String? = null
+
+    var secretKey: String? = null
+
+    var rootPath: String = "/"
 
     /**
      * Sets the hostname for the S3 store.
@@ -103,7 +119,7 @@ class AsyncS3Config(
      * Sets the access token for the S3 store.
      */
     fun accessToken(u: String): Builder {
-      access = u
+      accessToken = u
       return this
     }
 
@@ -111,7 +127,7 @@ class AsyncS3Config(
      * Sets the secret key for the S3 store.
      */
     fun secretKey(p: String): Builder {
-      secret = p
+      secretKey = p
       return this
     }
 
@@ -119,7 +135,7 @@ class AsyncS3Config(
      * Sets the root 'directory' in which job workspaces will be created.
      */
     fun rootPath(r: String): Builder {
-      root = r
+      rootPath = r
       return this
     }
 
@@ -151,18 +167,10 @@ class AsyncS3Config(
         port,
         https,
         bucket ?: throw IllegalStateException("Cannot build an AsyncS3Config instance with no bucket set!"),
-        access ?: throw IllegalStateException("Cannot build an AsyncS3Config instance with no access token set!"),
-        secret ?: throw IllegalStateException("Cannot build an AsyncS3Config instance with no secret key set!"),
-        root
+        accessToken ?: throw IllegalStateException("Cannot build an AsyncS3Config instance with no access token set!"),
+        secretKey ?: throw IllegalStateException("Cannot build an AsyncS3Config instance with no secret key set!"),
+        rootPath
       )
     }
-  }
-
-  companion object {
-    @JvmStatic
-    fun builder() = Builder()
-
-    @JvmStatic
-    inline fun build(fn: Builder.() -> Unit) = Builder().also(fn).build()
   }
 }

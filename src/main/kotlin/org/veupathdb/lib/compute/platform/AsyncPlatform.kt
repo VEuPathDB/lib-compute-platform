@@ -2,6 +2,7 @@ package org.veupathdb.lib.compute.platform
 
 import com.fasterxml.jackson.databind.JsonNode
 import org.slf4j.LoggerFactory
+import org.veupathdb.lib.compute.platform.config.AsyncJobConfig
 import org.veupathdb.lib.compute.platform.config.AsyncPlatformConfig
 import org.veupathdb.lib.compute.platform.intern.JobPruner
 import org.veupathdb.lib.compute.platform.intern.db.DatabaseMigrator
@@ -11,6 +12,17 @@ import org.veupathdb.lib.compute.platform.intern.queues.JobQueues
 import org.veupathdb.lib.compute.platform.intern.s3.S3
 import org.veupathdb.lib.hash_id.HashID
 
+/**
+ * Asynchronous Compute Platform
+ *
+ * Access point for working with the async compute platform library.
+ *
+ * Provides methods for submitting jobs, retrieving job details, and fetching
+ * job results.
+ *
+ * @author Elizabeth Paige Harper [https://github.com/foxcapades]
+ * @since 1.0.0
+ */
 object AsyncPlatform {
 
   private val Log = LoggerFactory.getLogger(javaClass)
@@ -64,6 +76,10 @@ object AsyncPlatform {
 
     // Schedule the expired job pruner
     JobPruner.schedule()
+  }
+
+  inline fun init(fn: AsyncPlatformConfig.Builder.() -> Unit) {
+    init(AsyncPlatformConfig.build(fn))
   }
 
   /**

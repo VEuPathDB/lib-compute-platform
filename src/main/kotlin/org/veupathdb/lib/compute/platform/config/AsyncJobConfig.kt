@@ -37,6 +37,15 @@ class AsyncJobConfig @JvmOverloads constructor(
   constructor(executorFactory: JobExecutorFactory, vararg persistableFiles: String) :
     this(executorFactory, persistableFiles.asList())
 
+
+  companion object {
+    @JvmStatic
+    fun builder() = Builder()
+
+    @JvmStatic
+    inline fun build(fn: Builder.() -> Unit) = Builder().also(fn).build()
+  }
+
   class Builder {
 
     var executorFactory: JobExecutorFactory? = null
@@ -99,14 +108,5 @@ class AsyncJobConfig @JvmOverloads constructor(
         expirationDays
       )
     }
-  }
-
-  companion object {
-
-    @JvmStatic
-    fun builder() = Builder()
-
-    @JvmStatic
-    fun build(fn: Builder.() -> Unit) = Builder().also(fn).build()
   }
 }

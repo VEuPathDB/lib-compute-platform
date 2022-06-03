@@ -11,6 +11,15 @@ import org.veupathdb.lib.s3.s34k.S3Client
 import org.veupathdb.lib.s3.s34k.S3Config
 import org.veupathdb.lib.s3.workspaces.S3WorkspaceFactory
 
+/**
+ * S3 Manager
+ *
+ * Provides methods for interacting with the S3 store backing the async compute
+ * platform library.
+ *
+ * @author Elizabeth Paige Harper [https://github.com/foxcapades]
+ * @since 1.0.0
+ */
 internal object S3 {
 
   private val Log = LoggerFactory.getLogger(javaClass)
@@ -34,14 +43,22 @@ internal object S3 {
       conf.host,
       conf.port.toUShort(),
       conf.https,
-      conf.access,
-      conf.secret
+      conf.accessToken,
+      conf.secretKey
     ))
 
-    wsf = S3WorkspaceFactory(s3!!, conf.bucket, conf.root)
+    wsf = S3WorkspaceFactory(s3!!, conf.bucket, conf.rootPath)
 
   }
 
+
+  /**
+   * Attempts to fetch the target job from the S3 store.
+   *
+   * @param jobID Hash ID of the workspace/job to fetch.
+   *
+   * @return The target job, if a workspace for it exists, otherwise `null`.
+   */
   @JvmStatic
   fun getJob(jobID: HashID): AsyncJob? {
     Log.debug("Fetching workspace {} from S3", jobID)

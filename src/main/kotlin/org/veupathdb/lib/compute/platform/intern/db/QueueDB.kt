@@ -46,9 +46,9 @@ internal object QueueDB {
     ds = HikariDataSource(HikariConfig().also {
       it.jdbcUrl         = "jdbc:postgresql://${config.dbConfig.host}:${config.dbConfig.port}/${config.dbConfig.name}"
       it.driverClassName = Driver::class.java.name
-      it.username        = config.dbConfig.user
-      it.password        = config.dbConfig.pass
-      it.maximumPoolSize = config.dbConfig.pool
+      it.username        = config.dbConfig.username
+      it.password        = config.dbConfig.password
+      it.maximumPoolSize = config.dbConfig.poolSize
     })
   }
 
@@ -194,7 +194,9 @@ internal object QueueDB {
   fun getQueuedJobs(): Stream<JobRecord> {
     Log.debug("Getting list of queued jobs.")
 
-    return ds!!.connection.use { ListQueuedJobs(it) }
+    // Connection is not closed here as the caller is responsible for closing
+    // the stream.
+    return ListQueuedJobs(ds!!.connection)
   }
 
   /**
