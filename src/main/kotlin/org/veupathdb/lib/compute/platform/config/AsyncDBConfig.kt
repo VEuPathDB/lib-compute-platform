@@ -107,14 +107,32 @@ class AsyncDBConfig @JvmOverloads constructor(
     }
 
     fun build(): AsyncDBConfig {
-      return AsyncDBConfig(
-        name ?: throw IllegalStateException("Cannot construct an AsyncDBConfig instance with no DB name set!"),
-        username ?: throw IllegalStateException("Cannot construct an AsyncDBConfig instance with no DB username set!"),
-        password ?: throw IllegalStateException("Cannot construct an AsyncDBConfig instance with no DB password set!"),
-        host ?: throw IllegalStateException("Cannot construct an AsyncDBConfig instance with no DB hostname set!"),
-        port,
-        poolSize
-      )
+      // We check null and blank because these are likely coming from env vars
+      // and docker compose will set blank values for vars defined in the
+      // docker-compose.yml file.
+
+      if (name == null)
+        throw IllegalStateException("Cannot construct an AsyncDBConfig instance with a null DB name!")
+      if (name!!.isBlank())
+        throw IllegalStateException("Cannot construct an AsyncDBConfig instance with a blank DB name!")
+
+      if (username == null)
+        throw IllegalStateException("Cannot construct an AsyncDBConfig instance with a null DB username!")
+      if (username!!.isBlank())
+        throw IllegalStateException("Cannot construct an AsyncDBConfig instance with a blank DB username!")
+
+      if (password == null)
+        throw IllegalStateException("Cannot construct an AsyncDBConfig instance with a null DB password!")
+      if (password!!.isBlank())
+        throw IllegalStateException("Cannot construct an AsyncDBConfig instance with a blank DB password!")
+
+      if (host == null)
+        throw IllegalStateException("Cannot construct an AsyncDBConfig instance with a null DB host!")
+      if (host!!.isBlank())
+        throw IllegalStateException("Cannot construct an AsyncDBConfig instance with a blank DB host!")
+
+
+      return AsyncDBConfig(name!!, username!!, password!!, host!!, port, poolSize)
     }
   }
 

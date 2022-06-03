@@ -162,15 +162,31 @@ class AsyncS3Config(
      * @return A new, configured [AsyncS3Config] instance.
      */
     fun build(): AsyncS3Config {
-      return AsyncS3Config(
-        host ?: throw IllegalStateException("Cannot build an AsyncS3Config instance with no hostname set!"),
-        port,
-        https,
-        bucket ?: throw IllegalStateException("Cannot build an AsyncS3Config instance with no bucket set!"),
-        accessToken ?: throw IllegalStateException("Cannot build an AsyncS3Config instance with no access token set!"),
-        secretKey ?: throw IllegalStateException("Cannot build an AsyncS3Config instance with no secret key set!"),
-        rootPath
-      )
+      // We check null and blank because these are likely coming from env vars
+      // and docker compose will set blank values for vars defined in the
+      // docker-compose.yml file.
+
+      if (host == null)
+        throw IllegalStateException("Cannot build an AsyncS3Config instance with a null hostname!")
+      if (host!!.isBlank())
+        throw IllegalStateException("Cannot build an AsyncS3Config instance with a blank hostname!")
+
+      if (bucket == null)
+        throw IllegalStateException("Cannot build an AsyncS3Config instance with a null bucket!")
+      if (bucket!!.isBlank())
+        throw IllegalStateException("Cannot build an AsyncS3Config instance with a blank bucket!")
+
+      if (accessToken == null)
+        throw IllegalStateException("Cannot build an AsyncS3Config instance with a null access token!")
+      if (accessToken!!.isBlank())
+        throw IllegalStateException("Cannot build an AsyncS3Config instance with a blank access token!")
+
+      if (secretKey == null)
+        throw IllegalStateException("Cannot build an AsyncS3Config instance with a null secret key!")
+      if (secretKey!!.isBlank())
+        throw IllegalStateException("Cannot build an AsyncS3Config instance with a blank secret key!")
+
+      return AsyncS3Config(host!!, port, https, bucket!!, accessToken!!, secretKey!!, rootPath)
     }
   }
 }

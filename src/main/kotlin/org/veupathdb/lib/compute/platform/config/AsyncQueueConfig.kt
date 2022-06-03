@@ -86,6 +86,10 @@ class AsyncQueueConfig @JvmOverloads constructor(
     }
 
     fun build(): AsyncQueueConfig {
+      // We check null and blank because these are likely coming from env vars
+      // and docker compose will set blank values for vars defined in the
+      // docker-compose.yml file.
+
       if (id == null)
         throw IllegalStateException("Cannot build an AsyncQueueConfig instance with a null id!")
       if (id!!.isBlank())
