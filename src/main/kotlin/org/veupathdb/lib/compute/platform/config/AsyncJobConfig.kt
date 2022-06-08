@@ -112,6 +112,11 @@ class AsyncJobConfig private constructor(
       if (persistableFiles.isEmpty())
         throw IllegalStateException("Cannot build an AsyncJobConfig instance without defining output files to be persisted on job completion!")
 
+      persistableFiles.forEach {
+        if (it.contains('/'))
+          throw IllegalStateException("Persistable file paths must not contain subdirectories or other directory markers.")
+      }
+
       return AsyncJobConfig(executorFactory!!, persistableFiles, expirationDays)
     }
   }

@@ -2,6 +2,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   kotlin("jvm") version "1.6.21"
+  id("org.jetbrains.dokka") version "1.6.21"
+  java
+  `maven-publish`
 }
 
 group = "org.veupathdb.lib"
@@ -60,5 +63,67 @@ tasks.test {
 }
 
 tasks.withType<KotlinCompile> {
-  kotlinOptions.jvmTarget = "1.8"
+  kotlinOptions.jvmTarget = "17"
+}
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_17
+  targetCompatibility = JavaVersion.VERSION_17
+
+  withJavadocJar()
+  withSourcesJar()
+}
+
+tasks.javadoc {
+  exclude("module-info.java")
+}
+
+tasks.dokkaHtml {
+  outputDirectory.set(file("docs/dokka"))
+}
+
+tasks.dokkaJavadoc {
+  outputDirectory.set(file("docs/javadoc"))
+}
+
+task("docs") {
+  dependsOn("dokkaHtml", "dokkaJavadoc")
+}
+
+publishing {
+  repositories {
+    maven {
+      name = "GitHub"
+      url = uri("https://maven.pkg.github.com/VEuPathDB/lib-compute-platform")
+      credentials {
+        username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+        password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+      }
+    }
+  }
+
+  publications {
+    create<MavenPublication>("gpr") {
+      from(components["java"])
+      pom {
+        name.set("S3 Workspaces")
+        description.set("Workspaces backed by an S3 object store.")
+        url.set("https://github.com/VEuPathDB/lib-compute-platform")
+        developers {
+          developer {
+            id.set("epharper")
+            name.set("Elizabeth Paige Harper")
+            email.set("epharper@upenn.edu")
+            url.set("https://github.com/foxcapades")
+            organization.set("VEuPathDB")
+          }
+        }
+        scm {
+          connection.set("scm:git:git://github.com/VEuPathDB/lib-compute-platform.git")
+          developerConnection.set("scm:git:ssh://github.com/VEuPathDB/lib-compute-platform.git")
+          url.set("https://github.com/VEuPathDB/lib-compute-platform")
+        }
+      }
+    }
+  }
 }
