@@ -10,6 +10,7 @@ import org.veupathdb.lib.compute.platform.intern.db.QueueDB
 import org.veupathdb.lib.compute.platform.intern.jobs.JobExecutors
 import org.veupathdb.lib.compute.platform.intern.queues.JobQueues
 import org.veupathdb.lib.compute.platform.intern.s3.S3
+import org.veupathdb.lib.compute.platform.intern.ws.ScratchSpaces
 import org.veupathdb.lib.hash_id.HashID
 
 /**
@@ -56,6 +57,7 @@ object AsyncPlatform {
     JobExecutors.init(config)
     QueueDB.init(config)
     S3.init(config.s3Config)
+    ScratchSpaces.init(config)
 
     // Perform database setup/migrations
     Log.info("Performing database migrations")
