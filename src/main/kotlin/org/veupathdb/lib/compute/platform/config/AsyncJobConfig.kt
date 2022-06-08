@@ -14,12 +14,16 @@ import org.veupathdb.lib.compute.platform.JobExecutorFactory
  * @param persistableFiles List of files that, if present in a job workspace on
  * job completion, will be persisted to the S3 store.
  *
- * If this list is empty, all files that exist in a job's scratch space on job
- * completion will be persisted.
+ * **Note**: This list defines the files that may be persisted, however if a
+ * file in this list does not appear in the outputs in a job's local workspace
+ * on job completion, it will simply be ignored.  If _no_ files in this list
+ * exist in the local workspace on job completion, an error will be logged.
+ *
+ * **Warning**: This list must not be empty.
  */
-class AsyncJobConfig @JvmOverloads constructor(
+class AsyncJobConfig private constructor(
   internal val executorFactory: JobExecutorFactory,
-  internal val persistableFiles: List<String> = emptyList(),
+  internal val persistableFiles: List<String>,
   internal val expirationDays: Int = 30
 ) {
   /**
@@ -48,9 +52,9 @@ class AsyncJobConfig @JvmOverloads constructor(
 
   class Builder {
 
-    var executorFactory: JobExecutorFactory? = null
+    val persistableFiles = ArrayList<String>(5)
 
-    var persistableFiles = ArrayList<String>(5)
+    var executorFactory: JobExecutorFactory? = null
 
     var expirationDays = 30
 
@@ -102,11 +106,13 @@ class AsyncJobConfig @JvmOverloads constructor(
     }
 
     fun build(): AsyncJobConfig {
-      return AsyncJobConfig(
-        executorFactory ?: throw IllegalStateException("Cannot build an AsyncJobConfig instance with no executor factory set!"),
-        if (persistableFiles.isEmpty()) emptyList() else persistableFiles,
-        expirationDays
-      )
+      if (executorFactory == null)
+        throw IllegalStateException("Cannot build an AsyncJobConfig instance with no executor factory set!")
+
+      if (persistableFiles.isEmpty())
+        throw IllegalStateException("Cannot build an AsyncJobConfig instance without defining output files to be persisted on job completion!")
+
+      return AsyncJobConfig(executorFactory!!, persistableFiles, expirationDays)
     }
   }
 }

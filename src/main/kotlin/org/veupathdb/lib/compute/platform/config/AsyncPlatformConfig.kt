@@ -21,6 +21,7 @@ class AsyncPlatformConfig private constructor(
   internal val s3Config: AsyncS3Config,
   internal val jobConfig: AsyncJobConfig,
   internal val queues: List<AsyncQueueConfig>,
+  internal val localWorkspaceRoot: String = "/tmp/workspaces",
 ) {
 
   companion object {
@@ -39,6 +40,8 @@ class AsyncPlatformConfig private constructor(
     var s3Config: AsyncS3Config? = null
 
     var jobConfig: AsyncJobConfig? = null
+
+    var localWorkspaceRoot: String = "/tmp/workspaces"
 
     // region Queues
 
@@ -97,6 +100,11 @@ class AsyncPlatformConfig private constructor(
 
     // endregion S3 Config
 
+    fun localWorkspaceRoot(path: String): Builder {
+      localWorkspaceRoot = path
+      return this
+    }
+
     fun build(): AsyncPlatformConfig {
       if (queues.isEmpty())
         throw IllegalStateException("Cannot build an AsyncPlatformConfig instance with no queues configured!")
@@ -110,7 +118,10 @@ class AsyncPlatformConfig private constructor(
       if (s3Config == null)
         throw IllegalStateException("Cannot build an AsyncPlatformConfig instance without an S3 config!")
 
-      return AsyncPlatformConfig(dbConfig!!, s3Config!!, jobConfig!!, queues)
+      if (localWorkspaceRoot.isBlank())
+        throw IllegalStateException("Cannot build an AsyncPlatformConfig instance with a blank local workspace root value!")
+
+      return AsyncPlatformConfig(dbConfig!!, s3Config!!, jobConfig!!, queues, localWorkspaceRoot)
     }
   }
 }

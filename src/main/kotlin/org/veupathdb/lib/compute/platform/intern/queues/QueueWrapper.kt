@@ -88,7 +88,7 @@ internal class QueueWrapper(conf: AsyncQueueConfig) {
 
     // Attempt to execute the job.
     try {
-      when (JobExecutors.new(job.jobID, job.body).execute()) {
+      when (JobExecutors.new().execute(job.jobID, job.body)) {
         JobResultStatus.Success -> handler.sendSuccess(SuccessNotification(job.jobID))
         JobResultStatus.Failure -> handler.sendError(ErrorNotification(job.jobID, 1))
       }

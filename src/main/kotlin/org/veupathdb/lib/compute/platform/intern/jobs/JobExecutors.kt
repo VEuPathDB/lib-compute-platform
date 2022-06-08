@@ -1,10 +1,7 @@
 package org.veupathdb.lib.compute.platform.intern.jobs
 
-import com.fasterxml.jackson.databind.JsonNode
 import org.veupathdb.lib.compute.platform.config.AsyncPlatformConfig
-import org.veupathdb.lib.compute.platform.JobExecutor
 import org.veupathdb.lib.compute.platform.JobExecutorFactory
-import org.veupathdb.lib.hash_id.HashID
 
 internal object JobExecutors {
 
@@ -12,20 +9,24 @@ internal object JobExecutors {
 
   private var provider: JobExecutorFactory? = null
 
+  private var persistables: List<String> = emptyList()
+
   @JvmStatic
   fun init(config: AsyncPlatformConfig) {
     if (initialized)
       throw IllegalStateException("Attempted to initialize JobExecutors more than once!")
 
+    initialized = true
+
     provider = config.jobConfig.executorFactory
 
-    initialized = true
+    persistables = config.jobConfig.persistableFiles
   }
 
-  fun new(jobID: HashID, rawConfig: JsonNode?): JobExecutor {
+  fun new(): JobExecutionHandler {
     if (provider == null)
       throw IllegalStateException("Attempted to execute a job before platform initialization!")
 
-    return provider!!.newJobExecutor(jobID, rawConfig)
+    return JobExecutionHandler(provider!!.newJobExecutor(), persistables)
   }
 }

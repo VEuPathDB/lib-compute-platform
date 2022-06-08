@@ -15,14 +15,9 @@ import org.veupathdb.lib.hash_id.HashID
 interface JobExecutorFactory {
 
   /**
-   * Constructs a new [JobExecutor] instance with the given job ID and raw
-   * configuration.
-   *
-   * @param jobID Hash ID of the job to execute.
-   *
-   * @param rawConfig Raw, nullable configuration for the job.
+   * Constructs a new [JobExecutor] instance.
    *
    * @return A new [JobExecutor] instance.
    */
-  fun newJobExecutor(jobID: HashID, rawConfig: JsonNode?): JobExecutor
+  fun newJobExecutor(): JobExecutor
 }

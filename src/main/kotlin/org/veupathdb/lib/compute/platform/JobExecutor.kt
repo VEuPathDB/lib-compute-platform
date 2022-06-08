@@ -11,9 +11,9 @@ package org.veupathdb.lib.compute.platform
 interface JobExecutor {
 
   /**
-   * Executes the configured job.
+   * Executes the job configured by the given [JobContext].
    *
    * @return Job completion status.
    */
-  fun execute(): JobResultStatus
+  fun execute(ctx: JobContext): JobResultStatus
 }

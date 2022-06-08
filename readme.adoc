@@ -3,9 +3,231 @@
 
 Base async job execution platform.
 
+Asynchronously executes configured jobs and caches the results.
+
+== TODO!!
+
+* directories not persisted
+* example repo will need to use a non-root user that owns the workspace root
+* validate that persisted paths contain no slashes?
+* persist files
+
 
 TODO!!
+
+== Interacting with the Platform
+
+All interactions with this platform are handled through the `AsyncPlatform`
+singleton.
+
+After initialization, the platform provides 3 basic methods for interactions:
+
+. Job Submission
+. Job Retrieval
+. Job Result Retrieval
+
+.Example calls
+[source, java]
+----
+AsyncPlatform.init(config);
+
+...
+
+AsyncPlatform.submitJob("my-queue", someJobID, someJobConfig);
+
+...
+
+var job = AsyncPlatform.getJob(someJobID);
+
+if (job.status == JobStatus.Complete) {
+  var results = AsyncPlatform.getJobResults(someJobID)
+
+  // Do something with the result list
+}
+
+----
+
+The details of queue, database, and S3 store management are internal to the
+platform and are not exposed to library consumers except through callbacks.
+
+
+== Job Execution
+
+Jobs are executed by `JobExecutor` implementations provided by the configured
+`JobExecutorFactory`.  These types must be implemented by the library consumer.
+
+When a job is pulled from the queue, the configured `JobExecutorFactory` will be
+called to retrieve a `JobExecutor` instance which will be called to perform the
+desired job execution steps.
+
+Job executors will be provided a scratch workspace in the local filesystem in
+which they can perform any filesystem operations necessary and store their
+outputs to be persisted.
+
+=== Output/Result Persistence
+
+On completion, the local scratch workspace the job was executed in will be
+scanned looking for any/all files that appear in the configured 'persistable
+files' list.  Those files, if found, will be copied to the configured S3 store
+to be cached until the job expires.
+
+All possible outputs for whom caching is desired should be configured.  This
+should include error logs or other outputs that would be used when investigating
+or debugging a job failure.
+
+Directories or files in subdirectories under the local scratch workspace root
+may not be persisted.  Only files that exist directly under the local scratch
+workspace root will be scanned when determining what files will be copied to S3.
+
 
 == Configuration
 
 TODO!!
+
+.Java Minimal
+[source, java]
+----
+var config = AsyncPlatformConfig.builder()
+  .addQueues(
+    new AsyncQueueConfig("my-queue-1", "user", "pass", "queue-host-1"),
+    new AsyncQueueConfig("my-queue-2", "user", "pass", "queue-host-2")
+  )
+  .jobConfig(new AsyncJobConfig(new MyJobExecutorFactory()))
+  .dbConfig(new AsyncDBConfig("my-db-name", "user", "pass", "db-host"))
+  .s3Config(new AsyncS3Config("s3-host", "my-bucket", "my-access-token", "my-secret-key"))
+  .localWorkspaceRoot("/tmp")
+  .build()
+----
+
+.Java Expanded
+[source, java]
+----
+var AsyncPlatformConfig.builder()
+  .addQueue(AsyncQueueConfig.builder()
+    .id("my-queue-1")
+    .username("user")
+    .password("pass")
+    .host("queue-host-1")
+    .port(5672)
+    .workers(5)
+    .build())
+  .addQueue(AsyncQueueConfig.builder()
+    .id("my-queue-2")
+    .username("user")
+    .password("pass")
+    .host("queue-host-2")
+    .port(5672)
+    .workers(5)
+    .build())
+  .jobConfig(AsyncJobConfig.builder()
+    .executorFactory(new MyExecutorFactory())
+    .persistableFiles("my-output-1", "my-output-2", "error.log")
+    .expirationDays(30)
+    .build())
+  .dbConfig(AsyncDBConfig.builder()
+    .host("db-host")
+    .port(5432)
+    .username("user")
+    .password("pass")
+    .name("my-db-name")
+    .poolSize(10)
+    .build())
+  .s3Config(AsyncS3Config.builder()
+    .host("s3-host")
+    .port(80)
+    .https(false)
+    .bucket("my-bucket")
+    .accessToken("my-access-token")
+    .secretKey("my-secret-key")
+    .rootPath("/")
+    .build())
+  .localWorkspaceRoot("/tmp")
+  .build()
+----
+
+.Kotlin Minimal
+[source, kotlin]
+----
+val config = AsyncPlatformConfig.builder()
+  .addQueues(
+    AsyncQueueConfig("my-queue-1", "user", "pass", "queue-host-1"),
+    AsyncQueueConfig("my-queue-2", "user", "pass", "queue-host-2"),
+  )
+  .jobConfig(AsyncJobConfig(MyJobExecutorFactory()))
+  .dbConfig(AsyncDBConfig("my-db-name", "user", "pass", "db-host"))
+  .s3Config(AsyncS3Config("s3-host", "my-bucket", "my-acccess-token", "my-secret-key"))
+  .localWorkspaceRoot("/tmp")
+  .build()
+----
+
+.Kotlin Expanded
+[source, kotlin]
+----
+val config = AsyncPlatformConfig.build {
+  addQueue {
+    id = "my-queue-1"
+    username = "user"
+    password = "pass"
+    host = "queue-host-1"
+    port = 5672
+    workers = 5
+  }
+
+  addQueue {
+    id = "my-queue-2"
+    username = "user"
+    password = "pass"
+    host = "queue-host-2"
+    port = 5672
+    workers = 5
+  }
+
+  jobConfig {
+    executorFactory = MyExecutorFactory()
+    persistableFiles(
+      "my-output-1",
+      "my-output-2",
+      "error.log",
+    )
+    expirationDays = 30
+  }
+
+  dbConfig {
+    host = "db-host"
+    port = 5432
+    username = "user"
+    password = "pass"
+    name = "my-db-name"
+    poolSize = 10
+  }
+
+  s3Config {
+    host = "s3-host"
+    port = 80
+    https = false
+    bucket = "my-bucket"
+    accessToken = "my-access-token"
+    secretKey = "my-secret-key"
+    rootPath = "/"
+  }
+
+  localWorkspaceRoot = "/tmp"
+}
+----
+
+
+== Database
+
+== Job Cache Management
+
+Job outputs are automatically cached to the configured S3 store on job
+completion for future retrieval.
+
+Jobs will be kept in the S3 store until they expire at which point they are
+subject to pruning.  Job expiration is configured when initializing the
+platform.  By default, job results are kept 30 days after they were last
+accessed, at which point they will be marked as expired and become available to
+be pruned.
+
+Job pruning happens every 12 hours automatically while the server is online,
+with the first prune attempt happening on startup.

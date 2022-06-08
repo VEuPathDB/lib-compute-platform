@@ -10,6 +10,8 @@ import org.veupathdb.lib.s3.s34k.S3Api
 import org.veupathdb.lib.s3.s34k.S3Client
 import org.veupathdb.lib.s3.s34k.S3Config
 import org.veupathdb.lib.s3.workspaces.S3WorkspaceFactory
+import java.nio.file.Path
+import kotlin.io.path.name
 
 /**
  * S3 Manager
@@ -63,6 +65,18 @@ internal object S3 {
   fun getJob(jobID: HashID): AsyncJob? {
     Log.debug("Fetching workspace {} from S3", jobID)
     return wsf!![jobID]?.let(::XS3Workspace)?.let(::AsyncS3Job)
+  }
+
+
+  fun persistFiles(jobID: HashID, files: List<Path>) {
+    Log.debug("persisting {} files to workspace {} in S3", files.size, jobID)
+
+    val ws = wsf!![jobID] ?: throw IllegalStateException("Attempted to write result files to nonexistent workspace $jobID")
+
+    files.forEach {
+      Log.debug("writing file {} to workspace {} in S3", it, jobID)
+      ws.copy(it.toFile(), it.name)
+    }
   }
 
 
