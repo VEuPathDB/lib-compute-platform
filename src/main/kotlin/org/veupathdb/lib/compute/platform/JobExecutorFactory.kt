@@ -17,6 +17,10 @@ interface JobExecutorFactory {
   /**
    * Constructs a new [JobExecutor] instance.
    *
+   * @param jobID Hash ID of the job that is to be executed.
+   *
+   * @param config Raw/serialized configuration for the job to be executed.
+   *
    * @return A new [JobExecutor] instance.
    */
   fun newJobExecutor(jobID: HashID, config: JsonNode?): JobExecutor
