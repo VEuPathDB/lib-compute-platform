@@ -15,5 +15,5 @@ interface JobExecutor {
    *
    * @return Job completion status.
    */
-  fun execute(ctx: JobContext): JobResultStatus
+  fun execute(ctx: JobContext): JobResult
 }

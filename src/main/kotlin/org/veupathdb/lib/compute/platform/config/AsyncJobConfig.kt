@@ -23,7 +23,6 @@ import org.veupathdb.lib.compute.platform.JobExecutorFactory
  */
 class AsyncJobConfig private constructor(
   internal val executorFactory: JobExecutorFactory,
-  internal val persistableFiles: List<String>,
   internal val expirationDays: Int = 30
 ) {
   /**
@@ -38,8 +37,8 @@ class AsyncJobConfig private constructor(
    * If this list is empty, all files that exist in a job's scratch space on job
    * completion will be persisted.
    */
-  constructor(executorFactory: JobExecutorFactory, vararg persistableFiles: String) :
-    this(executorFactory, persistableFiles.asList())
+  constructor(executorFactory: JobExecutorFactory) :
+    this(executorFactory, 30)
 
 
   companion object {
@@ -52,8 +51,6 @@ class AsyncJobConfig private constructor(
 
   class Builder {
 
-    val persistableFiles = ArrayList<String>(5)
-
     var executorFactory: JobExecutorFactory? = null
 
     var expirationDays = 30
@@ -64,35 +61,6 @@ class AsyncJobConfig private constructor(
      */
     fun executorFactory(fac: JobExecutorFactory): Builder {
       executorFactory = fac
-      return this
-    }
-
-    /**
-     * Appends the given collection of files to this [Builder]'s
-     * [persistableFiles] list.
-     *
-     * Persistable files are files that, if present in a job workspace on job
-     * completion, will be persisted to the S3 store.
-     *
-     * If the configured list is empty, all files that exist in a job's scratch
-     * space on job completion will be persisted.
-     */
-    fun persistableFiles(files: Iterable<String>): Builder {
-      persistableFiles.addAll(files)
-      return this
-    }
-
-    /**
-     * Appends the given files to this [Builder]'s [persistableFiles] list.
-     *
-     * Persistable files are files that, if present in a job workspace on job
-     * completion, will be persisted to the S3 store.
-     *
-     * If the configured list is empty, all files that exist in a job's scratch
-     * space on job completion will be persisted.
-     */
-    fun persistableFiles(vararg files: String): Builder {
-      persistableFiles.addAll(files)
       return this
     }
 
@@ -109,15 +77,7 @@ class AsyncJobConfig private constructor(
       if (executorFactory == null)
         throw IllegalStateException("Cannot build an AsyncJobConfig instance with no executor factory set!")
 
-      if (persistableFiles.isEmpty())
-        throw IllegalStateException("Cannot build an AsyncJobConfig instance without defining output files to be persisted on job completion!")
-
-      persistableFiles.forEach {
-        if (it.contains('/'))
-          throw IllegalStateException("Persistable file paths must not contain subdirectories or other directory markers.")
-      }
-
-      return AsyncJobConfig(executorFactory!!, persistableFiles, expirationDays)
+      return AsyncJobConfig(executorFactory!!, expirationDays)
     }
   }
 }
