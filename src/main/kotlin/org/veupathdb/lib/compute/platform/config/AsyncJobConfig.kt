@@ -10,16 +10,6 @@ import org.veupathdb.lib.compute.platform.JobExecutorFactory
  *
  * @param executorFactory Provider for [JobExecutor] instances that will be used
  * to process individual jobs.
- *
- * @param persistableFiles List of files that, if present in a job workspace on
- * job completion, will be persisted to the S3 store.
- *
- * **Note**: This list defines the files that may be persisted, however if a
- * file in this list does not appear in the outputs in a job's local workspace
- * on job completion, it will simply be ignored.  If _no_ files in this list
- * exist in the local workspace on job completion, an error will be logged.
- *
- * **Warning**: This list must not be empty.
  */
 class AsyncJobConfig private constructor(
   internal val executorFactory: JobExecutorFactory,

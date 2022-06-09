@@ -9,8 +9,6 @@ internal object JobExecutors {
 
   private var provider: JobExecutorFactory? = null
 
-  private var persistables: List<String> = emptyList()
-
   @JvmStatic
   fun init(config: AsyncPlatformConfig) {
     if (initialized)
@@ -19,14 +17,12 @@ internal object JobExecutors {
     initialized = true
 
     provider = config.jobConfig.executorFactory
-
-    persistables = config.jobConfig.persistableFiles
   }
 
   fun new(): JobExecutionHandler {
     if (provider == null)
       throw IllegalStateException("Attempted to execute a job before platform initialization!")
 
-    return JobExecutionHandler(provider!!.newJobExecutor(), persistables)
+    return JobExecutionHandler(provider!!.newJobExecutor())
   }
 }

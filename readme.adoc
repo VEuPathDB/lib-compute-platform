@@ -15,7 +15,6 @@ Asynchronously executes configured jobs and caches the results.
 
 == TODO!!
 
-* directories not persisted
 * example repo will need to use a non-root user that owns the workspace root
 
 TODO!!
@@ -72,7 +71,7 @@ outputs to be persisted.
 === Output/Result Persistence
 
 On completion, the local scratch workspace the job was executed in will be
-scanned looking for any/all files that appear in the configured 'persistable
+scanned looking for any/all files that appear in the returned 'persistable
 files' list.  Those files, if found, will be copied to the configured S3 store
 to be cached until the job expires.
 
@@ -187,18 +186,6 @@ instances.
 Job executors are defined/implemented by the library consumer and are
 responsible for actually executing the job tasks.
 
-Persistable Files::
-Defines the list of files that, if present on job completion, will be persisted
-to the S3 store.
-+
-On job completion, for each item in this list, if a file with a matching name
-exists in the scratch workspace was found, that file will be persisted to S3.
-+
-This means that any/all files that the library consumer wishes to have persisted
-must appear in this list.
-+
-WARNING: THIS WILL CHANGE, IN THE FUTURE THE JOB EXECUTION WILL RETURN A LIST OF
-FILES THAT SHOULD BE PERSISTED.
 
 === Queue Options
 
@@ -272,7 +259,6 @@ var AsyncPlatformConfig.builder()
     .build())
   .jobConfig(AsyncJobConfig.builder()
     .executorFactory(new MyExecutorFactory())
-    .persistableFiles("my-output-1", "my-output-2", "error.log")
     .expirationDays(30)
     .build())
   .dbConfig(AsyncDBConfig.builder()
@@ -335,11 +321,6 @@ val config = AsyncPlatformConfig.build {
 
   jobConfig {
     executorFactory = MyExecutorFactory()
-    persistableFiles(
-      "my-output-1",
-      "my-output-2",
-      "error.log",
-    )
     expirationDays = 30
   }
 
