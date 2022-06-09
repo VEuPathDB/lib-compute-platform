@@ -19,5 +19,5 @@ interface JobExecutorFactory {
    *
    * @return A new [JobExecutor] instance.
    */
-  fun newJobExecutor(): JobExecutor
+  fun newJobExecutor(jobID: HashID, config: JsonNode?): JobExecutor
 }

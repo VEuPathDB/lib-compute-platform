@@ -1,7 +1,9 @@
 package org.veupathdb.lib.compute.platform.intern.jobs
 
+import com.fasterxml.jackson.databind.JsonNode
 import org.veupathdb.lib.compute.platform.config.AsyncPlatformConfig
 import org.veupathdb.lib.compute.platform.JobExecutorFactory
+import org.veupathdb.lib.hash_id.HashID
 
 internal object JobExecutors {
 
@@ -19,10 +21,10 @@ internal object JobExecutors {
     provider = config.jobConfig.executorFactory
   }
 
-  fun new(): JobExecutionHandler {
+  fun new(jobID: HashID, config: JsonNode? = null): JobExecutionHandler {
     if (provider == null)
       throw IllegalStateException("Attempted to execute a job before platform initialization!")
 
-    return JobExecutionHandler(provider!!.newJobExecutor())
+    return JobExecutionHandler(provider!!.newJobExecutor(jobID, config))
   }
 }
