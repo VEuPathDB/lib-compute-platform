@@ -18,7 +18,7 @@ private const val SQL = """
     compute.jobs
   WHERE
     status = 'queued'
-    AND cutoff < coalesce((SELECT created FROM cutoff), now())
+    AND created < coalesce((SELECT created FROM cutoff), now())
 """
 
 /**
