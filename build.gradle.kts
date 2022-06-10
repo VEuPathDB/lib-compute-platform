@@ -42,7 +42,7 @@ dependencies {
   implementation("org.veupathdb.lib.s3:workspaces:4.0.0")
 
   // Rabbit
-  implementation("org.veupathdb.lib:rabbit-job-queue:1.1.0")
+  implementation("org.veupathdb.lib:rabbit-job-queue:1.1.1")
 
   // Metrics
   implementation("io.prometheus:simpleclient:0.15.0")
