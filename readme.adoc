@@ -658,7 +658,7 @@ LEN() > 2
 | Column | Type | Constraints | Purpose
 
 | job_id
-| BYTEA(16)
+| BYTEA
 | PRIMARY KEY +
 LEN() == 16
 | Hash ID of the job.

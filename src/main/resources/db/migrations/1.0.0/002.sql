@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS compute.jobs (
   -- Hash ID of the job.
   -- This value is a raw MD5 hash of the job configuration.
-  job_id BYTEA(16)
+  job_id BYTEA
     PRIMARY KEY
     NOT NULL,
   -- Current job status.
