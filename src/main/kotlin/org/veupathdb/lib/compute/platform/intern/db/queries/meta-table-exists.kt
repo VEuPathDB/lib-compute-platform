@@ -9,7 +9,7 @@ private const val SQL = """
     information_schema.tables
   WHERE
     table_schema = 'compute'
-    AND table_type = 'BASE_TABLE'
+    AND table_type = 'BASE TABLE'
     AND table_name = 'meta'
 """
 
