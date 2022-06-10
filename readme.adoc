@@ -14,22 +14,19 @@ image:https://github.com/VEuPathDB/lib-compute-platform/actions/workflows/commit
 image:https://img.shields.io/badge/docs-dokka-darkgreen[link="https://veupathdb.github.io/lib-compute-platform/dokka/"]
 image:https://img.shields.io/badge/docs-javadoc-darkblue[link="https://veupathdb.github.io/lib-compute-platform/javadoc/"]
 
-Base async job execution platform.
+Base async job execution core.
 
-Asynchronously executes configured jobs and caches the results.
+Provides a platform for asynchronously executing arbitrary jobs and persisting
+the results of those jobs.
 
-== TODO!!
-
-* example repo will need to use a non-root user that owns the workspace root
-
-TODO!!
 
 == Interacting with the Platform
 
 All interactions with this platform are handled through the `AsyncPlatform`
 singleton.
 
-After initialization, the platform provides 3 basic methods for interactions:
+After initialization, the platform exposes a minimal set of methods for
+interactions:
 
 . Job Submission
 . Job Retrieval
@@ -38,17 +35,22 @@ After initialization, the platform provides 3 basic methods for interactions:
 .Example calls
 [source, java]
 ----
+// Initialize the platform
 AsyncPlatform.init(config);
 
 ...
 
+// Submit a job to the "my-queue" job queue
 AsyncPlatform.submitJob("my-queue", someJobID, someJobConfig);
 
 ...
 
+// Lookup the target job.
 var job = AsyncPlatform.getJob(someJobID);
 
-if (job.status == JobStatus.Complete) {
+// If the job is in a "finished" status
+if (job.status.isFinished()) {
+  // Get the job's result files
   var results = AsyncPlatform.getJobResults(someJobID)
 
   // Do something with the result list
@@ -56,7 +58,8 @@ if (job.status == JobStatus.Complete) {
 
 ----
 
-The details of queue, database, and S3 store management are internal to the
+
+The details of the queue, database, and S3 store management are internal to the
 platform and are not exposed to library consumers except through callbacks.
 
 
@@ -66,12 +69,13 @@ Jobs are executed by `JobExecutor` implementations provided by the configured
 `JobExecutorFactory`.  These types must be implemented by the library consumer.
 
 When a job is pulled from the queue, the configured `JobExecutorFactory` will be
-called to retrieve a `JobExecutor` instance which will be called to perform the
-desired job execution steps.
+called to retrieve a `JobExecutor` instance which will be executed to perform
+the desired job execution steps.
 
-Job executors will be provided a scratch workspace in the local filesystem in
-which they can perform any filesystem operations necessary and store their
-outputs to be persisted.
+Job executors will be provided a temporary scratch workspace in the local
+filesystem in which they can perform any filesystem operations necessary and
+store their outputs to be persisted.
+
 
 === Output/Result Persistence
 
@@ -91,26 +95,70 @@ workspace root will be scanned when determining what files will be copied to S3.
 
 == Configuration
 
-DB Config::
-A <<DB Options>> instance.
+Configuring the platform is done by calling the `AsyncPlatform.init()` method,
+passing in an <<Async Platform Config,`AsyncPlatformConfig`>> instance.
 
-S3 Config::
-An <<S3 Options>> instance.
+The <<Async Platform Config,`AsyncPlatformConfig`>> type is constructable
+through a builder that will validate the configuration before attempting to
+initialize the platform.
+
+
+=== Async Platform Config
+
+[source, kotlin]
+----
+include::src/main/kotlin/org/veupathdb/lib/compute/platform/config/AsyncPlatformConfig.kt[lines="19..25"]
+----
+
+`dbConfig`::
++
+--
+An <<Async DB Config,`AsyncDBConfig`>> instance.
+
+This value must not be `null`.
+--
+
+`s3Config`::
++
+--
+An <<S3 Options,`AsyncS3Config`>> instance.
+
+This value must not be `null`.
+--
 
 Jobs Config::
 
-Queue Configs::
+`queues`::
 One or more <<Queue Options>> instances.
++
+The list of queue configs must not be empty.
 
-Local Workspace Root::
+`localWorkspaceRoot`::
++
+--
 Root path, on the service's local filesystem, in which job scratch spaces will
 be created.
-+
+
 These scratch spaces are ephemeral, thus it is not necessary or recommended to
 use a Docker volume to hold this root directory.
 
+Default: `/tmp/workspaces`
+--
 
-=== DB Options
+.Builder
+[source, java]
+----
+AsyncPlatformConfig.builder()
+  .dbConfig(...)
+  .s3Config(...)
+  .jobConfig(...)
+  .addQueue(...)
+  .localWorkspaceRoot(...)
+  .build()
+----
+
+
+=== Async DB Config
 
 Options for configuring the PostgreSQL instance that will be managed and
 maintained by this library.
@@ -119,27 +167,32 @@ The PostgreSQL instance itself may be shared for multiple purposes within a
 service stack, but this library should have a dedicated named database within
 the instance.
 
-Name::
+[source, kotlin]
+----
+include::src/main/kotlin/org/veupathdb/lib/compute/platform/config/AsyncDBConfig.kt[lines="30..37"]
+----
+
+`name`::
 Database name that will be used in the PostgreSQL instance to host the tables
 and schema used by this library.
 
-Username::
+`username`::
 PostgreSQL auth credentials username.  This user must have permissions to create
 tables and schemata.
 
-Password::
+`password`::
 PostgreSQL auth credentials password.  This user must have permissions to create
 tables and schemata.
 
-Hostname::
+`host`::
 Hostname of the PostgreSQL database that will be managed by this library.
 
-Port::
+`port`::
 Host port of the PostgreSQL database that will be managed by this library.
 +
 Default: `5432`
 
-Max Pool Size::
+`poolSize`::
 Maximum connection pool size for connections to the database managed by this
 library.
 +
