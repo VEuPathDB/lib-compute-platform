@@ -81,5 +81,5 @@ internal class DatabaseMigrator : Runnable {
    */
   @Suppress("NOTHING_TO_INLINE")
   private inline fun loadSQL(path: String) =
-    String(this::class.java.getResourceAsStream(path)!!.readAllBytes())
+    String(this::class.java.getResourceAsStream("/$path")!!.readAllBytes())
 }
