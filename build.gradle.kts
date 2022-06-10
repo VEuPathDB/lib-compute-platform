@@ -75,7 +75,7 @@ java {
 }
 
 tasks.javadoc {
-  exclude("module-info.java")
+//  exclude("module-info.java")
 }
 
 tasks.dokkaHtml {

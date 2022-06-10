@@ -14,9 +14,4 @@ $dokka.location:org.veupathdb.lib.compute.platform/JobResult.Companion///Pointin
 $dokka.location:org.veupathdb.lib.compute.platform/JobStatus.Companion///PointingToDeclaration/org/veupathdb/lib/compute/platform/JobStatus.Companion.html
 org.veupathdb.lib.compute.platform
 org.veupathdb.lib.compute.platform.config
-org.veupathdb.lib.compute.platform.intern.db.queries
-org.veupathdb.lib.compute.platform.intern.db.util
-org.veupathdb.lib.compute.platform.intern.jobs
-org.veupathdb.lib.compute.platform.intern.mtx
-org.veupathdb.lib.compute.platform.intern.s3
 

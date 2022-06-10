@@ -99,60 +99,6 @@ $dokka.location:org.veupathdb.lib.compute.platform.config/AsyncS3Config///Pointi
 $dokka.location:org.veupathdb.lib.compute.platform.config/AsyncS3Config/AsyncS3Config/#kotlin.String#kotlin.Int#kotlin.Boolean#kotlin.String#kotlin.String#kotlin.String#kotlin.String/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.config/-async-s3-config/-async-s3-config.html
 $dokka.location:org.veupathdb.lib.compute.platform.config/AsyncS3Config/AsyncS3Config/#kotlin.String#kotlin.String#kotlin.String#kotlin.String#kotlin.String/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.config/-async-s3-config/-async-s3-config.html
 $dokka.location:org.veupathdb.lib.compute.platform.config/AsyncS3Config/AsyncS3Config/#kotlin.String#kotlin.String#kotlin.String#kotlin.String/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.config/-async-s3-config/-async-s3-config.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.db.queries////PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.db.queries/index.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.db.queries//LookupDatabaseVersion/#java.sql.Connection/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.db.queries/-lookup-database-version.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.db.queries//UpdateDBLastAccessed/#java.sql.Connection#org.veupathdb.lib.hash_id.HashID/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.db.queries/-update-d-b-last-accessed.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.db.util////PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.db.util/index.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.db.util//stream/java.sql.ResultSet#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.db.util/stream.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.db.util/ResultSetIterator///PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.db.util/-result-set-iterator/index.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.db.util/ResultSetIterator/ResultSetIterator/#java.sql.ResultSet/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.db.util/-result-set-iterator/-result-set-iterator.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.db.util/ResultSetIterator/hasNext/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.db.util/-result-set-iterator/has-next.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.db.util/ResultSetIterator/next/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.db.util/-result-set-iterator/next.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.jobs////PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.jobs/index.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.jobs/JobCTX///PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.jobs/-job-c-t-x/index.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.jobs/JobCTX/JobCTX/#org.veupathdb.lib.hash_id.HashID#com.fasterxml.jackson.databind.JsonNode?#org.veupathdb.lib.compute.platform.JobWorkspace/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.jobs/-job-c-t-x/-job-c-t-x.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.jobs/JobCTX/config/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.jobs/-job-c-t-x/config.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.jobs/JobCTX/jobID/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.jobs/-job-c-t-x/job-i-d.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.jobs/JobCTX/workspace/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.jobs/-job-c-t-x/workspace.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.jobs/JobExecutionHandler///PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.jobs/-job-execution-handler/index.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.jobs/JobExecutionHandler/JobExecutionHandler/#org.veupathdb.lib.compute.platform.JobExecutor/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.jobs/-job-execution-handler/-job-execution-handler.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.jobs/JobExecutionHandler/execute/#org.veupathdb.lib.hash_id.HashID#com.fasterxml.jackson.databind.JsonNode?/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.jobs/-job-execution-handler/execute.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.mtx////PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.mtx/index.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.mtx/JobMetrics///PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.mtx/-job-metrics/index.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.mtx/JobMetrics/Failures/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.mtx/-job-metrics/-failures.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.mtx/JobMetrics/Successes/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.mtx/-job-metrics/-successes.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3////PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/index.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3//FileConfig/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-file-config.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3//FlagComplete/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-flag-complete.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3//FlagExpired/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-flag-expired.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3//FlagFailed/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-flag-failed.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3//FlagInProgress/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-flag-in-progress.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3//FlagQueued/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-flag-queued.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3/AsyncS3Job///PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-async-s3-job/index.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3/AsyncS3Job/AsyncS3Job/#org.veupathdb.lib.compute.platform.intern.s3.XS3Workspace/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-async-s3-job/-async-s3-job.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3/AsyncS3Job/config/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-async-s3-job/config.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3/AsyncS3Job/created/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-async-s3-job/created.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3/AsyncS3Job/finished/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-async-s3-job/finished.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3/AsyncS3Job/grabbed/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-async-s3-job/grabbed.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3/AsyncS3Job/jobID/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-async-s3-job/job-i-d.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3/AsyncS3Job/owned/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-async-s3-job/owned.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3/AsyncS3Job/queuePosition/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-async-s3-job/queue-position.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3/AsyncS3Job/status/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-async-s3-job/status.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3/JobResultReferenceImpl///PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-job-result-reference-impl/index.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3/JobResultReferenceImpl/JobResultReferenceImpl/#org.veupathdb.lib.s3.workspaces.WorkspaceFile/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-job-result-reference-impl/-job-result-reference-impl.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3/JobResultReferenceImpl/name/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-job-result-reference-impl/name.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3/JobResultReferenceImpl/open/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-job-result-reference-impl/open.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3/JobResultReferenceImpl/size/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-job-result-reference-impl/size.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3/XS3Workspace///PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-x-s3-workspace/index.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3/XS3Workspace/XS3Workspace/#org.veupathdb.lib.s3.workspaces.S3Workspace/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-x-s3-workspace/-x-s3-workspace.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3/XS3Workspace/completedDate/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-x-s3-workspace/completed-date.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3/XS3Workspace/deriveStatus/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-x-s3-workspace/derive-status.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3/XS3Workspace/expiredDate/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-x-s3-workspace/expired-date.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3/XS3Workspace/failedDate/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-x-s3-workspace/failed-date.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3/XS3Workspace/finishedDate/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-x-s3-workspace/finished-date.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3/XS3Workspace/getConfig/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-x-s3-workspace/get-config.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3/XS3Workspace/grabbedDate/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-x-s3-workspace/grabbed-date.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.s3/XS3Workspace/queuedDate/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.s3/-x-s3-workspace/queued-date.html
 $dokka.location:org.veupathdb.lib.compute.platform////PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform/index.html
 $dokka.location:org.veupathdb.lib.compute.platform/AsyncJob///PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform/-async-job/index.html
 $dokka.location:org.veupathdb.lib.compute.platform/AsyncJob/config/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform/-async-job/config.html
@@ -218,9 +164,4 @@ $dokka.location:org.veupathdb.lib.compute.platform/JobWorkspace/write/#kotlin.St
 $dokka.location:org.veupathdb.lib.compute.platform/JobWorkspace/write/#kotlin.String#kotlin.String/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform/-job-workspace/write.html
 org.veupathdb.lib.compute.platform
 org.veupathdb.lib.compute.platform.config
-org.veupathdb.lib.compute.platform.intern.db.queries
-org.veupathdb.lib.compute.platform.intern.db.util
-org.veupathdb.lib.compute.platform.intern.jobs
-org.veupathdb.lib.compute.platform.intern.mtx
-org.veupathdb.lib.compute.platform.intern.s3
 

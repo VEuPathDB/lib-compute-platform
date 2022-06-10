@@ -5,7 +5,7 @@ import org.veupathdb.lib.compute.platform.JobContext
 import org.veupathdb.lib.compute.platform.JobWorkspace
 import org.veupathdb.lib.hash_id.HashID
 
-data class JobCTX(
+internal data class JobCTX(
   override val jobID: HashID,
   override val config: JsonNode?,
   override val workspace: JobWorkspace

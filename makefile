@@ -1,6 +1,6 @@
-.PHONY: what
-what:
-	@echo what are you doing?
+.PHONY: help
+help:
+	@echo "Tasks:\n`cat makefile | grep '^[a-z\-]\+:' | sed 's/://;s/^/  /'`"
 
 .PHONY: publish-all
 publish-all:

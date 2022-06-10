@@ -20,7 +20,7 @@ private const val SQL = """
  *
  * @param jobID Hash ID of the job whose record should be updated.
  */
-fun UpdateDBLastAccessed(con: Connection, jobID: HashID) {
+internal fun UpdateDBLastAccessed(con: Connection, jobID: HashID) {
   con.prepareStatement(SQL).use { ps ->
     ps.setBytes(1, jobID.bytes)
     ps.execute()

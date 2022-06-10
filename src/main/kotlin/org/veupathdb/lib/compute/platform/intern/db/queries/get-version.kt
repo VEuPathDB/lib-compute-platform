@@ -19,7 +19,7 @@ private const val SQL = """
  * @return The current database version, or `null` if no database migrations
  * have yet taken place.
  */
-fun LookupDatabaseVersion(con: Connection) =
+internal fun LookupDatabaseVersion(con: Connection) =
   con.createStatement().use { stmt ->
     stmt.executeQuery(SQL).use { rs ->
       if (rs.next())

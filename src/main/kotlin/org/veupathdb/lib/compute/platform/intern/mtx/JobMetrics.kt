@@ -2,7 +2,7 @@ package org.veupathdb.lib.compute.platform.intern.mtx
 
 import io.prometheus.client.Counter
 
-object JobMetrics {
+internal object JobMetrics {
 
   /**
    * Counter of the number of jobs that have failed since last startup.

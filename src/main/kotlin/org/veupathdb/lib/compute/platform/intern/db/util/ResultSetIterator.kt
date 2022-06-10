@@ -3,7 +3,7 @@ package org.veupathdb.lib.compute.platform.intern.db.util
 import org.slf4j.LoggerFactory
 import java.sql.ResultSet
 
-class ResultSetIterator(private var rs: ResultSet) : Iterator<ResultSet> {
+internal class ResultSetIterator(private var rs: ResultSet) : Iterator<ResultSet> {
 
   private val Log = LoggerFactory.getLogger(ResultSetIterator::class.java)
 

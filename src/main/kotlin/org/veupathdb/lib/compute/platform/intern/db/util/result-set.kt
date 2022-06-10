@@ -6,7 +6,7 @@ import java.util.Spliterators
 import java.util.stream.Stream
 import java.util.stream.StreamSupport
 
-fun ResultSet.stream(): Stream<ResultSet> {
+internal fun ResultSet.stream(): Stream<ResultSet> {
   val out = StreamSupport.stream(
     Spliterators.spliteratorUnknownSize(
       ResultSetIterator(this),

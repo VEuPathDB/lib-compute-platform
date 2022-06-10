@@ -12,7 +12,7 @@ import org.veupathdb.lib.s3.workspaces.S3Workspace
  * Extends the [S3Workspace] type with additional methods and fields specific to
  * the async compute platform.
  */
-class XS3Workspace(private val raw: S3Workspace) : S3Workspace by raw {
+internal class XS3Workspace(private val raw: S3Workspace) : S3Workspace by raw {
 
   /**
    * The timestamp for when this job was queued from the S3 store.

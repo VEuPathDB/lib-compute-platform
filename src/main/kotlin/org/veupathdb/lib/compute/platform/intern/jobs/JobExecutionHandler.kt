@@ -8,7 +8,7 @@ import org.veupathdb.lib.compute.platform.intern.s3.S3
 import org.veupathdb.lib.compute.platform.intern.ws.ScratchSpaces
 import org.veupathdb.lib.hash_id.HashID
 
-class JobExecutionHandler(private val executor: JobExecutor) {
+internal class JobExecutionHandler(private val executor: JobExecutor) {
   fun execute(jobID: HashID, conf: JsonNode?): JobResultStatus {
     val workspace = ScratchSpaces.create(jobID)
 
