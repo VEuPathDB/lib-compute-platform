@@ -60,19 +60,19 @@ internal class QueueWrapper(conf: AsyncQueueConfig) {
 
   fun submitJob(jobID: HashID, config: JsonNode? = null) {
     Log.info("submitting job {} to queue {}", jobID, name)
-    QueueMetrics.Queued.inc()
+    QueueMetrics.Queued.labels(name).inc()
     dispatch.dispatch(JobDispatch(jobID, config))
   }
 
   private fun onError(job: ErrorNotification) {
     Log.info("job {} failed", job.jobID)
-    JobMetrics.Failures.inc()
+    JobMetrics.Failures.labels(name).inc()
     QueueDB.markJobAsFailed(job.jobID)
   }
 
   private fun onSuccess(job: SuccessNotification) {
     Log.info("job {} succeeded", job.jobID)
-    JobMetrics.Successes.inc()
+    JobMetrics.Successes.labels(name).inc()
     QueueDB.markJobAsComplete(job.jobID)
   }
 
@@ -80,9 +80,9 @@ internal class QueueWrapper(conf: AsyncQueueConfig) {
     Log.debug("handling job {}", job.jobID)
 
     // Decrement the queued job counter.
-    QueueMetrics.Queued.dec()
+    QueueMetrics.Queued.labels(name).dec()
     // Record the time this job spent in the queue.
-    QueueMetrics.Time.observe(job.dispatched.until(OffsetDateTime.now(), ChronoUnit.MILLIS).toDouble() / 1000.0)
+    QueueMetrics.Time.labels(name).observe(job.dispatched.until(OffsetDateTime.now(), ChronoUnit.MILLIS).toDouble() / 1000.0)
     // Mark the job as grabbed in the database.
     QueueDB.markJobAsGrabbed(job.jobID)
 
