@@ -22,7 +22,18 @@ the results of those jobs.
 
 image::docs/assets/overview.png[]
 
-== Interacting with the Platform
+
+== Usage
+
+.build.gradle.kts
+[source, kotlin]
+----
+dependencies {
+  implementation("org.veupathdb.lib:compute-platform:1.0-SNAPSHOT")
+}
+----
+
+=== Interacting with the Platform
 
 All interactions with this platform are handled through the `AsyncPlatform`
 singleton.
@@ -34,7 +45,7 @@ interactions:
 . Job Retrieval
 . Job Result Retrieval
 
-.Example calls
+.Example Usage
 [source, java]
 ----
 // Initialize the platform
@@ -500,7 +511,7 @@ var AsyncPlatformConfig.builder()
     .port(5432)
     .username("user")
     .password("pass")
-    .name("my-db-name")
+    .dbName("my-db-name")
     .poolSize(10)
     .build())
   .s3Config(AsyncS3Config.builder()
@@ -563,7 +574,7 @@ val config = AsyncPlatformConfig.build {
     port = 5432
     username = "user"
     password = "pass"
-    name = "my-db-name"
+    dbName = "my-db-name"
     poolSize = 10
   }
 
