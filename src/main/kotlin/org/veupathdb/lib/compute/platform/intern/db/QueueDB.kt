@@ -44,7 +44,7 @@ internal object QueueDB {
     Log.info("initializing DB manager")
 
     ds = HikariDataSource(HikariConfig().also {
-      it.jdbcUrl         = "jdbc:postgresql://${config.dbConfig.host}:${config.dbConfig.port}/${config.dbConfig.name}"
+      it.jdbcUrl         = "jdbc:postgresql://${config.dbConfig.host}:${config.dbConfig.port}/${config.dbConfig.dbName}"
       it.driverClassName = Driver::class.java.name
       it.username        = config.dbConfig.username
       it.password        = config.dbConfig.password

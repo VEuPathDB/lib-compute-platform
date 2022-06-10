@@ -19,6 +19,7 @@ Base async job execution core.
 Provides a platform for asynchronously executing arbitrary jobs and persisting
 the results of those jobs.
 
+image::docs/assets/overview.png[]
 
 == Interacting with the Platform
 
@@ -107,7 +108,13 @@ initialize the platform.
 
 [source, kotlin]
 ----
-include::src/main/kotlin/org/veupathdb/lib/compute/platform/config/AsyncPlatformConfig.kt[lines="19..25"]
+class AsyncPlatformConfig(
+  internal val dbConfig: AsyncDBConfig,
+  internal val s3Config: AsyncS3Config,
+  internal val jobConfig: AsyncJobConfig,
+  internal val queues: List<AsyncQueueConfig>,
+  internal val localWorkspaceRoot: String = "/tmp/workspaces",
+)
 ----
 
 `dbConfig`::
@@ -126,7 +133,13 @@ An <<S3 Options,`AsyncS3Config`>> instance.
 This value must not be `null`.
 --
 
-Jobs Config::
+`jobConfig`::
++
+--
+An <<Async Job Config,`AsyncJobConfig`>> instance.
+
+This value must not be `null`.
+--
 
 `queues`::
 One or more <<Queue Options>> instances.
@@ -145,7 +158,7 @@ use a Docker volume to hold this root directory.
 Default: `/tmp/workspaces`
 --
 
-.Builder
+.Builder Java
 [source, java]
 ----
 AsyncPlatformConfig.builder()
@@ -155,6 +168,18 @@ AsyncPlatformConfig.builder()
   .addQueue(...)
   .localWorkspaceRoot(...)
   .build()
+----
+
+.Builder Kotlin
+[source, kotlin]
+----
+AsyncPlatformConfig.build {
+  dbConfig { ... }
+  s3Config { ... }
+  jobConfig { ... }
+  addQueue { ... }
+  localWorkspaceRoot = ...
+}
 ----
 
 
@@ -169,10 +194,17 @@ the instance.
 
 [source, kotlin]
 ----
-include::src/main/kotlin/org/veupathdb/lib/compute/platform/config/AsyncDBConfig.kt[lines="30..37"]
+class AsyncDBConfig(
+  internal val dbName: String,
+  internal val username: String,
+  internal val password: String,
+  internal val host: String,
+  internal val port: Int = 5432,
+  internal val poolSize: Int = 10,
+)
 ----
 
-`name`::
+`dbName`::
 Database name that will be used in the PostgreSQL instance to host the tables
 and schema used by this library.
 
@@ -198,85 +230,228 @@ library.
 +
 Default: `10`
 
+.Builder Java
+[source, java]
+----
+AsyncDBConfig.builder()
+  .dbName(...)
+  .username(...)
+  .password(...)
+  .host(...)
+  .port(...)
+  .poolSize(...)
+  .build()
+----
+
+.Builder Kotlin
+[source, kotlin]
+----
+AsyncDbConfig.build {
+  dbName = ...
+  username = ...
+  password = ...
+  host = ...
+  port = ...
+  poolSize = ...
+}
+----
+
 
 === S3 Options
 
 Options for configuring connectivity with the S3 instance this library will use
 to persist job results.
 
-Hostname::
+[source, kotlin]
+----
+class AsyncS3Config(
+  internal val host: String,
+  internal val port: Int = 80,
+  internal val https: Boolean = false,
+  internal val bucket: String,
+  internal val accessToken: String,
+  internal val secretKey: String,
+  internal val rootPath: String = "/",
+)
+----
+
+`host`::
 Hostname of the S3 instance that will be used by this library.
 
-Port::
+`port`::
 Host port of the S3 instance that will be used by this library.
 +
 Default: `80`
 
-HTTPS::
+`https`::
 Whether HTTPS should be used when communicating with the S3 server.
 +
 Default: `false`
 
-Bucket::
+`bucket`::
 Name of the bucket that will be used by this library to persist job results.
 
-Access Token::
+`accessToken`::
 Auth credentials access token that will be used by this library to communicate
 with the S3 server.
 
-Secret Key::
+`secretKey`::
 Auth credentials secret key that will be used by this library to communicate
 with the S3 server.
 
-Root Path::
+`rootPath`::
 "Directory" (prefix) that will be used to hold all workspaces persisted to the
 S3 store by this library.
 +
 Default: `/`
 
+.Builder Java
+[source, java]
+----
+AsyncS3Config.builder()
+  .host(...)
+  .port(...)
+  .https(...)
+  .bucket(...)
+  .accessToken(...)
+  .secretKey(...)
+  .rootPath(...)
+  .build()
+----
 
-=== Job Execution Options
+.Builder Kotlin
+[source, kotlin]
+----
+AsyncS3Config.build {
+  host = ...
+  port = ...
+  https = ...
+  bucket = ...
+  accessToken = ...
+  secretKey = ...
+  rootPath = ...
+}
+----
 
-Executor Factory::
+
+=== Async Job Config
+
+[source, kotlin]
+----
+class AsyncJobConfig(
+  internal val executorFactory: JobExecutorFactory,
+  internal val expirationDays: Int = 30
+)
+----
+
+`executorFactory`::
++
+--
 Defines the provider/factory that will be used to instantiate new job executor
 instances.
-+
+
 Job executors are defined/implemented by the library consumer and are
 responsible for actually executing the job tasks.
+--
+
+`expirationDays`::
++
+--
+Defines the number of days a job's cache will be kept in S3 past the date of
+last access.
+
+Each time a job is accessed, its last accessed date will be updated and its
+expiration will be this number of days out from the updated last accessed date.
+--
+
+.Builder Java
+[source, java]
+----
+AsyncJobConfig.builder()
+  .executorFactory(...)
+  .expirationDays(...)
+  .build()
+----
+
+.Builder Kotlin
+[source, kotlin]
+----
+AsyncJobConfig.build {
+  executorFactory = ...
+  expirationDays = ...
+}
+----
 
 
-=== Queue Options
+=== Async Queue Config
 
 Configuration of a single job queue.  Multiple queues may be defined.
 
-Queue ID::
-A unique identifier assigned to a queue that is used to submit jobs to specific
-target queues.
+[source, kotlin]
+----
+class AsyncQueueConfig(
+  internal val id: String,
+  internal val username: String,
+  internal val password: String,
+  internal val host: String,
+  internal val port: Int,
+  internal val workers: Int,
+)
+----
+
+`id`::
+A unique name/identifier assigned to a queue that is used to submit jobs to
+specific target queues.
 +
 Assigning multiple queues the same name/ID will cause undefined behavior.
 
-Username::
+`username`::
 RabbitMQ auth credentials username.
 
-Password::
+`password`::
 RabbitMQ auth credentials password.
 
-Hostname::
+`host`::
 Hostname of the RabbitMQ instance that will be used to back the queue being
 configured.
 
-Port::
+`port`::
 Host port of the RabbitMQ instance that will be used to back the queue being
 configured.
 +
 Default: `5672`
 
-Workers::
+`workers`::
 Number of worker threads that will be spun up to consume jobs published to the
 queue being configured.
 +
 Default: `5`
 
+.Builder Java
+[source, java]
+----
+AsyncQueueConfig.builder()
+  .id(...)
+  .username(...)
+  .password(...)
+  .host(...)
+  .port(...)
+  .workers(...)
+  .build()
+----
+
+.Builder Kotlin
+[source, kotlin]
+----
+AsyncQueueConfig.build {
+  id = ...
+  username = ...
+  password = ...
+  host = ...
+  port = ...
+  workers = ...
+}
+----
 
 === Examples
 
@@ -407,6 +582,19 @@ val config = AsyncPlatformConfig.build {
 
 
 == Database
+
+This library/platform requires a companion PostgreSQL database that will be used
+for tracking managed jobs.
+
+The schema of the database is configured and maintained by the library itself,
+thus the library requires credentials for a user that has permission to create,
+modify, and delete schemata and tables under the target database.
+
+It is recommended that the database not be shared with or used for other
+purposes.
+
+The database load generated by this library is quite light, so there should be
+no issue sharing a PostgreSQL instance with other databases.
 
 == Job Cache Management
 

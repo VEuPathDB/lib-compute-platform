@@ -21,14 +21,14 @@ package org.veupathdb.lib.compute.platform.config
  *
  * @param password Connection credentials password.
  *
- * @param name PostgreSQL database name.
+ * @param dbName PostgreSQL database name.
  *
  * @param poolSize Max connection pool size.
  *
  * Defaults to `10`.
  */
 class AsyncDBConfig @JvmOverloads constructor(
-  internal val name: String,
+  internal val dbName: String,
   internal val username: String,
   internal val password: String,
   internal val host: String,
@@ -54,7 +54,7 @@ class AsyncDBConfig @JvmOverloads constructor(
 
     var password: String? = null
 
-    var name: String? = null
+    var dbName: String? = null
 
     var poolSize: Int = 10
 
@@ -94,7 +94,7 @@ class AsyncDBConfig @JvmOverloads constructor(
      * Sets the PostgreSQL database name.
      */
     fun dbName(n: String): Builder {
-      name = n
+      dbName = n
       return this
     }
 
@@ -111,9 +111,9 @@ class AsyncDBConfig @JvmOverloads constructor(
       // and docker compose will set blank values for vars defined in the
       // docker-compose.yml file.
 
-      if (name == null)
+      if (dbName == null)
         throw IllegalStateException("Cannot construct an AsyncDBConfig instance with a null DB name!")
-      if (name!!.isBlank())
+      if (dbName!!.isBlank())
         throw IllegalStateException("Cannot construct an AsyncDBConfig instance with a blank DB name!")
 
       if (username == null)
@@ -132,7 +132,7 @@ class AsyncDBConfig @JvmOverloads constructor(
         throw IllegalStateException("Cannot construct an AsyncDBConfig instance with a blank DB host!")
 
 
-      return AsyncDBConfig(name!!, username!!, password!!, host!!, port, poolSize)
+      return AsyncDBConfig(dbName!!, username!!, password!!, host!!, port, poolSize)
     }
   }
 
