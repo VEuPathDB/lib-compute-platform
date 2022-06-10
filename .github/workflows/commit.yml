@@ -25,3 +25,6 @@ jobs:
 
       - name: Gradle Build
         run: ./gradlew clean build
+        env:
+          GITHUB_USERNAME: ${{ secret.GH_USERNAME }}
+          GITHUB_TOKEN: ${{ secret.GH_TOKEN }}
