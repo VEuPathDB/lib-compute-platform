@@ -9,6 +9,9 @@ ifdef::env-github[]
 :warning-caption: :warning:
 endif::[]
 
+image:https://img.shields.io/badge/jdk-17-blueviolet[title="JDK 17"]
+image:https://github.com/VEuPathDB/lib-compute-platform/actions/workflows/commit.yml/badge.svg?event=push[title="Build", link="https://github.com/VEuPathDB/lib-compute-platform/actions/workflows/commit.yml"]
+
 Base async job execution platform.
 
 Asynchronously executes configured jobs and caches the results.

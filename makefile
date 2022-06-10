@@ -13,3 +13,7 @@ publish-remote:
 .PHONY: publish-local
 publish-local:
 	@gradle publishToMavenLocal
+
+.PHONY: docs
+docs:
+	@gradle docs
