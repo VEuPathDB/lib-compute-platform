@@ -38,8 +38,8 @@ dependencies {
   implementation("org.postgresql:postgresql:42.3.6")
 
   // S3
-  implementation("org.veupathdb.lib.s3:s34k-minio:0.3.1+s34k-0.7.0")
-  implementation("org.veupathdb.lib.s3:workspaces:4.0.1")
+  implementation("org.veupathdb.lib.s3:s34k-minio:0.3.2+s34k-0.7.0")
+  implementation("org.veupathdb.lib.s3:workspaces:4.0.2")
 
   // Rabbit
   implementation("org.veupathdb.lib:rabbit-job-queue:1.1.1")
