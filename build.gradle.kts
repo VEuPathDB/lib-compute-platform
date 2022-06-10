@@ -27,8 +27,6 @@ dependencies {
 
   // Logging
   implementation("org.slf4j:slf4j-api:1.7.36")
-  implementation("org.apache.logging.log4j:log4j-core:2.17.2")
-  implementation("org.apache.logging.log4j:log4j-slf4j-impl:2.17.2")
 
   // Jackson
   implementation(platform("com.fasterxml.jackson:jackson-bom:2.13.3"))
