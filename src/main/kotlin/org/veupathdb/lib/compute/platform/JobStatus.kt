@@ -14,6 +14,14 @@ enum class JobStatus {
   Expired,
   ;
 
+  /**
+   * Indicates whether this status is a "finished" status.
+   *
+   * This will only be true if this enum value is [Complete] or [Failed].
+   */
+  val isFinished
+    get() = this == Failed || this == Complete
+
   override fun toString() =
     when (this) {
       Queued     -> "queued"
