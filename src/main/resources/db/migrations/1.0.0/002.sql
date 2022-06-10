@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS compute.jobs (
   status VARCHAR(8)
     NOT NULL,
   -- Name of the queue the job was submitted to.
-  queue VARCHAR(16)
+  queue VARCHAR(32)
     NOT NULL,
   -- Serialized configuration for this job.
   -- This field should not be used to hold input data for a job, just the
@@ -18,14 +18,13 @@ CREATE TABLE IF NOT EXISTS compute.jobs (
   -- Timestamp for when the job was originally created (queued).
   created TIMESTAMP WITH TIME ZONE
     NOT NULL,
-  -- Timestamp for when the job was pulled from the queue to be run.
+  -- Timestamp for when the job was last accessed.
   last_accessed TIMESTAMP WITH TIME ZONE
     NOT NULL,
-  grabbed TIMESTAMP WITH TIME ZONE
-    NOT NULL,
+  -- Timestamp for when the job was pulled from the queue to be run.
+  grabbed TIMESTAMP WITH TIME ZONE,
   -- Timestamp for when the job finished (successfully or not)
-  finished TIMESTAMP WITH TIME ZONE
-    NOT NULL,
+  finished TIMESTAMP WITH TIME ZONE,
 
   CONSTRAINT compute_job_id_min_len
     CHECK ( length(job_id) = 16 ),
