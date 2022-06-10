@@ -75,7 +75,8 @@ java {
 }
 
 tasks.javadoc {
-//  exclude("module-info.java")
+  // This is required to generate the javadoc jar when publishing a release.
+  exclude("module-info.java")
 }
 
 tasks.dokkaHtml {
