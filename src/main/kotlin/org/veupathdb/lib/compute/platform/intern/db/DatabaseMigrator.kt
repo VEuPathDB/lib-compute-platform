@@ -15,7 +15,10 @@ internal class DatabaseMigrator : Runnable {
   override fun run() {
     Log.info("Checking for database updates.")
 
-    val version = QueueDB.getDatabaseVersion() ?: "0.0.0"
+    val version = if (QueueDB.metaTableExists())
+      QueueDB.getDatabaseVersion() ?: "0.0.0"
+    else
+      "0.0.0"
 
     Log.debug("Starting from version {}", version)
 

@@ -208,8 +208,7 @@ internal object QueueDB {
    */
   fun getDatabaseVersion(): String? {
     Log.debug("Getting database version.")
-
-    return ds!!.connection.use { LookupDatabaseVersion(it) }
+    return ds!!.connection.use(::LookupDatabaseVersion)
   }
 
   /**
@@ -218,7 +217,11 @@ internal object QueueDB {
    */
   fun deadJobCleanup() {
     Log.debug("Executing dead job cleanup.")
+    ds!!.connection.use(::QueueDeadJobs)
+  }
 
-    ds!!.connection.use { QueueDeadJobs(it) }
+  fun metaTableExists(): Boolean {
+    Log.debug("Testing if platform meta table exists.")
+    return ds!!.connection.use(::MetaDBTableExists)
   }
 }
