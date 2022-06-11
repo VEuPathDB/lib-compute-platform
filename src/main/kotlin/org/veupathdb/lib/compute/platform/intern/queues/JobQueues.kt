@@ -3,9 +3,7 @@ package org.veupathdb.lib.compute.platform.intern.queues
 import com.fasterxml.jackson.databind.JsonNode
 import org.slf4j.LoggerFactory
 import org.veupathdb.lib.compute.platform.config.AsyncPlatformConfig
-import org.veupathdb.lib.compute.platform.intern.db.model.JobRecord
 import org.veupathdb.lib.hash_id.HashID
-import java.util.stream.Stream
 
 /**
  * Job Queue Manager

@@ -2,7 +2,7 @@ package org.veupathdb.lib.compute.platform.intern.jobs
 
 import com.fasterxml.jackson.databind.JsonNode
 import org.veupathdb.lib.compute.platform.config.AsyncPlatformConfig
-import org.veupathdb.lib.compute.platform.JobExecutorFactory
+import org.veupathdb.lib.compute.platform.job.JobExecutorFactory
 import org.veupathdb.lib.hash_id.HashID
 
 internal object JobExecutors {
