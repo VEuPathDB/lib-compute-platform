@@ -1,7 +1,7 @@
 package org.veupathdb.lib.compute.platform.intern.ws
 
 import com.fasterxml.jackson.databind.JsonNode
-import org.veupathdb.lib.compute.platform.JobWorkspace
+import org.veupathdb.lib.compute.platform.job.JobWorkspace
 import org.veupathdb.lib.jackson.Json
 import java.io.FileNotFoundException
 import java.io.InputStream

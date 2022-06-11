@@ -1,5 +1,7 @@
 package org.veupathdb.lib.compute.platform.config
 
+private const val DefaultLocalWorkspaceRoot = "/tmp/workspaces"
+
 /**
  * Async Compute Platform Configuration
  *
@@ -21,10 +23,13 @@ class AsyncPlatformConfig private constructor(
   internal val s3Config: AsyncS3Config,
   internal val jobConfig: AsyncJobConfig,
   internal val queues: List<AsyncQueueConfig>,
-  internal val localWorkspaceRoot: String = "/tmp/workspaces",
+  internal val localWorkspaceRoot: String,
 ) {
 
   companion object {
+    /**
+     * Creates and returns a new [Builder] instance.
+     */
     @JvmStatic
     fun builder() = Builder()
 
@@ -32,28 +37,62 @@ class AsyncPlatformConfig private constructor(
     inline fun build(fn: Builder.() -> Unit) = Builder().also(fn).build()
   }
 
+  /**
+   * Async Platform Config Builder
+   *
+   * @author Elizabeth Paige Harper [https://github.com/foxcapades]
+   * @since 1.0.0
+   */
   class Builder {
+
+    /**
+     * Queue configurations.
+     *
+     * This list must contain at least one element by the time [build] is
+     * called.
+     */
     val queues = ArrayList<AsyncQueueConfig>(1)
 
+    /**
+     * Async DB Configuration.
+     */
     var dbConfig: AsyncDBConfig? = null
 
+    /**
+     * Async S3 Configuration.
+     */
     var s3Config: AsyncS3Config? = null
 
+    /**
+     * Async Job Configuration.
+     */
     var jobConfig: AsyncJobConfig? = null
 
-    var localWorkspaceRoot: String = "/tmp/workspaces"
+    /**
+     * Local scratch workspace root path.
+     */
+    var localWorkspaceRoot: String = DefaultLocalWorkspaceRoot
 
     // region Queues
 
+    /**
+     * Adds the given queue configuration to this [Builder].
+     */
     fun addQueue(conf: AsyncQueueConfig): Builder {
       queues.add(conf)
       return this
     }
 
+    /**
+     * Adds the given queue configuration to this [Builder].
+     */
     inline fun addQueue(fn: AsyncQueueConfig.Builder.() -> Unit) {
       queues.add(AsyncQueueConfig.build(fn))
     }
 
+    /**
+     * Adds the given queue configurations to this [Builder].
+     */
     fun addQueues(vararg conf: AsyncQueueConfig): Builder {
       conf.forEach(queues::add)
       return this

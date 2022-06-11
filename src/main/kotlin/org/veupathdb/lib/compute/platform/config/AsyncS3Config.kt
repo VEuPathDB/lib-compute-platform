@@ -1,5 +1,9 @@
 package org.veupathdb.lib.compute.platform.config
 
+private const val DefaultPort = 80
+private const val DefaultHTTPS = false
+private const val DefaultRootPath = "/"
+
 /**
  * S3 Store Connection Configuration
  *
@@ -32,12 +36,12 @@ package org.veupathdb.lib.compute.platform.config
  */
 class AsyncS3Config(
   internal val host: String,
-  internal val port: Int = 80,
-  internal val https: Boolean = false,
+  internal val port: Int,
+  internal val https: Boolean,
   internal val bucket: String,
   internal val accessToken: String,
   internal val secretKey: String,
-  internal val rootPath: String = "/",
+  internal val rootPath: String,
 ) {
 
   /**
@@ -53,7 +57,7 @@ class AsyncS3Config(
    * @param secret Secret key for the S3 store.
    */
   constructor(host: String, bucket: String, access: String, secret: String) :
-    this(host, 80, false, bucket, access, secret, "/")
+    this(host, DefaultPort, DefaultHTTPS, bucket, access, secret, DefaultRootPath)
 
   /**
    * Returns a new [AsyncS3Config] instance.
@@ -72,7 +76,7 @@ class AsyncS3Config(
    * Defaults to the root of the bucket.
    */
   constructor(host: String, bucket: String, access: String, secret: String, root: String) :
-    this(host, 80, false, bucket, access, secret, root)
+    this(host, DefaultPort, DefaultHTTPS, bucket, access, secret, root)
 
 
   companion object {

@@ -4,8 +4,8 @@ import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import org.postgresql.Driver
 import org.slf4j.LoggerFactory
-import org.veupathdb.lib.compute.platform.AsyncJob
-import org.veupathdb.lib.compute.platform.JobStatus
+import org.veupathdb.lib.compute.platform.job.AsyncJob
+import org.veupathdb.lib.compute.platform.job.JobStatus
 import org.veupathdb.lib.compute.platform.config.AsyncPlatformConfig
 import org.veupathdb.lib.compute.platform.intern.db.model.JobRecord
 import org.veupathdb.lib.compute.platform.intern.db.queries.*

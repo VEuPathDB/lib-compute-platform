@@ -2,8 +2,8 @@ package org.veupathdb.lib.compute.platform.intern.s3
 
 import com.fasterxml.jackson.databind.JsonNode
 import org.slf4j.LoggerFactory
-import org.veupathdb.lib.compute.platform.AsyncJob
-import org.veupathdb.lib.compute.platform.JobResultReference
+import org.veupathdb.lib.compute.platform.job.AsyncJob
+import org.veupathdb.lib.compute.platform.job.JobResultReference
 import org.veupathdb.lib.compute.platform.config.AsyncS3Config
 import org.veupathdb.lib.hash_id.HashID
 import org.veupathdb.lib.s3.s34k.S3Api

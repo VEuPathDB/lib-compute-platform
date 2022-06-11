@@ -1,4 +1,4 @@
-package org.veupathdb.lib.compute.platform
+package org.veupathdb.lib.compute.platform.job
 
 import java.io.InputStream
 

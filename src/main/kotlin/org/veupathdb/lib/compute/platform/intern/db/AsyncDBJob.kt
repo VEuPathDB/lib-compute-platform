@@ -1,6 +1,6 @@
 package org.veupathdb.lib.compute.platform.intern.db
 
-import org.veupathdb.lib.compute.platform.AsyncJob
+import org.veupathdb.lib.compute.platform.job.AsyncJob
 import org.veupathdb.lib.compute.platform.intern.db.model.JobRecord
 
 internal class AsyncDBJob(

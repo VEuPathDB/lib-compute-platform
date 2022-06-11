@@ -1,6 +1,6 @@
 package org.veupathdb.lib.compute.platform.intern.s3
 
-import org.veupathdb.lib.compute.platform.JobResultReference
+import org.veupathdb.lib.compute.platform.job.JobResultReference
 import org.veupathdb.lib.s3.workspaces.WorkspaceFile
 import java.io.InputStream
 

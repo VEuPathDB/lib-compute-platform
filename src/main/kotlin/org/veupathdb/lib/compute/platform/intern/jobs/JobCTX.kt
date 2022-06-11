@@ -2,7 +2,7 @@ package org.veupathdb.lib.compute.platform.intern.jobs
 
 import com.fasterxml.jackson.databind.JsonNode
 import org.veupathdb.lib.compute.platform.JobContext
-import org.veupathdb.lib.compute.platform.JobWorkspace
+import org.veupathdb.lib.compute.platform.job.JobWorkspace
 import org.veupathdb.lib.hash_id.HashID
 
 internal data class JobCTX(

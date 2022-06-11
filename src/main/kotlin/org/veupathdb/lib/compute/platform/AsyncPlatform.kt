@@ -2,7 +2,6 @@ package org.veupathdb.lib.compute.platform
 
 import com.fasterxml.jackson.databind.JsonNode
 import org.slf4j.LoggerFactory
-import org.veupathdb.lib.compute.platform.config.AsyncJobConfig
 import org.veupathdb.lib.compute.platform.config.AsyncPlatformConfig
 import org.veupathdb.lib.compute.platform.intern.JobPruner
 import org.veupathdb.lib.compute.platform.intern.db.DatabaseMigrator
@@ -11,6 +10,8 @@ import org.veupathdb.lib.compute.platform.intern.jobs.JobExecutors
 import org.veupathdb.lib.compute.platform.intern.queues.JobQueues
 import org.veupathdb.lib.compute.platform.intern.s3.S3
 import org.veupathdb.lib.compute.platform.intern.ws.ScratchSpaces
+import org.veupathdb.lib.compute.platform.job.AsyncJob
+import org.veupathdb.lib.compute.platform.job.JobResultReference
 import org.veupathdb.lib.hash_id.HashID
 
 /**

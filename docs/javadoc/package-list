@@ -10,8 +10,9 @@ $dokka.location:org.veupathdb.lib.compute.platform.config/AsyncQueueConfig.Build
 $dokka.location:org.veupathdb.lib.compute.platform.config/AsyncQueueConfig.Companion///PointingToDeclaration/org/veupathdb/lib/compute/platform/config/AsyncQueueConfig.Companion.html
 $dokka.location:org.veupathdb.lib.compute.platform.config/AsyncS3Config.Builder///PointingToDeclaration/org/veupathdb/lib/compute/platform/config/AsyncS3Config.Builder.html
 $dokka.location:org.veupathdb.lib.compute.platform.config/AsyncS3Config.Companion///PointingToDeclaration/org/veupathdb/lib/compute/platform/config/AsyncS3Config.Companion.html
-$dokka.location:org.veupathdb.lib.compute.platform/JobResult.Companion///PointingToDeclaration/org/veupathdb/lib/compute/platform/JobResult.Companion.html
-$dokka.location:org.veupathdb.lib.compute.platform/JobStatus.Companion///PointingToDeclaration/org/veupathdb/lib/compute/platform/JobStatus.Companion.html
+$dokka.location:org.veupathdb.lib.compute.platform.job/JobResult.Companion///PointingToDeclaration/org/veupathdb/lib/compute/platform/job/JobResult.Companion.html
+$dokka.location:org.veupathdb.lib.compute.platform.job/JobStatus.Companion///PointingToDeclaration/org/veupathdb/lib/compute/platform/job/JobStatus.Companion.html
 org.veupathdb.lib.compute.platform
 org.veupathdb.lib.compute.platform.config
+org.veupathdb.lib.compute.platform.job
 

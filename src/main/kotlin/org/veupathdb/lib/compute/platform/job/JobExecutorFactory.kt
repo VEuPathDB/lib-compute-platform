@@ -1,4 +1,4 @@
-package org.veupathdb.lib.compute.platform
+package org.veupathdb.lib.compute.platform.job
 
 import com.fasterxml.jackson.databind.JsonNode
 import org.veupathdb.lib.hash_id.HashID

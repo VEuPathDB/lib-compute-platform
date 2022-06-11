@@ -1,5 +1,8 @@
 package org.veupathdb.lib.compute.platform.config
 
+private const val DefaultPort = 5432
+private const val DefaultPoolSize = 10
+
 /**
  * Async Platform Database Connection Configuration
  *
@@ -8,35 +11,103 @@ package org.veupathdb.lib.compute.platform.config
  *
  * @author Elizabeth Paige Harper [https://github.com/foxcapades]
  * @since 1.0.0
- *
- * @constructor Creates a new [AsyncDBConfig] instance.
- *
- * @param host PostgreSQL database hostname.
- *
- * @param port PostgreSQL host port.
- *
- * Defaults to `5432`.
- *
- * @param username Connection credentials username.
- *
- * @param password Connection credentials password.
- *
- * @param dbName PostgreSQL database name.
- *
- * @param poolSize Max connection pool size.
- *
- * Defaults to `10`.
  */
-class AsyncDBConfig @JvmOverloads constructor(
-  internal val dbName: String,
-  internal val username: String,
-  internal val password: String,
-  internal val host: String,
-  internal val port: Int = 5432,
-  internal val poolSize: Int = 10,
-) {
+class AsyncDBConfig {
+
+  /**
+   * Database name.
+   */
+  internal val dbName: String
+
+  /**
+   * Credentials username.
+   */
+  internal val username: String
+
+  /**
+   * Credentials password.
+   */
+  internal val password: String
+
+  /**
+   * Database instance host.
+   */
+  internal val host: String
+
+  /**
+   * Database instance host port.
+   */
+  internal val port: Int
+
+  /**
+   * Max connection pool size.
+   */
+  internal val poolSize: Int
+
+  /**
+   * Creates a new [AsyncDBConfig] instance.
+   *
+   * @param host PostgreSQL database hostname.
+   *
+   * @param username Connection credentials username.
+   *
+   * @param password Connection credentials password.
+   *
+   * @param dbName PostgreSQL database name.
+   */
+  constructor(dbName: String, username: String, password: String, host: String) :
+    this(dbName, username, password, host, DefaultPort, DefaultPoolSize)
+
+  /**
+   * Creates a new [AsyncDBConfig] instance.
+   *
+   * @param host PostgreSQL database hostname.
+   *
+   * @param username Connection credentials username.
+   *
+   * @param password Connection credentials password.
+   *
+   * @param dbName PostgreSQL database name.
+   *
+   * @param poolSize Max connection pool size.
+   *
+   * Defaults to `10`.
+   */
+  constructor(dbName: String, username: String, password: String, host: String, poolSize: Int) :
+    this(dbName, username, password, host, DefaultPort, poolSize)
+
+  /**
+   * Creates a new [AsyncDBConfig] instance.
+   *
+   * @param host PostgreSQL database hostname.
+   *
+   * @param port PostgreSQL host port.
+   *
+   * Defaults to `5432`.
+   *
+   * @param username Connection credentials username.
+   *
+   * @param password Connection credentials password.
+   *
+   * @param dbName PostgreSQL database name.
+   *
+   * @param poolSize Max connection pool size.
+   *
+   * Defaults to `10`.
+   */
+  constructor(dbName: String, username: String, password: String, host: String, port: Int, poolSize: Int) {
+    this.dbName = dbName
+    this.username = username
+    this.password = password
+    this.host = host
+    this.port = port
+    this.poolSize = poolSize
+  }
 
   companion object {
+    /**
+     * Creates and returns a new [Builder] instance.
+     */
     @JvmStatic
     fun builder() = Builder()
 
@@ -44,19 +115,43 @@ class AsyncDBConfig @JvmOverloads constructor(
     inline fun build(fn: Builder.() -> Unit) = Builder().also(fn).build()
   }
 
+  /**
+   * Async DB Config Builder
+   *
+   * @author Elizabeth Paige Harper [https://github.com/foxcapades]
+   * @since 1.0.0
+   */
   class Builder {
 
+    /**
+     * Database instance hostname.
+     */
     var host: String? = null
 
-    var port: Int = 5432
+    /**
+     * Database instance host port.
+     */
+    var port: Int = DefaultPort
 
+    /**
+     * Credentials username.
+     */
     var username: String? = null
 
+    /**
+     * Credentials password.
+     */
     var password: String? = null
 
+    /**
+     * Database name.
+     */
     var dbName: String? = null
 
-    var poolSize: Int = 10
+    /**
+     * Max database connection pool size.
+     */
+    var poolSize: Int = DefaultPoolSize
 
     /**
      * Sets the hostname setting for the PostgreSQL database.

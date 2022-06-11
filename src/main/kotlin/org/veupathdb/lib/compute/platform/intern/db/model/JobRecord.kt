@@ -1,10 +1,8 @@
 package org.veupathdb.lib.compute.platform.intern.db.model
 
 import com.fasterxml.jackson.databind.JsonNode
-import org.veupathdb.lib.compute.platform.JobStatus
+import org.veupathdb.lib.compute.platform.job.JobStatus
 import org.veupathdb.lib.hash_id.HashID
-import org.veupathdb.lib.jackson.Json
-import java.sql.ResultSet
 import java.time.OffsetDateTime
 
 /**
@@ -37,7 +35,7 @@ import java.time.OffsetDateTime
  */
 internal data class JobRecord (
   val jobID:        HashID,
-  val status:       JobStatus,
+  val status: JobStatus,
   val queue:        String,
   val config:       JsonNode?,
   val created:      OffsetDateTime,

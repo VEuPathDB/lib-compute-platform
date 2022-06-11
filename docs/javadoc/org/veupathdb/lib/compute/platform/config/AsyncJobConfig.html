@@ -152,7 +152,7 @@ public final class <span class="typeNameLabel"><a href=AsyncJobConfig.html>Async
                                             <td class="colFirst"><code>public final class</code></td>
                                             <th class="colSecond" scope="row"><code><a href="AsyncJobConfig.Builder.html">AsyncJobConfig.Builder</a></span></code>
                                             </th>
-                                            <td class="colLast"></td>
+                                            <td class="colLast"><p>Async Job Config Builder</p></td>
                                         </tr>
                                         
                                     </table>
@@ -204,7 +204,13 @@ public final class <span class="typeNameLabel"><a href=AsyncJobConfig.html>Async
                                         
                                             <tr class="altColor">
                                                 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a
-                                                        href="#AsyncJobConfig(JobExecutorFactory)">AsyncJobConfig</a></span>(<a href=../JobExecutorFactory.html>JobExecutorFactory</a> executorFactory)</code></th>
+                                                        href="#AsyncJobConfig(JobExecutorFactory)">AsyncJobConfig</a></span>(<a href=../job/JobExecutorFactory.html>JobExecutorFactory</a> executorFactory)</code></th>
+                                                <td class="colLast">Creates a new <a href=AsyncJobConfig.html>AsyncJobConfig</a> instance.</td>
+                                            </tr>
+                                        
+                                            <tr class="rowColor">
+                                                <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a
+                                                        href="#AsyncJobConfig(JobExecutorFactory,Integer)">AsyncJobConfig</a></span>(<a href=../job/JobExecutorFactory.html>JobExecutorFactory</a> executorFactory, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html>Integer</a> expirationDays)</code></th>
                                                 <td class="colLast">Creates a new <a href=AsyncJobConfig.html>AsyncJobConfig</a> instance.</td>
                                             </tr>
                                         
@@ -292,14 +298,37 @@ public final class <span class="typeNameLabel"><a href=AsyncJobConfig.html>Async
                                 <ul class="blockList">
                                     <li class="blockList">
                                         <h4>AsyncJobConfig</h4>
-                                        <pre>AsyncJobConfig(<a href=../JobExecutorFactory.html>JobExecutorFactory</a> executorFactory)</pre>
+                                        <pre>AsyncJobConfig(<a href=../job/JobExecutorFactory.html>JobExecutorFactory</a> executorFactory)</pre>
                                         <div class="block">Creates a new <a href=AsyncJobConfig.html>AsyncJobConfig</a> instance.</div>
                                         
                                         <dl>
                                             <dt><span class="paramLabel">Parameters:</span></dt>
                                             
                                             
-                                            <dd><code>executorFactory</code> - Provider for <a href=../JobExecutor.html>JobExecutor</a> instances that will be used to process individual jobs.</dd>
+                                            <dd><code>executorFactory</code> - Provider for <a href=../job/JobExecutor.html>JobExecutor</a> instances that will be used to process individual jobs.</dd>
+                                            
+                                            
+                                        </dl>
+                                        
+                                    </li>
+                                </ul>
+                                
+                                <a name="AsyncJobConfig(JobExecutorFactory,Integer)"></a>
+                                <ul class="blockList">
+                                    <li class="blockList">
+                                        <h4>AsyncJobConfig</h4>
+                                        <pre>AsyncJobConfig(<a href=../job/JobExecutorFactory.html>JobExecutorFactory</a> executorFactory, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html>Integer</a> expirationDays)</pre>
+                                        <div class="block">Creates a new <a href=AsyncJobConfig.html>AsyncJobConfig</a> instance.</div>
+                                        
+                                        <dl>
+                                            <dt><span class="paramLabel">Parameters:</span></dt>
+                                            
+                                            
+                                            <dd><code>executorFactory</code> - Provider for <a href=../job/JobExecutor.html>JobExecutor</a> instances that will be used to process individual jobs.</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>expirationDays</code> - Number of days after a job was last accessed that it may be expired and pruned.</dd>
                                             
                                             
                                         </dl>

@@ -1,7 +1,7 @@
 package org.veupathdb.lib.compute.platform.intern.s3
 
 import com.fasterxml.jackson.databind.JsonNode
-import org.veupathdb.lib.compute.platform.JobStatus
+import org.veupathdb.lib.compute.platform.job.JobStatus
 import org.veupathdb.lib.jackson.Json
 import org.veupathdb.lib.s3.s34k.errors.S34KError
 import org.veupathdb.lib.s3.workspaces.S3Workspace

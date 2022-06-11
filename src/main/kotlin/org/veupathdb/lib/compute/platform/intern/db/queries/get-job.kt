@@ -1,6 +1,6 @@
 package org.veupathdb.lib.compute.platform.intern.db.queries
 
-import org.veupathdb.lib.compute.platform.JobStatus
+import org.veupathdb.lib.compute.platform.job.JobStatus
 import org.veupathdb.lib.compute.platform.intern.db.model.JobRecord
 import org.veupathdb.lib.hash_id.HashID
 import org.veupathdb.lib.jackson.Json

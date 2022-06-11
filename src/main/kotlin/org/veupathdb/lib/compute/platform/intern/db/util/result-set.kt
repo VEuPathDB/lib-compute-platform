@@ -6,6 +6,11 @@ import java.util.Spliterators
 import java.util.stream.Stream
 import java.util.stream.StreamSupport
 
+/**
+ * Returns a [Stream] over the rows in a [ResultSet].
+ *
+ * The returned [Stream] must be closed to avoid connection leaks.
+ */
 internal fun ResultSet.stream(): Stream<ResultSet> {
   val out = StreamSupport.stream(
     Spliterators.spliteratorUnknownSize(
