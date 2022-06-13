@@ -23,7 +23,15 @@ import java.time.OffsetDateTime
  *
  * @param config Raw, serialized configuration for this job.
  *
+ * @param includedFiles Array of 0 or more names of files that were included
+ * with this job when it was created.
+ *
  * @param created Timestamp of when this job was created.
+ *
+ * @param lastAccessed Timestamp of when this job was last "accessed".
+ *
+ * This timestamp is not updated automatically, so will not necessarily be the
+ * timestamp of the query that returned this row.
  *
  * @param grabbed Timestamp of when this job was started.
  *
@@ -33,14 +41,15 @@ import java.time.OffsetDateTime
  *
  * This will be `null` if the job has not yet finished.
  */
-internal data class JobRecord (
-  val jobID:        HashID,
-  val status: JobStatus,
-  val queue:        String,
-  val config:       JsonNode?,
-  val created:      OffsetDateTime,
-  val lastAccessed: OffsetDateTime,
-  val grabbed:      OffsetDateTime?,
-  val finished:     OffsetDateTime?,
+internal class JobRecord (
+  val jobID:         HashID,
+  val status:        JobStatus,
+  val queue:         String,
+  val config:        JsonNode?,
+  val includedFiles: Array<String>,
+  val created:       OffsetDateTime,
+  val lastAccessed:  OffsetDateTime,
+  val grabbed:       OffsetDateTime?,
+  val finished:      OffsetDateTime?,
 )
 

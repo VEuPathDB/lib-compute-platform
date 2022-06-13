@@ -4,7 +4,16 @@ import com.fasterxml.jackson.databind.JsonNode
 import org.veupathdb.lib.hash_id.HashID
 import java.time.OffsetDateTime
 
+/**
+ * Async Job
+ *
+ * Represents a job submitted to the compute platform.
+ *
+ * @author Elizabeth Paige Harper [https://github.com/foxcapades]
+ * @since 1.0.0
+ */
 interface AsyncJob {
+
   /**
    * Hash ID of this job.
    */
@@ -18,18 +27,32 @@ interface AsyncJob {
   /**
    * Position of this job in the queue.
    *
-   * Will only be present if this process owns the job and the job is currently
+   * Will only be present if this process owns the job, and the job is currently
    * in the `queued` status.
    */
   val queuePosition: Int?
 
   /**
-   * Indicates whether this process owns this job.
+   * Indicates whether this compute platform process owns this job.
+   *
+   * This field is used to indicate ownership in situations were there are
+   * multiple separate compute platform applications sharing a single S3 store
+   * instance.
+   *
+   * If this job was found in the local, managed database, this value will be
+   * `true`.
+   *
+   * If this job was not found in the local, managed database, and was instead
+   * found only in the S3 store, this value will be `false`.
    */
   val owned: Boolean
 
   /**
-   * Raw configuration for this job.
+   * Optional, raw configuration for this job.
+   *
+   * This will be present if the job was submitted with a configuration.
+   *
+   * If the job was submitted with no configuration, this value will be `null`.
    */
   val config: JsonNode?
 

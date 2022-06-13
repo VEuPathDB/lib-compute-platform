@@ -3,13 +3,19 @@ package org.veupathdb.lib.compute.platform.intern.s3
 import com.fasterxml.jackson.databind.JsonNode
 import org.slf4j.LoggerFactory
 import org.veupathdb.lib.compute.platform.job.AsyncJob
-import org.veupathdb.lib.compute.platform.job.JobResultReference
+import org.veupathdb.lib.compute.platform.job.JobFileReference
 import org.veupathdb.lib.compute.platform.config.AsyncS3Config
+import org.veupathdb.lib.compute.platform.intern.FileConfig
+import org.veupathdb.lib.compute.platform.intern.FlagExpired
+import org.veupathdb.lib.compute.platform.intern.FlagQueued
+import org.veupathdb.lib.compute.platform.intern.IsFlagFilename
+import org.veupathdb.lib.compute.platform.intern.IsReservedFilename
 import org.veupathdb.lib.hash_id.HashID
 import org.veupathdb.lib.s3.s34k.S3Api
 import org.veupathdb.lib.s3.s34k.S3Client
 import org.veupathdb.lib.s3.s34k.S3Config
 import org.veupathdb.lib.s3.workspaces.S3WorkspaceFactory
+import java.io.InputStream
 import java.nio.file.Path
 import kotlin.io.path.name
 
@@ -18,6 +24,10 @@ import kotlin.io.path.name
  *
  * Provides methods for interacting with the S3 store backing the async compute
  * platform library.
+ *
+ * This layer provides methods only for specific, targeted operations, and not
+ * general access to S3.  This is to keep the operations used by this platform
+ * organized and accounted for.
  *
  * @author Elizabeth Paige Harper [https://github.com/foxcapades]
  * @since 1.0.0
@@ -81,7 +91,7 @@ internal object S3 {
 
 
   /**
-   * Fetches the result files from the target workspace.
+   * Fetches the input and output files from the target workspace.
    *
    * @param jobID Hash ID of the workspace from which the files should be
    * retrieved.
@@ -91,7 +101,7 @@ internal object S3 {
    * This list will not include any flag files or the input config file.
    */
   @JvmStatic
-  fun getResultFiles(jobID: HashID): List<JobResultReference> {
+  fun getNonReservedFiles(jobID: HashID): List<JobFileReference> {
     Log.debug("Fetching result files from workspace {} in S3", jobID)
 
     // Load the workspace
@@ -101,32 +111,19 @@ internal object S3 {
     val files = ws.files()
 
     // Instantiate our output list
-    val out = ArrayList<JobResultReference>(files.size)
+    val out = ArrayList<JobFileReference>(files.size)
 
     // Iterate through the files in the S3 workspace
     files.forEach {
       // If the file is not a flag file and is not the input config
-      if (!IsFlagFilename(it.name) && it.name != FileConfig) {
+      if (!IsReservedFilename(it.name)) {
         // Add it to the output list
-        out.add(JobResultReferenceImpl(it))
+        out.add(JobFileReferenceImpl(it))
       }
     }
 
     return out
   }
-
-
-  /**
-   * Deletes the target workspace.
-   *
-   * @param jobID Hash ID of the workspace to delete.
-   */
-  @JvmStatic
-  fun deleteWorkspace(jobID: HashID) {
-    Log.debug("Deleting workspace for job {} in S3", jobID)
-    wsf!![jobID]?.delete()
-  }
-
 
   /**
    * Clears out the target workspace and marks it as `expired`.
@@ -199,16 +196,26 @@ internal object S3 {
    * @param jobID ID of the workspace to create.
    *
    * @param conf Optional JSON configuration to write to the workspace.
+   *
+   * @param inputs Input files that will be uploaded to the S3 workspace.
    */
   @JvmStatic
-  fun submitWorkspace(jobID: HashID, conf: JsonNode? = null) {
-    Log.debug("Creating workspace for job {} in S3", jobID)
+  fun submitWorkspace(jobID: HashID, conf: JsonNode?, inputs: Map<String, () -> InputStream>) {
+    Log.debug("creating workspace for job {} in s3", jobID)
 
     val ws = wsf!!.create(jobID)
 
+    Log.debug("writing queued flag to s3 workspace {}", jobID)
     ws.touch(FlagQueued)
 
-    if (conf != null)
-      ws.write(FileConfig, conf.toString().byteInputStream())
+    if (conf != null) {
+      Log.debug("writing file {} to s3 workspace {}", FileConfig, jobID)
+      conf.toString().byteInputStream().use { ws.write(FileConfig, it) }
+    }
+
+    inputs.forEach { (k, v) ->
+      Log.debug("writing file {} to s3 workspace {}", k, jobID)
+      v().use { ws.write(k, it) }
+    }
   }
 }

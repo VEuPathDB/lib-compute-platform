@@ -1,4 +1,4 @@
-package org.veupathdb.lib.compute.platform.intern.db.queries
+package org.veupathdb.lib.compute.platform.intern.db.queries.select
 
 import java.sql.Connection
 

@@ -1,6 +1,12 @@
 package org.veupathdb.lib.compute.platform.intern.s3
 
 import com.fasterxml.jackson.databind.JsonNode
+import org.veupathdb.lib.compute.platform.intern.FileConfig
+import org.veupathdb.lib.compute.platform.intern.FlagComplete
+import org.veupathdb.lib.compute.platform.intern.FlagExpired
+import org.veupathdb.lib.compute.platform.intern.FlagFailed
+import org.veupathdb.lib.compute.platform.intern.FlagInProgress
+import org.veupathdb.lib.compute.platform.intern.FlagQueued
 import org.veupathdb.lib.compute.platform.job.JobStatus
 import org.veupathdb.lib.jackson.Json
 import org.veupathdb.lib.s3.s34k.errors.S34KError

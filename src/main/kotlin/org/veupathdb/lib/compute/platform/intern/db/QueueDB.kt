@@ -8,7 +8,17 @@ import org.veupathdb.lib.compute.platform.job.AsyncJob
 import org.veupathdb.lib.compute.platform.job.JobStatus
 import org.veupathdb.lib.compute.platform.config.AsyncPlatformConfig
 import org.veupathdb.lib.compute.platform.intern.db.model.JobRecord
-import org.veupathdb.lib.compute.platform.intern.db.queries.*
+import org.veupathdb.lib.compute.platform.intern.db.queries.insert.RecordNewJob
+import org.veupathdb.lib.compute.platform.intern.db.queries.select.*
+import org.veupathdb.lib.compute.platform.intern.db.queries.select.GetExpiredJobs
+import org.veupathdb.lib.compute.platform.intern.db.queries.select.GetJobQueuePosition
+import org.veupathdb.lib.compute.platform.intern.db.queries.select.ListQueuedJobs
+import org.veupathdb.lib.compute.platform.intern.db.queries.select.LookupJob
+import org.veupathdb.lib.compute.platform.intern.db.queries.update.MarkJobExpired
+import org.veupathdb.lib.compute.platform.intern.db.queries.update.MarkJobFinished
+import org.veupathdb.lib.compute.platform.intern.db.queries.update.MarkJobGrabbed
+import org.veupathdb.lib.compute.platform.intern.db.queries.update.QueueDeadJobs
+import org.veupathdb.lib.compute.platform.intern.db.queries.update.UpdateDBLastAccessed
 import org.veupathdb.lib.hash_id.HashID
 import java.time.OffsetDateTime
 import java.util.stream.Stream
@@ -160,7 +170,7 @@ internal object QueueDB {
    */
   @JvmStatic
   fun getJob(jobID: HashID) : AsyncJob? {
-    Log.debug("Looking up job {}", jobID)
+    Log.debug("looking up public job {}", jobID)
 
     return ds!!.connection.use {
       val raw = LookupJob(it, jobID)
@@ -177,10 +187,16 @@ internal object QueueDB {
   }
 
   @JvmStatic
-  fun submitJob(queue: String, jobID: HashID, config: String? = null) {
+  fun getJobInternal(jobID: HashID): JobRecord? {
+    Log.debug("looking up raw job {}", jobID)
+    return ds!!.connection.use { LookupJob(it, jobID) }
+  }
+
+  @JvmStatic
+  fun submitJob(queue: String, jobID: HashID, config: String?, files: Iterable<String>) {
     Log.debug("Recording new job {} in the database.", jobID)
 
-    ds!!.connection.use { RecordNewJob(it, jobID, queue, config) }
+    ds!!.connection.use { RecordNewJob(it, jobID, queue, config, files) }
   }
 
   /**

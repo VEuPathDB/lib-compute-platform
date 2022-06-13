@@ -64,6 +64,25 @@ internal class LocalWorkspace(override val path: Path) : JobWorkspace {
     return out
   }
 
+  /**
+   * Executes the given action on this [LocalWorkspace] instance, then calls
+   * [delete].
+   *
+   * Meant to be used for short calls where the [LocalWorkspace] instance does
+   * not need to be kept around after the completion of the call.
+   *
+   * @param fn Action to call on this [LocalWorkspace].
+   *
+   * @return The output value returned by the given action, which may be [Unit].
+   */
+  inline fun <R> use(fn: (LocalWorkspace) -> R): R {
+    return try {
+      fn(this)
+    } finally {
+      delete()
+    }
+  }
+
 
   @Suppress("NOTHING_TO_INLINE")
   private inline fun resolve(path: String): Path =

@@ -61,7 +61,7 @@ internal object JobQueues {
    * @throws IllegalArgumentException If the target [queue] does not exist.
    */
   @JvmStatic
-  fun submitJob(queue: String, jobID: HashID, rawConfig: JsonNode? = null) {
+  fun submitJob(queue: String, jobID: HashID, rawConfig: JsonNode?) {
     Log.debug("submitting job {} to job queue {}", jobID, queue)
 
     if (queue !in queues)

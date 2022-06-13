@@ -1,6 +1,5 @@
 package org.veupathdb.lib.compute.platform
 
-import com.fasterxml.jackson.databind.JsonNode
 import org.slf4j.LoggerFactory
 import org.veupathdb.lib.compute.platform.config.AsyncPlatformConfig
 import org.veupathdb.lib.compute.platform.intern.JobPruner
@@ -11,7 +10,8 @@ import org.veupathdb.lib.compute.platform.intern.queues.JobQueues
 import org.veupathdb.lib.compute.platform.intern.s3.S3
 import org.veupathdb.lib.compute.platform.intern.ws.ScratchSpaces
 import org.veupathdb.lib.compute.platform.job.AsyncJob
-import org.veupathdb.lib.compute.platform.job.JobResultReference
+import org.veupathdb.lib.compute.platform.job.JobFileReference
+import org.veupathdb.lib.compute.platform.job.JobSubmission
 import org.veupathdb.lib.hash_id.HashID
 
 /**
@@ -86,29 +86,46 @@ object AsyncPlatform {
   }
 
   /**
-   * Submits a new job to be processed asynchronously.
+   * Submits a new job to the async compute platform.
    *
-   * @param queue Name/ID of the queue that this job should be submitted to.
+   * @param queue ID/name of the target queue this job should be submitted to.
    *
-   * @param
+   * @param fn Action used to configure the job to submit.
+   *
+   * @throws IllegalArgumentException If the given [queue] value is not a valid
+   * queue ID/name.
    */
   @JvmStatic
-  @JvmOverloads
-  fun submitJob(queue: String, jobID: HashID, rawConfig: JsonNode? = null) {
-    Log.info("Submitting job {} to the async platform.", jobID)
+  inline fun submitJob(queue: String, fn: JobSubmission.Builder.() -> Unit) {
+    submitJob(queue, JobSubmission.build(fn))
+  }
+
+  /**
+   * Submits a new job to the async compute platform.
+   *
+   * @param queue ID/name of the target queue this job should be submitted to.
+   *
+   * @param job Configuration for the job to submit.
+   *
+   * @throws IllegalArgumentException If the given [queue] value is not a valid
+   * queue ID/name.
+   */
+  @JvmStatic
+  fun submitJob(queue: String, job: JobSubmission) {
+    Log.info("submitting job {} to the async platform", job.jobID)
 
     // If the target queue doesn't exist, halt here.
     if (queue !in JobQueues)
-      throw IllegalStateException("Attempted to submit a job to nonexistent queue '$queue'.")
+      throw IllegalArgumentException("Attempted to submit a job to nonexistent queue '$queue'.")
 
     // Record the new job in the database
-    QueueDB.submitJob(queue, jobID, rawConfig?.toString())
+    QueueDB.submitJob(queue, job.jobID, job.config?.toString(), job.inputs.keys)
 
     // Create a workspace for the new job in S3
-    S3.submitWorkspace(jobID, rawConfig)
+    S3.submitWorkspace(job.jobID, job.config, job.inputs)
 
     // Submit the new job to the target job queue
-    JobQueues.submitJob(queue, jobID, rawConfig)
+    JobQueues.submitJob(queue, job.jobID, job.config)
   }
 
   /**
@@ -147,21 +164,15 @@ object AsyncPlatform {
   }
 
   /**
-   * Fetches the results files for the target job.
-   *
-   * This method makes no attempt to verify that the target job is actually
-   * complete.  That check should be performed before calling this method.
+   * Fetches the available files for the target job.
    *
    * @param jobID Hash ID of the job whose results should be retrieved.
    *
    * @return List of result files in the job workspace.
-   *
-   * These files will be any non-flag, non-input-config file that exist in the
-   * workspace.
    */
   @JvmStatic
-  fun getJobResults(jobID: HashID): List<JobResultReference> {
+  fun getJobFiles(jobID: HashID): List<JobFileReference> {
     Log.debug("Fetching results for job {}", jobID)
-    return S3.getResultFiles(jobID)
+    return S3.getNonReservedFiles(jobID)
   }
 }

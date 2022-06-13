@@ -1,10 +1,10 @@
 package org.veupathdb.lib.compute.platform.intern.s3
 
-import org.veupathdb.lib.compute.platform.job.JobResultReference
+import org.veupathdb.lib.compute.platform.job.JobFileReference
 import org.veupathdb.lib.s3.workspaces.WorkspaceFile
 import java.io.InputStream
 
-internal data class JobResultReferenceImpl(private val raw: WorkspaceFile) : JobResultReference {
+internal data class JobFileReferenceImpl(private val raw: WorkspaceFile) : JobFileReference {
   override val name: String
     get() = raw.name
 

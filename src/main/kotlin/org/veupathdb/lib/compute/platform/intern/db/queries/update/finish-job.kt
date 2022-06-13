@@ -1,4 +1,4 @@
-package org.veupathdb.lib.compute.platform.intern.db.queries
+package org.veupathdb.lib.compute.platform.intern.db.queries.update
 
 import org.veupathdb.lib.compute.platform.job.JobStatus
 import org.veupathdb.lib.hash_id.HashID

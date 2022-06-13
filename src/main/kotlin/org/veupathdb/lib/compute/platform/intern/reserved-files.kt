@@ -1,6 +1,6 @@
 @file:JvmName("S3Consts")
 
-package org.veupathdb.lib.compute.platform.intern.s3
+package org.veupathdb.lib.compute.platform.intern
 
 /**
  * Name of the `queued` status indication flag object.
@@ -36,6 +36,18 @@ internal fun IsFlagFilename(name: String): Boolean {
     FlagComplete   -> true
     FlagFailed     -> true
     FlagExpired    -> true
+    else           -> false
+  }
+}
+
+internal fun IsReservedFilename(name: String): Boolean {
+  return when(name) {
+    FlagQueued     -> true
+    FlagInProgress -> true
+    FlagComplete   -> true
+    FlagFailed     -> true
+    FlagExpired    -> true
+    FileConfig     -> true
     else           -> false
   }
 }

@@ -50,7 +50,6 @@ dependencies {
 
   // Misc & Utils
   api("org.veupathdb.lib:hash-id:1.0.2")
-  implementation("io.foxcapades.lib:env-access:1.0.0")
 
   // Testing
   testImplementation(kotlin("test"))

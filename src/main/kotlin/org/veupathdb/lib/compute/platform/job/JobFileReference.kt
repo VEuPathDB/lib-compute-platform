@@ -3,14 +3,14 @@ package org.veupathdb.lib.compute.platform.job
 import java.io.InputStream
 
 /**
- * Job Result Reference
+ * Job File Reference
  *
  * Provides data about and access to an individual job result file.
  *
  * @author Elizabeth Paige Harper [https://github.com/foxcapades]
  * @since 1.0.0
  */
-interface JobResultReference {
+interface JobFileReference {
 
   /**
    * Basename of the result file.
