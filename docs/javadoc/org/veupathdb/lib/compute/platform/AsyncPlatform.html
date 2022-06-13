@@ -262,17 +262,17 @@ public class <span class="typeNameLabel"><a href=AsyncPlatform.html>AsyncPlatfor
                                         <tr id="i2" class="altColor">
                                             <td class="colFirst"><code>final static <a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html>Unit</a></code>
                                             </td>
-                                            <th class="colSecond" scope="row"><code><a href=AsyncPlatform.html#submitJob(String,HashID,JsonNode)>submitJob</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> queue, HashID jobID, JsonNode rawConfig) </code>
+                                            <th class="colSecond" scope="row"><code><a href=AsyncPlatform.html#submitJob(String,Function1)>submitJob</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> queue, Function1&lt;<a href=job/JobSubmission.Builder.html>JobSubmission.Builder</a>, <a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html>Unit</a>&gt; fn) </code>
                                             </th>
-                                            <td class="colLast">Submits a new job to be processed asynchronously.</td>
+                                            <td class="colLast">Submits a new job to the async compute platform.</td>
                                         </tr>
                                         
                                         <tr id="i3" class="rowColor">
                                             <td class="colFirst"><code>final static <a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html>Unit</a></code>
                                             </td>
-                                            <th class="colSecond" scope="row"><code><a href=AsyncPlatform.html#submitJob(String,HashID,JsonNode)>submitJob</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> queue, HashID jobID) </code>
+                                            <th class="colSecond" scope="row"><code><a href=AsyncPlatform.html#submitJob(String,JobSubmission)>submitJob</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> queue, <a href=job/JobSubmission.html>JobSubmission</a> job) </code>
                                             </th>
-                                            <td class="colLast">Submits a new job to be processed asynchronously.</td>
+                                            <td class="colLast">Submits a new job to the async compute platform.</td>
                                         </tr>
                                         
                                         <tr id="i4" class="altColor">
@@ -284,11 +284,11 @@ public class <span class="typeNameLabel"><a href=AsyncPlatform.html>AsyncPlatfor
                                         </tr>
                                         
                                         <tr id="i5" class="rowColor">
-                                            <td class="colFirst"><code>final static <a href=https://docs.oracle.com/javase/8/docs/api/java/util/List.html>List</a>&lt;<a href=job/JobResultReference.html>JobResultReference</a>&gt;</code>
+                                            <td class="colFirst"><code>final static <a href=https://docs.oracle.com/javase/8/docs/api/java/util/List.html>List</a>&lt;<a href=job/JobFileReference.html>JobFileReference</a>&gt;</code>
                                             </td>
-                                            <th class="colSecond" scope="row"><code><a href=AsyncPlatform.html#getJobResults(HashID)>getJobResults</a>(HashID jobID) </code>
+                                            <th class="colSecond" scope="row"><code><a href=AsyncPlatform.html#getJobFiles(HashID)>getJobFiles</a>(HashID jobID) </code>
                                             </th>
-                                            <td class="colLast">Fetches the results files for the target job.</td>
+                                            <td class="colLast">Fetches the available files for the target job.</td>
                                         </tr>
                                         
                                         </tbody>
@@ -374,7 +374,7 @@ public class <span class="typeNameLabel"><a href=AsyncPlatform.html>AsyncPlatfor
                                     </li>
                                 </ul>
                                 
-                                <a id="submitJob(String,HashID,JsonNode)">
+                                <a id="submitJob(String,Function1)">
                                     <!--   -->
                                 </a>
                                 <ul class=
@@ -382,18 +382,18 @@ public class <span class="typeNameLabel"><a href=AsyncPlatform.html>AsyncPlatfor
                                           >
                                     <li class="blockList">
                                         <h4>submitJob</h4>
-                                        <pre class="methodSignature">@<a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html>JvmOverloads</a>() final static <a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html>Unit</a> <a href=AsyncPlatform.html#submitJob(String,HashID,JsonNode)>submitJob</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> queue, HashID jobID, JsonNode rawConfig)</pre>
-                                        <div class="block"><p>Submits a new job to be processed asynchronously.</p></div>
+                                        <pre class="methodSignature"> final static <a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html>Unit</a> <a href=AsyncPlatform.html#submitJob(String,Function1)>submitJob</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> queue, Function1&lt;<a href=job/JobSubmission.Builder.html>JobSubmission.Builder</a>, <a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html>Unit</a>&gt; fn)</pre>
+                                        <div class="block"><p>Submits a new job to the async compute platform.</p></div>
                                         
                                         <dl>
                                             <dt><span class="paramLabel">Parameters:</span></dt>
                                             
                                             
-                                            <dd><code>queue</code> - Name/ID of the queue that this job should be submitted to.</dd>
+                                            <dd><code>queue</code> - ID/name of the target queue this job should be submitted to.</dd>
                                             
                                             
                                             
-                                            
+                                            <dd><code>fn</code> - Action used to configure the job to submit.</dd>
                                             
                                             
                                         </dl>
@@ -402,7 +402,7 @@ public class <span class="typeNameLabel"><a href=AsyncPlatform.html>AsyncPlatfor
                                     </li>
                                 </ul>
                                 
-                                <a id="submitJob(String,HashID)">
+                                <a id="submitJob(String,JobSubmission)">
                                     <!--   -->
                                 </a>
                                 <ul class=
@@ -410,16 +410,18 @@ public class <span class="typeNameLabel"><a href=AsyncPlatform.html>AsyncPlatfor
                                           >
                                     <li class="blockList">
                                         <h4>submitJob</h4>
-                                        <pre class="methodSignature">@<a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin.jvm/-jvm-overloads/index.html>JvmOverloads</a>() final static <a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html>Unit</a> <a href=AsyncPlatform.html#submitJob(String,HashID,JsonNode)>submitJob</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> queue, HashID jobID)</pre>
-                                        <div class="block"><p>Submits a new job to be processed asynchronously.</p></div>
+                                        <pre class="methodSignature"> final static <a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html>Unit</a> <a href=AsyncPlatform.html#submitJob(String,JobSubmission)>submitJob</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> queue, <a href=job/JobSubmission.html>JobSubmission</a> job)</pre>
+                                        <div class="block"><p>Submits a new job to the async compute platform.</p></div>
                                         
                                         <dl>
                                             <dt><span class="paramLabel">Parameters:</span></dt>
                                             
                                             
-                                            <dd><code>queue</code> - Name/ID of the queue that this job should be submitted to.</dd>
+                                            <dd><code>queue</code> - ID/name of the target queue this job should be submitted to.</dd>
                                             
                                             
+                                            
+                                            <dd><code>job</code> - Configuration for the job to submit.</dd>
                                             
                                             
                                         </dl>
@@ -452,16 +454,16 @@ public class <span class="typeNameLabel"><a href=AsyncPlatform.html>AsyncPlatfor
                                     </li>
                                 </ul>
                                 
-                                <a id="getJobResults(HashID)">
+                                <a id="getJobFiles(HashID)">
                                     <!--   -->
                                 </a>
                                 <ul class=
                                               "blockListLast"
                                           >
                                     <li class="blockList">
-                                        <h4>getJobResults</h4>
-                                        <pre class="methodSignature"> final static <a href=https://docs.oracle.com/javase/8/docs/api/java/util/List.html>List</a>&lt;<a href=job/JobResultReference.html>JobResultReference</a>&gt; <a href=AsyncPlatform.html#getJobResults(HashID)>getJobResults</a>(HashID jobID)</pre>
-                                        <div class="block"><p>Fetches the results files for the target job.</p><p>This method makes no attempt to verify that the target job is actually complete.  That check should be performed before calling this method.</p></div>
+                                        <h4>getJobFiles</h4>
+                                        <pre class="methodSignature"> final static <a href=https://docs.oracle.com/javase/8/docs/api/java/util/List.html>List</a>&lt;<a href=job/JobFileReference.html>JobFileReference</a>&gt; <a href=AsyncPlatform.html#getJobFiles(HashID)>getJobFiles</a>(HashID jobID)</pre>
+                                        <div class="block"><p>Fetches the available files for the target job.</p></div>
                                         
                                         <dl>
                                             <dt><span class="paramLabel">Parameters:</span></dt>
