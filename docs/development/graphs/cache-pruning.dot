@@ -1,0 +1,50 @@
+digraph {
+  node [shape=rect]
+  graph [nodesep=0.5]
+
+  Start [
+    shape=circle
+  ]
+
+  DBLookup [
+    label="Get expired\njobs from DB"
+  ]
+
+  ForEach [
+    label="Iterate over\nexpired jobs"
+  ]
+
+  HasNext [
+    label="Has\nnext?",
+    shape=diamond
+  ]
+
+  GetNext [
+    label="Get next result"
+  ]
+
+  Rmdir [
+    label="Remove S3\nworkspace directory"
+  ]
+
+  WriteExpired [
+    label="Write expired\nflag to S3"
+  ]
+
+  Done [
+    shape=circle
+  ]
+
+  Start    -> DBLookup
+  DBLookup -> ForEach
+  ForEach  -> HasNext
+
+  HasNext -> GetNext [color=green]
+  HasNext -> Done    [color=red]
+
+  GetNext -> Rmdir
+  Rmdir   -> WriteExpired
+  WriteExpired -> HasNext
+
+  { rank=sink; Done }
+}
