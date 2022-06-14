@@ -76,6 +76,20 @@ The details of the queue, database, and S3 store management are internal to the
 platform and are not exposed to library consumers except through callbacks.
 
 
+=== Implementing Platform Interfaces
+
+This library exposes 2 interfaces which library consumers must implement in
+order to work with the platform: `JobExecutorFactory` and `JobExecutor`.
+
+The `JobExecutorFactory` implementation is responsible for creating new
+instances of implementations of the `JobExecutor` interface.  This factory will
+be provided context for which the `JobExecutor` is being requested to enable the
+factory to provide an implementation suited for that context.
+
+The `JobExecutor` implementations are responsible for performing the actual jobs
+themselves.  This is where job execution specific logic should live or be called
+from.
+
 
 == Jobs
 

@@ -1,7 +1,5 @@
 package org.veupathdb.lib.compute.platform.job
 
-import com.fasterxml.jackson.databind.JsonNode
-import org.veupathdb.lib.hash_id.HashID
 
 /**
  * Job Executor Provider/Factory
@@ -17,11 +15,10 @@ interface JobExecutorFactory {
   /**
    * Constructs a new [JobExecutor] instance.
    *
-   * @param jobID Hash ID of the job that is to be executed.
-   *
-   * @param config Raw/serialized configuration for the job to be executed.
+   * @param ctx Context for which a new [JobExecutor] instance is being
+   * requested.
    *
    * @return A new [JobExecutor] instance.
    */
-  fun newJobExecutor(jobID: HashID, config: JsonNode?): JobExecutor
+  fun newJobExecutor(ctx: JobExecutorContext): JobExecutor
 }

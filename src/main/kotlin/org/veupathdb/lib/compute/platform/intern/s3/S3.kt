@@ -2,14 +2,10 @@ package org.veupathdb.lib.compute.platform.intern.s3
 
 import com.fasterxml.jackson.databind.JsonNode
 import org.slf4j.LoggerFactory
+import org.veupathdb.lib.compute.platform.config.AsyncS3Config
+import org.veupathdb.lib.compute.platform.intern.*
 import org.veupathdb.lib.compute.platform.job.AsyncJob
 import org.veupathdb.lib.compute.platform.job.JobFileReference
-import org.veupathdb.lib.compute.platform.config.AsyncS3Config
-import org.veupathdb.lib.compute.platform.intern.FileConfig
-import org.veupathdb.lib.compute.platform.intern.FlagExpired
-import org.veupathdb.lib.compute.platform.intern.FlagQueued
-import org.veupathdb.lib.compute.platform.intern.IsFlagFilename
-import org.veupathdb.lib.compute.platform.intern.IsReservedFilename
 import org.veupathdb.lib.hash_id.HashID
 import org.veupathdb.lib.s3.s34k.S3Api
 import org.veupathdb.lib.s3.s34k.S3Client

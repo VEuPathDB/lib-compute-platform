@@ -1,7 +1,6 @@
 package org.veupathdb.lib.compute.platform.job
 
 import com.fasterxml.jackson.databind.JsonNode
-import java.io.File
 import java.io.FileNotFoundException
 import java.io.InputStream
 import java.io.Reader
