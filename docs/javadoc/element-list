@@ -1,0 +1,21 @@
+$dokka.format:javadoc-v1
+$dokka.linkExtension:html
+$dokka.location:org.veupathdb.lib.compute.platform.config/AsyncDBConfig.Builder///PointingToDeclaration/org/veupathdb/lib/compute/platform/config/AsyncDBConfig.Builder.html
+$dokka.location:org.veupathdb.lib.compute.platform.config/AsyncDBConfig.Companion///PointingToDeclaration/org/veupathdb/lib/compute/platform/config/AsyncDBConfig.Companion.html
+$dokka.location:org.veupathdb.lib.compute.platform.config/AsyncJobConfig.Builder///PointingToDeclaration/org/veupathdb/lib/compute/platform/config/AsyncJobConfig.Builder.html
+$dokka.location:org.veupathdb.lib.compute.platform.config/AsyncJobConfig.Companion///PointingToDeclaration/org/veupathdb/lib/compute/platform/config/AsyncJobConfig.Companion.html
+$dokka.location:org.veupathdb.lib.compute.platform.config/AsyncPlatformConfig.Builder///PointingToDeclaration/org/veupathdb/lib/compute/platform/config/AsyncPlatformConfig.Builder.html
+$dokka.location:org.veupathdb.lib.compute.platform.config/AsyncPlatformConfig.Companion///PointingToDeclaration/org/veupathdb/lib/compute/platform/config/AsyncPlatformConfig.Companion.html
+$dokka.location:org.veupathdb.lib.compute.platform.config/AsyncQueueConfig.Builder///PointingToDeclaration/org/veupathdb/lib/compute/platform/config/AsyncQueueConfig.Builder.html
+$dokka.location:org.veupathdb.lib.compute.platform.config/AsyncQueueConfig.Companion///PointingToDeclaration/org/veupathdb/lib/compute/platform/config/AsyncQueueConfig.Companion.html
+$dokka.location:org.veupathdb.lib.compute.platform.config/AsyncS3Config.Builder///PointingToDeclaration/org/veupathdb/lib/compute/platform/config/AsyncS3Config.Builder.html
+$dokka.location:org.veupathdb.lib.compute.platform.config/AsyncS3Config.Companion///PointingToDeclaration/org/veupathdb/lib/compute/platform/config/AsyncS3Config.Companion.html
+$dokka.location:org.veupathdb.lib.compute.platform.job/JobResult.Companion///PointingToDeclaration/org/veupathdb/lib/compute/platform/job/JobResult.Companion.html
+$dokka.location:org.veupathdb.lib.compute.platform.job/JobStatus.Companion///PointingToDeclaration/org/veupathdb/lib/compute/platform/job/JobStatus.Companion.html
+$dokka.location:org.veupathdb.lib.compute.platform.job/JobSubmission.Builder///PointingToDeclaration/org/veupathdb/lib/compute/platform/job/JobSubmission.Builder.html
+$dokka.location:org.veupathdb.lib.compute.platform.job/JobSubmission.Companion///PointingToDeclaration/org/veupathdb/lib/compute/platform/job/JobSubmission.Companion.html
+org.veupathdb.lib.compute.platform
+org.veupathdb.lib.compute.platform.config
+org.veupathdb.lib.compute.platform.intern.util
+org.veupathdb.lib.compute.platform.job
+
