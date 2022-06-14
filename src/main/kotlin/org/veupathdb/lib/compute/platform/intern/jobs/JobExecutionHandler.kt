@@ -4,13 +4,12 @@ import com.fasterxml.jackson.databind.JsonNode
 import org.slf4j.LoggerFactory
 import org.veupathdb.lib.compute.platform.intern.FileConfig
 import org.veupathdb.lib.compute.platform.intern.db.QueueDB
-import org.veupathdb.lib.compute.platform.job.JobExecutor
-import org.veupathdb.lib.compute.platform.job.JobResultStatus
 import org.veupathdb.lib.compute.platform.intern.s3.S3
 import org.veupathdb.lib.compute.platform.intern.ws.ScratchSpaces
+import org.veupathdb.lib.compute.platform.job.JobExecutor
 import org.veupathdb.lib.compute.platform.job.JobFileReference
+import org.veupathdb.lib.compute.platform.job.JobResultStatus
 import org.veupathdb.lib.hash_id.HashID
-import java.io.InputStream
 
 /**
  * Job executor with context.

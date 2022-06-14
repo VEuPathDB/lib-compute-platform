@@ -1,8 +1,7 @@
 package org.veupathdb.lib.compute.platform.intern.db.util
 
 import java.sql.ResultSet
-import java.util.Spliterator
-import java.util.Spliterators
+import java.util.*
 import java.util.stream.Stream
 import java.util.stream.StreamSupport
 
