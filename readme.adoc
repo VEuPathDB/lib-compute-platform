@@ -35,14 +35,15 @@ dependencies {
 
 === Interacting with the Platform
 
-All interactions with this platform are handled through the `AsyncPlatform`
+All interactions with this platform are handled through the
+link:src/main/kotlin/org/veupathdb/lib/compute/platform/AsyncPlatform.kt[`AsyncPlatform`]
 singleton.
 
 After initialization, the platform exposes a minimal set of methods for
 interactions:
 
 . Job Submission
-. Job Retrieval
+. Job Details Retrieval
 . Job Result Retrieval
 
 .Example Usage
@@ -79,7 +80,10 @@ platform and are not exposed to library consumers except through callbacks.
 === Implementing Platform Interfaces
 
 This library exposes 2 interfaces which library consumers must implement in
-order to work with the platform: `JobExecutorFactory` and `JobExecutor`.
+order to work with the platform:
+link:src/main/kotlin/org/veupathdb/lib/compute/platform/job/JobExecutorFactory.kt[`JobExecutorFactory`]
+and
+link:src/main/kotlin/org/veupathdb/lib/compute/platform/job/JobExecutor.kt[`JobExecutor`].
 
 The `JobExecutorFactory` implementation is responsible for creating new
 instances of implementations of the `JobExecutor` interface.  This factory will
