@@ -8,7 +8,8 @@ package org.veupathdb.lib.compute.platform.job
  * @author Elizabeth Paige Harper [https://github.com/foxcapades]
  * @since 1.0.0
  */
-interface JobExecutor {
+@FunctionalInterface
+fun interface JobExecutor {
 
   /**
    * Executes the job configured by the given [JobContext].

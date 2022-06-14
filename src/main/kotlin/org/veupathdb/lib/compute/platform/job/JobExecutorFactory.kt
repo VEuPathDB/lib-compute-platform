@@ -10,7 +10,8 @@ package org.veupathdb.lib.compute.platform.job
  * @author Elizabeth Paige Harper [https://github.com/foxcapades]
  * @since 1.0.0
  */
-interface JobExecutorFactory {
+@FunctionalInterface
+fun interface JobExecutorFactory {
 
   /**
    * Constructs a new [JobExecutor] instance.
