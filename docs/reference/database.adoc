@@ -83,6 +83,11 @@ IN ('queued', 'grabbed', 'complete', 'failed', 'expired')
 |
 | Serialized configuration for the job.
 
+| input_files
+| VARCHAR[]
+| NOT NULL
+| Array of the names of files that were included with the job.
+
 | created
 | TIMESTAMP WITH TIME ZONE
 | NOT NULL
@@ -102,4 +107,9 @@ IN ('queued', 'grabbed', 'complete', 'failed', 'expired')
 | TIMESTAMP WITH TIME ZONE
 |
 | Timestamp for when the job was finished (successfully or not)
+
+| output_files
+| VARCHAR[]
+|
+| Array of the names of files that were created by the job.
 |===
