@@ -23,7 +23,7 @@ jobs:
           distribution: 'corretto'
           java-version: '17'
 
-      - name: Gradle Build
+      - name: Generate Docs
         run: ./gradlew docs
         env:
           GITHUB_USERNAME: ${{ secrets.GH_USERNAME }}
