@@ -83,7 +83,7 @@ internal class JobExecutionHandler(private val executor: JobExecutor) {
 
 
       // Execute the job via the given JobExecutor implementation.
-      val res = executor.execute(JobCTX(jobID, conf, workspace))
+      val res = executor.execute(JobContext(jobID, conf, workspace))
 
       // Persist the outputs of the job to S3.
       S3.persistFiles(jobID, workspace.getFiles(res.outputFiles))

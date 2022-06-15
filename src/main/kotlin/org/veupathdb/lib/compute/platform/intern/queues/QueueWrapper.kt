@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode
 import org.slf4j.LoggerFactory
 import org.veupathdb.lib.compute.platform.config.AsyncQueueConfig
 import org.veupathdb.lib.compute.platform.intern.db.QueueDB
-import org.veupathdb.lib.compute.platform.intern.jobs.JobExecCTX
+import org.veupathdb.lib.compute.platform.intern.jobs.JobExecContext
 import org.veupathdb.lib.compute.platform.intern.jobs.JobExecutors
 import org.veupathdb.lib.compute.platform.intern.metrics.JobMetrics
 import org.veupathdb.lib.compute.platform.intern.metrics.QueueMetrics
@@ -89,7 +89,7 @@ internal class QueueWrapper(conf: AsyncQueueConfig) {
 
     // Attempt to execute the job.
     try {
-      when (JobExecutors.new(JobExecCTX(name, job.jobID, job.body)).execute(job.jobID, job.body)) {
+      when (JobExecutors.new(JobExecContext(name, job.jobID, job.body)).execute(job.jobID, job.body)) {
         JobResultStatus.Success -> handler.sendSuccess(SuccessNotification(job.jobID))
         JobResultStatus.Failure -> handler.sendError(ErrorNotification(job.jobID, 1))
       }
