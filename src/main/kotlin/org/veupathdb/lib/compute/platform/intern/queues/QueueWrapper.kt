@@ -6,8 +6,8 @@ import org.veupathdb.lib.compute.platform.config.AsyncQueueConfig
 import org.veupathdb.lib.compute.platform.intern.db.QueueDB
 import org.veupathdb.lib.compute.platform.intern.jobs.JobExecCTX
 import org.veupathdb.lib.compute.platform.intern.jobs.JobExecutors
-import org.veupathdb.lib.compute.platform.intern.mtx.JobMetrics
-import org.veupathdb.lib.compute.platform.intern.mtx.QueueMetrics
+import org.veupathdb.lib.compute.platform.intern.metrics.JobMetrics
+import org.veupathdb.lib.compute.platform.intern.metrics.QueueMetrics
 import org.veupathdb.lib.compute.platform.job.JobResultStatus
 import org.veupathdb.lib.hash_id.HashID
 import org.veupathdb.lib.rabbit.jobs.QueueConfig
