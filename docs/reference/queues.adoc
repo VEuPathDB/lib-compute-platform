@@ -1,0 +1,37 @@
+= Queues
+:toc:
+
+See: link:https://github.com/VEuPathDB/lib-rabbit-job-queue[lib-rabbit-job-queue]
+
+== Queue Creation
+
+When the compute platform library is initialized, all configured queues will be
+created in the RabbitMQ instance if they did not already exist.
+
+For each queue configured with the platform there are 3 queues in RabbitMQ that
+are defined as follows.
+
+. A "jobs" queue which submitted jobs will be posted to for executors to pick
+  up.
+. An "error" queue which executors will post back job failure notifications.
+. A "success" queue which executors will post back job success notifications.
+
+
+=== Example
+
+Assuming the config:
+[source, kotlin]
+----
+addQueue { id = "foo" }
+addQueue { id = "bar" }
+----
+
+RabbitMQ will contain the following message queues:
+
+* `foo_jobs`
+* `foo_error`
+* `foo_success`
+* `bar_jobs`
+* `bar_error`
+* `bar_success`
+

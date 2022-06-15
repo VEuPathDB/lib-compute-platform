@@ -637,7 +637,8 @@ val config = AsyncPlatformConfig.build {
 
 == Additional Topics
 
-include::docs/reference/database.adoc[leveloffset=2]
+* link:docs/reference/database.adoc[Database Details]
+* link:docs/reference/queues.adoc[Message Queues]
 
 == Job Cache Management
 
