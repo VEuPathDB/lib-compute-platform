@@ -635,10 +635,9 @@ val config = AsyncPlatformConfig.build {
 }
 ----
 
+== Additional Topics
 
-== Database
-
-TODO: LINK HERE!
+include::docs/reference/database.adoc[leveloffset=2]
 
 == Job Cache Management
 
