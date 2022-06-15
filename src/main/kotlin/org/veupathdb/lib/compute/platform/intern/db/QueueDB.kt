@@ -121,19 +121,19 @@ internal object QueueDB {
 
 
   /**
-   * Marks the target job as 'grabbed' or 'in-progress' in the database.
+   * Marks the target job as 'in-progress' in the database.
    *
    * Additionally, updates the job record's `grabbed` timestamp to the current
    * time.
    *
-   * @param jobID Hash ID of the job to be marked as grabbed/in-progress.
+   * @param jobID Hash ID of the job to be marked as in-progress.
    *
    * If the job does not exist in the database, no change will be made.
    */
   @JvmStatic
-  fun markJobAsGrabbed(jobID: HashID) {
-    Log.debug("Marking job {} as grabbed", jobID)
-    ds!!.connection.use { MarkJobGrabbed(it, jobID) }
+  fun markJobAsInProgress(jobID: HashID) {
+    Log.debug("Marking job {} as in-progress", jobID)
+    ds!!.connection.use { MarkJobInProgress(it, jobID) }
   }
 
 

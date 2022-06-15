@@ -84,8 +84,8 @@ internal class QueueWrapper(conf: AsyncQueueConfig) {
     QueueMetrics.Queued.labels(name).dec()
     // Record the time this job spent in the queue.
     QueueMetrics.Time.labels(name).observe(job.dispatched.until(OffsetDateTime.now(), ChronoUnit.MILLIS).toDouble() / 1000.0)
-    // Mark the job as grabbed in the database.
-    QueueDB.markJobAsGrabbed(job.jobID)
+    // Mark the job as in-progress in the database.
+    QueueDB.markJobAsInProgress(job.jobID)
 
     // Attempt to execute the job.
     try {

@@ -7,20 +7,20 @@ private const val SQL = """
   UPDATE
     compute.jobs
   SET
-    status = 'grabbed'
+    status = 'in-progress'
   , grabbed = now()
   WHERE
     job_id = ?
 """
 
 /**
- * Marks the target job as grabbed.
+ * Marks the target job as in-progress.
  *
  * @param con Open database connection to use for the query.
  *
- * @param jobID Hash ID of the target job that will be marked as a grabbed.
+ * @param jobID Hash ID of the target job that will be marked as a in-progress.
  */
-internal fun MarkJobGrabbed(con: Connection, jobID: HashID) {
+internal fun MarkJobInProgress(con: Connection, jobID: HashID) {
   con.prepareStatement(SQL).use { ps ->
     ps.setBytes(1, jobID.bytes)
     ps.execute()

@@ -68,9 +68,9 @@ LEN() == 16
 | Hash ID of the job.
 
 | status
-| VARCHAR(8)
+| VARCHAR(11)
 | NOT NULL +
-IN ('queued', 'grabbed', 'complete', 'failed', 'expired')
+IN ('queued', 'in-progress', 'complete', 'failed', 'expired')
 | Current job status.
 
 | queue

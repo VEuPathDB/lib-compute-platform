@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS compute.jobs (
     NOT NULL,
 
   -- Current job status.
-  status VARCHAR(8)
+  status VARCHAR(11)
     NOT NULL,
 
   -- ID/Name of the queue the job was submitted to.
@@ -62,5 +62,5 @@ CREATE TABLE IF NOT EXISTS compute.jobs (
   CONSTRAINT compute_job_id_min_len
     CHECK ( length(job_id) = 16 ),
   CONSTRAINT compute_job_status_enum
-    CHECK ( status IN ('queued', 'grabbed', 'complete', 'failed', 'expired') )
+    CHECK ( status IN ('queued', 'in-progress', 'complete', 'failed', 'expired') )
 );
