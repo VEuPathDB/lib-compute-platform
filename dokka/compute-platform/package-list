@@ -104,10 +104,6 @@ $dokka.location:org.veupathdb.lib.compute.platform.config/AsyncS3Config///Pointi
 $dokka.location:org.veupathdb.lib.compute.platform.config/AsyncS3Config/AsyncS3Config/#kotlin.String#kotlin.Int#kotlin.Boolean#kotlin.String#kotlin.String#kotlin.String#kotlin.String/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.config/-async-s3-config/-async-s3-config.html
 $dokka.location:org.veupathdb.lib.compute.platform.config/AsyncS3Config/AsyncS3Config/#kotlin.String#kotlin.String#kotlin.String#kotlin.String#kotlin.String/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.config/-async-s3-config/-async-s3-config.html
 $dokka.location:org.veupathdb.lib.compute.platform.config/AsyncS3Config/AsyncS3Config/#kotlin.String#kotlin.String#kotlin.String#kotlin.String/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.config/-async-s3-config/-async-s3-config.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.util////PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.util/index.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.util/ReaderInputStream///PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.util/-reader-input-stream/index.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.util/ReaderInputStream/ReaderInputStream/#java.io.Reader#kotlin.Int/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.util/-reader-input-stream/-reader-input-stream.html
-$dokka.location:org.veupathdb.lib.compute.platform.intern.util/ReaderInputStream/read/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.util/-reader-input-stream/read.html
 $dokka.location:org.veupathdb.lib.compute.platform.job////PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.job/index.html
 $dokka.location:org.veupathdb.lib.compute.platform.job/AsyncJob///PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.job/-async-job/index.html
 $dokka.location:org.veupathdb.lib.compute.platform.job/AsyncJob/config/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.job/-async-job/config.html
@@ -192,6 +188,5 @@ $dokka.location:org.veupathdb.lib.compute.platform/AsyncPlatform/submitJob/#kotl
 $dokka.location:org.veupathdb.lib.compute.platform/AsyncPlatform/submitJob/#kotlin.String#org.veupathdb.lib.compute.platform.job.JobSubmission/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform/-async-platform/submit-job.html
 org.veupathdb.lib.compute.platform
 org.veupathdb.lib.compute.platform.config
-org.veupathdb.lib.compute.platform.intern.util
 org.veupathdb.lib.compute.platform.job
 
