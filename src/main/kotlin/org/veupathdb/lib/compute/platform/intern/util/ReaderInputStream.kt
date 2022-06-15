@@ -16,7 +16,7 @@ import java.io.Reader
  * Defaults to `256`
  */
 @OptIn(ExperimentalUnsignedTypes::class)
-class ReaderInputStream(
+internal class ReaderInputStream(
   private val reader: Reader,
   private val chunkSize: Int = 256
 ) : InputStream() {

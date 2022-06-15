@@ -77,11 +77,11 @@ tasks.javadoc {
 }
 
 tasks.dokkaHtml {
-  outputDirectory.set(file("docs/dokka"))
+  outputDirectory.set(file("build/docs/dokka"))
 }
 
 tasks.dokkaJavadoc {
-  outputDirectory.set(file("docs/javadoc"))
+  outputDirectory.set(file("build/docs/javadoc"))
 }
 
 task("docs") {
