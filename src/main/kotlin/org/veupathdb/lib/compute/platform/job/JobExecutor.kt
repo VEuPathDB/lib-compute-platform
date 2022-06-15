@@ -14,6 +14,8 @@ fun interface JobExecutor {
   /**
    * Executes the job configured by the given [JobContext].
    *
+   * @param ctx Context in/for the job that is to be executed.
+   *
    * @return Job completion status.
    */
   fun execute(ctx: JobContext): JobResult
