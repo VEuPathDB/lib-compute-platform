@@ -61,6 +61,7 @@ object AsyncPlatform {
     ScratchSpaces.init(config)
 
     // Perform database setup/migrations
+    // See: src/main/resources/db/migrations/readme.adoc
     Log.info("Performing database migrations")
     DatabaseMigrator().run()
 
