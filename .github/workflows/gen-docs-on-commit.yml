@@ -30,8 +30,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
       - name: Publish Docs
-        uses: tsunematsu21/actions-publish-gh-pages@v1.0.2
+        uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
-          dir: build/docs
+          folder: build/docs
           branch: docs
-          token: ${{ secrets.GITHUB_TOKEN }}
