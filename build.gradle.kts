@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "org.veupathdb.lib"
-version = "1.0-SNAPSHOT"
+version = "1.0.0"
 
 repositories {
   mavenLocal()
