@@ -61,6 +61,7 @@ object AsyncPlatform {
     ScratchSpaces.init(config)
 
     // Perform database setup/migrations
+    // See: src/main/resources/db/migrations/readme.adoc
     Log.info("Performing database migrations")
     DatabaseMigrator().run()
 
@@ -168,7 +169,7 @@ object AsyncPlatform {
    *
    * @param jobID Hash ID of the job whose results should be retrieved.
    *
-   * @return List of result files in the job workspace.
+   * @return List of files in the job workspace.
    */
   @JvmStatic
   fun getJobFiles(jobID: HashID): List<JobFileReference> {

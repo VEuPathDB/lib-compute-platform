@@ -10,7 +10,7 @@ private const val SQL = """
   , grabbed = null
   , finished = null
   WHERE
-    status = 'grabbed'
+    status = 'in-progress'
 """
 
 /**

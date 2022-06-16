@@ -25,7 +25,7 @@ enum class JobStatus {
   override fun toString() =
     when (this) {
       Queued     -> "queued"
-      InProgress -> "grabbed"
+      InProgress -> "in-progress"
       Complete   -> "complete"
       Failed     -> "failed"
       Expired    -> "expired"
@@ -35,12 +35,12 @@ enum class JobStatus {
     @JvmStatic
     fun fromString(value: String) =
       when (value) {
-        "queued"   -> Queued
-        "grabbed"  -> InProgress
-        "complete" -> Complete
-        "failed"   -> Failed
-        "expired"  -> Expired
-        else       -> throw IllegalArgumentException("Unrecognized JobStatus value: $value")
+        "queued"      -> Queued
+        "in-progress" -> InProgress
+        "complete"    -> Complete
+        "failed"      -> Failed
+        "expired"     -> Expired
+        else          -> throw IllegalArgumentException("Unrecognized JobStatus value: $value")
       }
   }
 }

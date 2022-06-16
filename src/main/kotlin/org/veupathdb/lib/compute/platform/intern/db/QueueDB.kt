@@ -4,21 +4,13 @@ import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import org.postgresql.Driver
 import org.slf4j.LoggerFactory
-import org.veupathdb.lib.compute.platform.job.AsyncJob
-import org.veupathdb.lib.compute.platform.job.JobStatus
 import org.veupathdb.lib.compute.platform.config.AsyncPlatformConfig
 import org.veupathdb.lib.compute.platform.intern.db.model.JobRecord
 import org.veupathdb.lib.compute.platform.intern.db.queries.insert.RecordNewJob
 import org.veupathdb.lib.compute.platform.intern.db.queries.select.*
-import org.veupathdb.lib.compute.platform.intern.db.queries.select.GetExpiredJobs
-import org.veupathdb.lib.compute.platform.intern.db.queries.select.GetJobQueuePosition
-import org.veupathdb.lib.compute.platform.intern.db.queries.select.ListQueuedJobs
-import org.veupathdb.lib.compute.platform.intern.db.queries.select.LookupJob
-import org.veupathdb.lib.compute.platform.intern.db.queries.update.MarkJobExpired
-import org.veupathdb.lib.compute.platform.intern.db.queries.update.MarkJobFinished
-import org.veupathdb.lib.compute.platform.intern.db.queries.update.MarkJobGrabbed
-import org.veupathdb.lib.compute.platform.intern.db.queries.update.QueueDeadJobs
-import org.veupathdb.lib.compute.platform.intern.db.queries.update.UpdateDBLastAccessed
+import org.veupathdb.lib.compute.platform.intern.db.queries.update.*
+import org.veupathdb.lib.compute.platform.job.AsyncJob
+import org.veupathdb.lib.compute.platform.job.JobStatus
 import org.veupathdb.lib.hash_id.HashID
 import java.time.OffsetDateTime
 import java.util.stream.Stream
@@ -129,19 +121,19 @@ internal object QueueDB {
 
 
   /**
-   * Marks the target job as 'grabbed' or 'in-progress' in the database.
+   * Marks the target job as 'in-progress' in the database.
    *
    * Additionally, updates the job record's `grabbed` timestamp to the current
    * time.
    *
-   * @param jobID Hash ID of the job to be marked as grabbed/in-progress.
+   * @param jobID Hash ID of the job to be marked as in-progress.
    *
    * If the job does not exist in the database, no change will be made.
    */
   @JvmStatic
-  fun markJobAsGrabbed(jobID: HashID) {
-    Log.debug("Marking job {} as grabbed", jobID)
-    ds!!.connection.use { MarkJobGrabbed(it, jobID) }
+  fun markJobAsInProgress(jobID: HashID) {
+    Log.debug("Marking job {} as in-progress", jobID)
+    ds!!.connection.use { MarkJobInProgress(it, jobID) }
   }
 
 

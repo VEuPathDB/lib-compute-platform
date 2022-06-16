@@ -207,9 +207,9 @@ will have to be part of the platform configuration.
 
 * Insert new job
 * Update job status
-** Update from queued to grabbed
-** Update from grabbed to finished (failed or complete)
-** Update from grabbed to queued (dead job)
+** Update from queued to in-progress
+** Update from in-progress to finished (failed or complete)
+** Update from in-progress to queued (dead job)
 ** Update from finished to expired (except failed stays in failed status)
 * Get job status
 * Get job queue position

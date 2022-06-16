@@ -35,14 +35,15 @@ dependencies {
 
 === Interacting with the Platform
 
-All interactions with this platform are handled through the `AsyncPlatform`
+All interactions with this platform are handled through the
+link:src/main/kotlin/org/veupathdb/lib/compute/platform/AsyncPlatform.kt[`AsyncPlatform`]
 singleton.
 
 After initialization, the platform exposes a minimal set of methods for
 interactions:
 
 . Job Submission
-. Job Retrieval
+. Job Details Retrieval
 . Job Result Retrieval
 
 .Example Usage
@@ -75,6 +76,23 @@ if (job.status.isFinished()) {
 The details of the queue, database, and S3 store management are internal to the
 platform and are not exposed to library consumers except through callbacks.
 
+
+=== Implementing Platform Interfaces
+
+This library exposes 2 interfaces which library consumers must implement in
+order to work with the platform:
+link:src/main/kotlin/org/veupathdb/lib/compute/platform/job/JobExecutorFactory.kt[`JobExecutorFactory`]
+and
+link:src/main/kotlin/org/veupathdb/lib/compute/platform/job/JobExecutor.kt[`JobExecutor`].
+
+The `JobExecutorFactory` implementation is responsible for creating new
+instances of implementations of the `JobExecutor` interface.  This factory will
+be provided context for which the `JobExecutor` is being requested to enable the
+factory to provide an implementation suited for that context.
+
+The `JobExecutor` implementations are responsible for performing the actual jobs
+themselves.  This is where job execution specific logic should live or be called
+from.
 
 
 == Jobs
@@ -617,10 +635,10 @@ val config = AsyncPlatformConfig.build {
 }
 ----
 
+== Additional Topics
 
-== Database
-
-TODO: LINK HERE!
+* link:docs/reference/database.adoc[Database Details]
+* link:docs/reference/queues.adoc[Message Queues]
 
 == Job Cache Management
 
@@ -647,3 +665,4 @@ with the first prune attempt happening on startup.
 * `.failed`
 * `.expired`
 * `input-config`
+
