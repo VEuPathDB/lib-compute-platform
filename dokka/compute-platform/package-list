@@ -104,6 +104,12 @@ $dokka.location:org.veupathdb.lib.compute.platform.config/AsyncS3Config///Pointi
 $dokka.location:org.veupathdb.lib.compute.platform.config/AsyncS3Config/AsyncS3Config/#kotlin.String#kotlin.Int#kotlin.Boolean#kotlin.String#kotlin.String#kotlin.String#kotlin.String/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.config/-async-s3-config/-async-s3-config.html
 $dokka.location:org.veupathdb.lib.compute.platform.config/AsyncS3Config/AsyncS3Config/#kotlin.String#kotlin.String#kotlin.String#kotlin.String#kotlin.String/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.config/-async-s3-config/-async-s3-config.html
 $dokka.location:org.veupathdb.lib.compute.platform.config/AsyncS3Config/AsyncS3Config/#kotlin.String#kotlin.String#kotlin.String#kotlin.String/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.config/-async-s3-config/-async-s3-config.html
+$dokka.location:org.veupathdb.lib.compute.platform.intern.jobs////PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.jobs/index.html
+$dokka.location:org.veupathdb.lib.compute.platform.intern.jobs/JobExecContext///PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.jobs/-job-exec-context/index.html
+$dokka.location:org.veupathdb.lib.compute.platform.intern.jobs/JobExecContext/JobExecContext/#kotlin.String#org.veupathdb.lib.hash_id.HashID#com.fasterxml.jackson.databind.JsonNode?/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.jobs/-job-exec-context/-job-exec-context.html
+$dokka.location:org.veupathdb.lib.compute.platform.intern.jobs/JobExecContext/jobConfig/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.jobs/-job-exec-context/job-config.html
+$dokka.location:org.veupathdb.lib.compute.platform.intern.jobs/JobExecContext/jobID/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.jobs/-job-exec-context/job-i-d.html
+$dokka.location:org.veupathdb.lib.compute.platform.intern.jobs/JobExecContext/queue/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.jobs/-job-exec-context/queue.html
 $dokka.location:org.veupathdb.lib.compute.platform.job////PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.job/index.html
 $dokka.location:org.veupathdb.lib.compute.platform.job/AsyncJob///PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.job/-async-job/index.html
 $dokka.location:org.veupathdb.lib.compute.platform.job/AsyncJob/config/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.job/-async-job/config.html
@@ -120,8 +126,12 @@ $dokka.location:org.veupathdb.lib.compute.platform.job/JobContext/jobID/#/Pointi
 $dokka.location:org.veupathdb.lib.compute.platform.job/JobContext/workspace/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.job/-job-context/workspace.html
 $dokka.location:org.veupathdb.lib.compute.platform.job/JobExecutor///PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.job/-job-executor/index.html
 $dokka.location:org.veupathdb.lib.compute.platform.job/JobExecutor/execute/#org.veupathdb.lib.compute.platform.job.JobContext/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.job/-job-executor/execute.html
+$dokka.location:org.veupathdb.lib.compute.platform.job/JobExecutorContext///PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.job/-job-executor-context/index.html
+$dokka.location:org.veupathdb.lib.compute.platform.job/JobExecutorContext/jobConfig/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.job/-job-executor-context/job-config.html
+$dokka.location:org.veupathdb.lib.compute.platform.job/JobExecutorContext/jobID/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.job/-job-executor-context/job-i-d.html
+$dokka.location:org.veupathdb.lib.compute.platform.job/JobExecutorContext/queue/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.job/-job-executor-context/queue.html
 $dokka.location:org.veupathdb.lib.compute.platform.job/JobExecutorFactory///PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.job/-job-executor-factory/index.html
-$dokka.location:org.veupathdb.lib.compute.platform.job/JobExecutorFactory/newJobExecutor/#org.veupathdb.lib.hash_id.HashID#com.fasterxml.jackson.databind.JsonNode?/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.job/-job-executor-factory/new-job-executor.html
+$dokka.location:org.veupathdb.lib.compute.platform.job/JobExecutorFactory/newJobExecutor/#org.veupathdb.lib.compute.platform.job.JobExecutorContext/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.job/-job-executor-factory/new-job-executor.html
 $dokka.location:org.veupathdb.lib.compute.platform.job/JobFileReference///PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.job/-job-file-reference/index.html
 $dokka.location:org.veupathdb.lib.compute.platform.job/JobFileReference/name/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.job/-job-file-reference/name.html
 $dokka.location:org.veupathdb.lib.compute.platform.job/JobFileReference/open/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.job/-job-file-reference/open.html
@@ -188,5 +198,6 @@ $dokka.location:org.veupathdb.lib.compute.platform/AsyncPlatform/submitJob/#kotl
 $dokka.location:org.veupathdb.lib.compute.platform/AsyncPlatform/submitJob/#kotlin.String#org.veupathdb.lib.compute.platform.job.JobSubmission/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform/-async-platform/submit-job.html
 org.veupathdb.lib.compute.platform
 org.veupathdb.lib.compute.platform.config
+org.veupathdb.lib.compute.platform.intern.jobs
 org.veupathdb.lib.compute.platform.job
 
