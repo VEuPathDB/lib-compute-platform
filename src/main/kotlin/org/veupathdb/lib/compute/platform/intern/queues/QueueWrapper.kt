@@ -8,6 +8,7 @@ import org.veupathdb.lib.compute.platform.intern.jobs.JobExecContext
 import org.veupathdb.lib.compute.platform.intern.jobs.JobExecutors
 import org.veupathdb.lib.compute.platform.intern.metrics.JobMetrics
 import org.veupathdb.lib.compute.platform.intern.metrics.QueueMetrics
+import org.veupathdb.lib.compute.platform.intern.s3.S3
 import org.veupathdb.lib.compute.platform.job.JobResultStatus
 import org.veupathdb.lib.hash_id.HashID
 import org.veupathdb.lib.rabbit.jobs.QueueConfig
@@ -69,12 +70,14 @@ internal class QueueWrapper(conf: AsyncQueueConfig) {
     Log.info("job {} failed", job.jobID)
     JobMetrics.Failures.labels(name).inc()
     QueueDB.markJobAsFailed(job.jobID)
+    S3.markWorkspaceAsFailed(job.jobID)
   }
 
   private fun onSuccess(job: SuccessNotification) {
     Log.info("job {} succeeded", job.jobID)
     JobMetrics.Successes.labels(name).inc()
     QueueDB.markJobAsComplete(job.jobID)
+    S3.markWorkspaceAsComplete(job.jobID)
   }
 
   private fun onJob(job: JobDispatch) {
@@ -89,6 +92,8 @@ internal class QueueWrapper(conf: AsyncQueueConfig) {
     try {
       // Mark the job as in-progress in the database.
       QueueDB.markJobAsInProgress(job.jobID)
+      // Write the in-progress flag to S3
+      S3.markWorkspaceAsInProgress(job.jobID)
 
       when (JobExecutors.new(JobExecContext(name, job.jobID, job.body)).execute(job.jobID, job.body)) {
         JobResultStatus.Success -> handler.sendSuccess(SuccessNotification(job.jobID))

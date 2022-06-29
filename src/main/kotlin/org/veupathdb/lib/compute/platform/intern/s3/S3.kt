@@ -214,4 +214,26 @@ internal object S3 {
       v().use { ws.write(k, it) }
     }
   }
+
+  fun markWorkspaceAsInProgress(jobID: HashID) {
+    Log.debug("marking workspace for job {} as in-progress in s3", jobID)
+
+    val ws = wsf!![jobID] ?: throw IllegalStateException("Attempted to mark nonexistent workspace $jobID as in-progress")
+    ws.touch(FlagInProgress)
+  }
+
+  fun markWorkspaceAsFailed(jobID: HashID) {
+    Log.debug("marking workspace for job {} as failed in s3", jobID)
+
+    val ws = wsf!![jobID] ?: throw IllegalStateException("Attempted to mark nonexistent workspace $jobID as failed")
+    ws.touch(FlagFailed)
+  }
+
+  fun markWorkspaceAsComplete(jobID: HashID) {
+    Log.debug("marking workspace for job {} as failed in s3", jobID)
+
+    val ws = wsf!![jobID] ?: throw IllegalStateException("Attempted to mark nonexistent workspace $jobID as complete")
+    ws.touch(FlagComplete)
+  }
+
 }
