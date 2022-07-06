@@ -6,6 +6,7 @@ import org.postgresql.Driver
 import org.slf4j.LoggerFactory
 import org.veupathdb.lib.compute.platform.config.AsyncPlatformConfig
 import org.veupathdb.lib.compute.platform.intern.db.model.JobRecord
+import org.veupathdb.lib.compute.platform.intern.db.queries.delete.DeleteJob
 import org.veupathdb.lib.compute.platform.intern.db.queries.insert.RecordNewJob
 import org.veupathdb.lib.compute.platform.intern.db.queries.select.*
 import org.veupathdb.lib.compute.platform.intern.db.queries.update.*
@@ -151,6 +152,20 @@ internal object QueueDB {
     ds!!.connection.use { UpdateDBLastAccessed(it, jobID) }
   }
 
+
+  /**
+   * Deletes the job record for the job with the given ID if such a record
+   * exists.
+   *
+   * @param jobID Hash ID of the job to delete.
+   *
+   * @since 1.2.0
+   */
+  @JvmStatic
+  fun deleteJob(jobID: HashID) {
+    Log.debug("Deleting job {}", jobID)
+    ds!!.connection.use { DeleteJob(it, jobID) }
+  }
 
   /**
    * Retrieves the job record for the job with the given ID if such a record
