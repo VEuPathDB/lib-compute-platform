@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "org.veupathdb.lib"
-version = "1.0.1"
+version = "1.1.0"
 
 repositories {
   mavenLocal()
@@ -38,7 +38,7 @@ dependencies {
   implementation("org.postgresql:postgresql:42.3.6")
 
   // S3
-  implementation("org.veupathdb.lib.s3:s34k-minio:0.3.2+s34k-0.7.0")
+  implementation("org.veupathdb.lib.s3:s34k-minio:0.3.3+s34k-0.7.1")
   implementation("org.veupathdb.lib.s3:workspaces:4.0.3")
 
   // Rabbit
