@@ -16,6 +16,8 @@ private const val SQL = """
  * @param con Open database connection to be used for executing the query.
  *
  * @param jobID Hash ID of the job to delete.
+ *
+ * @since 1.2.0
  */
 internal fun DeleteJob(con: Connection, jobID: HashID) {
   con.prepareStatement(SQL).use { ps ->
