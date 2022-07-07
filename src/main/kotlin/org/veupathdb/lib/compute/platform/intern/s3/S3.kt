@@ -10,10 +10,11 @@ import org.veupathdb.lib.hash_id.HashID
 import org.veupathdb.lib.s3.s34k.S3Api
 import org.veupathdb.lib.s3.s34k.S3Client
 import org.veupathdb.lib.s3.s34k.S3Config
+import org.veupathdb.lib.s3.workspaces.S3Workspace
 import org.veupathdb.lib.s3.workspaces.S3WorkspaceFactory
+import java.io.File
 import java.io.InputStream
 import java.nio.file.Path
-import kotlin.io.path.name
 
 /**
  * S3 Manager
@@ -74,14 +75,32 @@ internal object S3 {
   }
 
 
+  /**
+   * Attempts to persist the list of files (and/or directories) to the S3 store.
+   *
+   * @param jobID Hash ID of the workspace into which the given files should be
+   * persisted.
+   *
+   * @param files List of files to persist.
+   */
   fun persistFiles(jobID: HashID, files: List<Path>) {
     Log.debug("persisting {} files to workspace {} in S3", files.size, jobID)
 
     val ws = wsf!![jobID] ?: throw IllegalStateException("Attempted to write result files to nonexistent workspace $jobID")
 
     files.forEach {
-      Log.debug("writing file {} to workspace {} in S3", it, jobID)
-      ws.copy(it.toFile(), it.name)
+      persistFile(ws, it.toFile())
+    }
+  }
+
+  private fun persistFile(ws: S3Workspace, src: File, prefix: String = "") {
+    if (src.isDirectory) {
+      val pfx = "$prefix${src.name}/"
+      src.listFiles()!!.forEach { persistFile(ws, it, pfx) }
+    } else {
+      val name = "$prefix${src.name}"
+      Log.debug("writing file {} as {} to workspace {} in S3", src, name, ws.id)
+      ws.copy(src, name)
     }
   }
 
