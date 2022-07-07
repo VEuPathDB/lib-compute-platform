@@ -178,16 +178,22 @@ object AsyncPlatform {
   }
 
   /**
-   * Deletes the target job only if it is both owned by the current service or
-   * process and is in a completed status.
+   * Deletes the target job only if it exists, is owned by the current service
+   * or process, and is in a completed status.
    *
-   * If the target job is not owned by the current service or process, or is
-   * not in a completed status, this method throws an [IllegalStateException].
+   * If the target job does not exist, is not owned by the current service or
+   * process, or is not in a completed status, this method throws an
+   * [IllegalStateException].
    *
    * Callers should first use [getJob] to test the completion and ownership
    * statuses of the job before attempting to use this method.
    *
    * @param jobID Hash ID of the job that should be deleted.
+   *
+   * @throws IllegalStateException If the target job does not exist, is not
+   * owned by the current service or process, or is not in a completed status.
+   *
+   * @since 1.2.0
    */
   @JvmStatic
   fun deleteJob(jobID: HashID) {
