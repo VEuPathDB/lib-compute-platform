@@ -176,4 +176,29 @@ object AsyncPlatform {
     Log.debug("Fetching results for job {}", jobID)
     return S3.getNonReservedFiles(jobID)
   }
+
+  /**
+   * Deletes the target job only if it is both owned by the current service or
+   * process and is in a completed status.
+   *
+   * If the target job is not owned by the current service or process, or is
+   * not in a completed status, this method throws an [IllegalStateException].
+   *
+   * Callers should first use [getJob] to test the completion and ownership
+   * statuses of the job before attempting to use this method.
+   *
+   * @param jobID Hash ID of the job that should be deleted.
+   */
+  @JvmStatic
+  fun deleteJob(jobID: HashID) {
+    Log.debug("Deleting job {}", jobID)
+
+    // Assert that the job is both owned by this process and is complete
+    (QueueDB.getJob(jobID)
+      ?: throw IllegalStateException("Attempted to delete unowned job $jobID"))
+      .finished ?: throw IllegalStateException("Attempted to delete incomplete job $jobID")
+
+    QueueDB.deleteJob(jobID)
+    S3.deleteWorkspace(jobID)
+  }
 }

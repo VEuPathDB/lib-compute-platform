@@ -85,6 +85,11 @@ internal object S3 {
     }
   }
 
+  fun deleteWorkspace(jobID: HashID) {
+    val ws = wsf!![jobID] ?: throw IllegalStateException("Attempted to delete nonexistent workspace $jobID")
+    ws.delete()
+  }
+
 
   /**
    * Fetches the input and output files from the target workspace.
