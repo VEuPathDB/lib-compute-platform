@@ -190,6 +190,7 @@ $dokka.location:org.veupathdb.lib.compute.platform.job/JobWorkspace/write/#kotli
 $dokka.location:org.veupathdb.lib.compute.platform.job/JobWorkspace/write/#kotlin.String#kotlin.String/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.job/-job-workspace/write.html
 $dokka.location:org.veupathdb.lib.compute.platform////PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform/index.html
 $dokka.location:org.veupathdb.lib.compute.platform/AsyncPlatform///PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform/-async-platform/index.html
+$dokka.location:org.veupathdb.lib.compute.platform/AsyncPlatform/deleteJob/#org.veupathdb.lib.hash_id.HashID/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform/-async-platform/delete-job.html
 $dokka.location:org.veupathdb.lib.compute.platform/AsyncPlatform/getJob/#org.veupathdb.lib.hash_id.HashID/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform/-async-platform/get-job.html
 $dokka.location:org.veupathdb.lib.compute.platform/AsyncPlatform/getJobFiles/#org.veupathdb.lib.hash_id.HashID/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform/-async-platform/get-job-files.html
 $dokka.location:org.veupathdb.lib.compute.platform/AsyncPlatform/init/#kotlin.Function1[org.veupathdb.lib.compute.platform.config.AsyncPlatformConfig.Builder,kotlin.Unit]/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform/-async-platform/init.html
