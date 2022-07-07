@@ -104,6 +104,20 @@ internal object S3 {
     }
   }
 
+  /**
+   * Deletes the workspace for the target job.
+   *
+   * @param jobID Hash ID of the job workspace that should be deleted.
+   *
+   * @throws IllegalStateException If the target job does not exist.
+   *
+   * @since 1.2.0
+   */
+  fun deleteWorkspace(jobID: HashID) {
+    val ws = wsf!![jobID] ?: throw IllegalStateException("Attempted to delete nonexistent workspace $jobID")
+    ws.delete()
+  }
+
 
   /**
    * Fetches the input and output files from the target workspace.

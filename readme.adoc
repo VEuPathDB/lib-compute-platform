@@ -45,6 +45,7 @@ interactions:
 . Job Submission
 . Job Details Retrieval
 . Job Result Retrieval
+. Job Deletion
 
 .Example Usage
 [source, java]
@@ -69,6 +70,9 @@ if (job.status.isFinished()) {
 
   // Do something with the result list
 }
+
+// Delete a failed job after cause of failure has been fixed
+AsyncPlatform.deleteJob(someJobID);
 
 ----
 

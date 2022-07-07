@@ -29,7 +29,7 @@ private const val SQL = """
 /**
  * Records a new job in the database.
  *
- * @param con Open database to be used for executing the query.
+ * @param con Open database connection to be used for executing the query.
  *
  * @param jobID Hash ID of the job to record.
  *
