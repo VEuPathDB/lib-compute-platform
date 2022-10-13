@@ -11,7 +11,7 @@ ifdef::env-github[]
 endif::[]
 
 image:https://img.shields.io/badge/jdk-17-blueviolet[title="JDK 17"]
-image:https://github.com/VEuPathDB/lib-compute-platform/actions/workflows/commit.yml/badge.svg?event=push[title="Build", link="https://github.com/VEuPathDB/lib-compute-platform/actions/workflows/commit.yml"]
+image:https://github.com/VEuPathDB/lib-compute-platform/actions/workflows/build-on-commit.yml/badge.svg[link="https://github.com/VEuPathDB/lib-compute-platform/actions/workflows/build-on-commit.yml"]
 image:https://img.shields.io/badge/docs-dokka-darkgreen[link="https://veupathdb.github.io/lib-compute-platform/dokka/"]
 image:https://img.shields.io/badge/docs-javadoc-darkblue[link="https://veupathdb.github.io/lib-compute-platform/javadoc/"]
 
