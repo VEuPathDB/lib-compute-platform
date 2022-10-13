@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "org.veupathdb.lib"
-version = "1.2.1"
+version = "1.2.2"
 
 repositories {
   mavenLocal()
@@ -29,24 +29,24 @@ dependencies {
   implementation("org.slf4j:slf4j-api:1.7.36")
 
   // Jackson
-  implementation(platform("com.fasterxml.jackson:jackson-bom:2.13.3"))
+  implementation(platform("com.fasterxml.jackson:jackson-bom:2.13.4"))
   implementation("com.fasterxml.jackson.core:jackson-databind")
   implementation("org.veupathdb.lib:jackson-singleton:3.0.0")
 
   // DB
   implementation("com.zaxxer:HikariCP:5.0.1")
-  implementation("org.postgresql:postgresql:42.3.6")
+  implementation("org.postgresql:postgresql:42.5.0")
 
   // S3
-  implementation("org.veupathdb.lib.s3:s34k-minio:0.3.4+s34k-0.7.1")
+  implementation("org.veupathdb.lib.s3:s34k-minio:0.3.5+s34k-0.7.2")
   implementation("org.veupathdb.lib.s3:workspaces:4.0.3")
 
   // Rabbit
   implementation("org.veupathdb.lib:rabbit-job-queue:1.2.0")
 
   // Metrics
-  implementation("io.prometheus:simpleclient:0.15.0")
-  implementation("io.prometheus:simpleclient_common:0.15.0")
+  implementation("io.prometheus:simpleclient:0.16.0")
+  implementation("io.prometheus:simpleclient_common:0.16.0")
 
   // Misc & Utils
   api("org.veupathdb.lib:hash-id:1.0.2")
