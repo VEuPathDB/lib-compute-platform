@@ -103,6 +103,11 @@ internal object QueueDB {
     ds!!.connection.use { MarkJobFinished(it, jobID, JobStatus.Failed) }
   }
 
+  @JvmStatic
+  fun setJobOutputFiles(jobID: HashID, files: Array<String>) {
+    Log.debug("Appending output files to job {}", jobID)
+    ds!!.connection.use { SetJobOutputFiles(it, jobID, files) }
+  }
 
   /**
    * Marks the target job as completed in the database.
