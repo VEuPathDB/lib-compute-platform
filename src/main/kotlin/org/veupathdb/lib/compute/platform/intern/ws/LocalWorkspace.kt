@@ -5,8 +5,10 @@ import org.veupathdb.lib.compute.platform.job.JobWorkspace
 import org.veupathdb.lib.jackson.Json
 import java.io.FileNotFoundException
 import java.io.InputStream
+import java.io.OutputStream
 import java.io.Reader
 import java.nio.file.Path
+import java.util.function.Consumer
 import kotlin.io.path.*
 
 internal class LocalWorkspace(override val path: Path) : JobWorkspace {
@@ -23,6 +25,9 @@ internal class LocalWorkspace(override val path: Path) : JobWorkspace {
 
   override fun write(path: String, data: InputStream) =
     resolveForWriting(path).also { it.outputStream().use { os -> data.transferTo(os); os.flush() } }
+
+  override fun write(path: String, consumer: Consumer<OutputStream>) =
+    resolveForWriting(path).also { it.outputStream().use { os -> consumer.accept(os); os.flush() } }
 
   override fun write(path: String, data: Reader) =
     resolveForWriting(path).also { it.writer().use { ow -> data.transferTo(ow); ow.flush() } }
