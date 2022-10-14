@@ -3,8 +3,10 @@ package org.veupathdb.lib.compute.platform.job
 import com.fasterxml.jackson.databind.JsonNode
 import java.io.FileNotFoundException
 import java.io.InputStream
+import java.io.OutputStream
 import java.io.Reader
 import java.nio.file.Path
+import java.util.function.Consumer
 
 /**
  * Local Scratch Workspace
@@ -75,6 +77,28 @@ interface JobWorkspace {
    * @return Path to the written file.
    */
   fun write(path: String, data: InputStream): Path
+
+  /**
+   * Opens an output stream to the given path and passes it to the consumer,
+   * which can write arbitrary data to the file, then closes the stream.
+   *
+   * If the given path points to a file that already exists, it will be
+   * truncated before writing.
+   *
+   * If the given path points to a file that does not yet exist, it will be
+   * created.
+   *
+   * @param path Relative path at which the file should be written.
+   *
+   * If this path includes subdirectories, those subdirectories will be created
+   * if they do not already exist.
+   *
+   * @param consumer Consumer of the created output stream which will write
+   * data to the target file via the stream.
+   *
+   * @return Path to the written file.
+   */
+  fun write(path: String, consumer: Consumer<OutputStream>): Path
 
   /**
    * Writes the contents of the given reader to the file at the given path.
