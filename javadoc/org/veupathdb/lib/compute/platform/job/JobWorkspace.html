@@ -272,12 +272,20 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                         <tr id="i4" class="altColor">
                                             <td class="colFirst"><code>abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a></code>
                                             </td>
+                                            <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#write(String,Consumer)>write</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path, <a href=https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html>Consumer</a>&lt;<a href=https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html>OutputStream</a>&gt; consumer) </code>
+                                            </th>
+                                            <td class="colLast">Opens an output stream to the given path and passes it to the consumer, which can write arbitrary data to the file, then closes the stream.</td>
+                                        </tr>
+                                        
+                                        <tr id="i5" class="rowColor">
+                                            <td class="colFirst"><code>abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a></code>
+                                            </td>
                                             <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#write(String,Reader)>write</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path, <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html>Reader</a> data) </code>
                                             </th>
                                             <td class="colLast">Writes the contents of the given reader to the file at the given path.</td>
                                         </tr>
                                         
-                                        <tr id="i5" class="rowColor">
+                                        <tr id="i6" class="altColor">
                                             <td class="colFirst"><code>abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a></code>
                                             </td>
                                             <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#write(String,String)>write</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> data) </code>
@@ -285,7 +293,7 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                             <td class="colLast">Writes the given string to the file at the given path.</td>
                                         </tr>
                                         
-                                        <tr id="i6" class="altColor">
+                                        <tr id="i7" class="rowColor">
                                             <td class="colFirst"><code>abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a></code>
                                             </td>
                                             <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#write(String,JsonNode)>write</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path, JsonNode data) </code>
@@ -293,7 +301,7 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                             <td class="colLast">Writes the given JsonNode to the file at the given path.</td>
                                         </tr>
                                         
-                                        <tr id="i7" class="rowColor">
+                                        <tr id="i8" class="altColor">
                                             <td class="colFirst"><code>abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a></code>
                                             </td>
                                             <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#copy(String,String)>copy</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> fromPath, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> toPath) </code>
@@ -301,7 +309,7 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                             <td class="colLast">Copies the file at the given <a href=JobWorkspace.html#copy(String,String)>fromPath</a> to the given <a href=JobWorkspace.html#copy(String,String)>toPath</a>.</td>
                                         </tr>
                                         
-                                        <tr id="i8" class="altColor">
+                                        <tr id="i9" class="rowColor">
                                             <td class="colFirst"><code>abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html>InputStream</a></code>
                                             </td>
                                             <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#openStream(String)>openStream</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path) </code>
@@ -309,7 +317,7 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                             <td class="colLast">Opens an <a href=https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html>InputStream</a> over the contents of the file at the given <a href=JobWorkspace.html#openStream(String)>path</a>.</td>
                                         </tr>
                                         
-                                        <tr id="i9" class="rowColor">
+                                        <tr id="i10" class="altColor">
                                             <td class="colFirst"><code>abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html>Reader</a></code>
                                             </td>
                                             <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#openReader(String)>openReader</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path) </code>
@@ -317,7 +325,7 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                             <td class="colLast">Opens a <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html>Reader</a> over the contents of the file at the given <a href=JobWorkspace.html#openReader(String)>path</a>.</td>
                                         </tr>
                                         
-                                        <tr id="i10" class="altColor">
+                                        <tr id="i11" class="rowColor">
                                             <td class="colFirst"><code>abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a></code>
                                             </td>
                                             <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#readAsString(String)>readAsString</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path) </code>
@@ -325,7 +333,7 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                             <td class="colLast">Reads the contents of the file at the given <a href=JobWorkspace.html#readAsString(String)>path</a> into a <a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html>String</a> and returns it.</td>
                                         </tr>
                                         
-                                        <tr id="i11" class="rowColor">
+                                        <tr id="i12" class="altColor">
                                             <td class="colFirst"><code>abstract JsonNode</code>
                                             </td>
                                             <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#readAsJson(String)>readAsJson</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path) </code>
@@ -333,7 +341,7 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                             <td class="colLast">Reads the contents of the file at the given <a href=JobWorkspace.html#readAsJson(String)>path</a> as a JSON value and returns it.</td>
                                         </tr>
                                         
-                                        <tr id="i12" class="altColor">
+                                        <tr id="i13" class="rowColor">
                                             <td class="colFirst"><code>abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a></code>
                                             </td>
                                             <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#getPath()>getPath</a>() </code>
@@ -477,6 +485,34 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                             
                                             
                                             <dd><code>data</code> - Input stream over the data that will be written to the target file.</dd>
+                                            
+                                            
+                                        </dl>
+                                        
+                                        <!-- TODO missing return annotation -->
+                                    </li>
+                                </ul>
+                                
+                                <a id="write(String,Consumer)">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>write</h4>
+                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a> <a href=JobWorkspace.html#write(String,Consumer)>write</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path, <a href=https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html>Consumer</a>&lt;<a href=https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html>OutputStream</a>&gt; consumer)</pre>
+                                        <div class="block"><p>Opens an output stream to the given path and passes it to the consumer, which can write arbitrary data to the file, then closes the stream.</p><p>If the given path points to a file that already exists, it will be truncated before writing.</p><p>If the given path points to a file that does not yet exist, it will be created.</p></div>
+                                        
+                                        <dl>
+                                            <dt><span class="paramLabel">Parameters:</span></dt>
+                                            
+                                            
+                                            <dd><code>path</code> - Relative path at which the file should be written.</dd>
+                                            
+                                            
+                                            
+                                            <dd><code>consumer</code> - Consumer of the created output stream which will write data to the target file via the stream.</dd>
                                             
                                             
                                         </dl>

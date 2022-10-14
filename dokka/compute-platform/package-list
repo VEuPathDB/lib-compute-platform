@@ -187,6 +187,7 @@ $dokka.location:org.veupathdb.lib.compute.platform.job/JobWorkspace/touch/#kotli
 $dokka.location:org.veupathdb.lib.compute.platform.job/JobWorkspace/write/#kotlin.String#com.fasterxml.jackson.databind.JsonNode/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.job/-job-workspace/write.html
 $dokka.location:org.veupathdb.lib.compute.platform.job/JobWorkspace/write/#kotlin.String#java.io.InputStream/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.job/-job-workspace/write.html
 $dokka.location:org.veupathdb.lib.compute.platform.job/JobWorkspace/write/#kotlin.String#java.io.Reader/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.job/-job-workspace/write.html
+$dokka.location:org.veupathdb.lib.compute.platform.job/JobWorkspace/write/#kotlin.String#java.util.function.Consumer[java.io.OutputStream]/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.job/-job-workspace/write.html
 $dokka.location:org.veupathdb.lib.compute.platform.job/JobWorkspace/write/#kotlin.String#kotlin.String/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.job/-job-workspace/write.html
 $dokka.location:org.veupathdb.lib.compute.platform////PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform/index.html
 $dokka.location:org.veupathdb.lib.compute.platform/AsyncPlatform///PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform/-async-platform/index.html
