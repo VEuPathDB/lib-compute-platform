@@ -88,6 +88,9 @@ internal class JobExecutionHandler(private val executor: JobExecutor) {
       // Persist the outputs of the job to S3.
       S3.persistFiles(jobID, workspace.getFiles(res.outputFiles))
 
+      // Record the output files on the job row
+      QueueDB.setJobOutputFiles(jobID, res.outputFiles.toTypedArray())
+
       // Return the job's status
       return res.status
     }
