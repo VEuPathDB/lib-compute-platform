@@ -123,7 +123,7 @@ object AsyncPlatform {
     QueueDB.submitJob(queue, job.jobID, job.config?.toString(), job.inputs.keys)
 
     // Remove any previous workspace at this location
-    S3.deleteWorkspace(job.jobID)
+    S3.deleteWorkspace(job.jobID, false)
 
     // Create a workspace for the new job in S3
     S3.submitWorkspace(job.jobID, job.config, job.inputs)
