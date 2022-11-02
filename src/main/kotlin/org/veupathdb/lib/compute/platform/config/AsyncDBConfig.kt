@@ -4,7 +4,7 @@ private const val DefaultPort = 5432
 private const val DefaultPoolSize = 10
 
 /**
- * Async Platform Database Connection Configuration
+ * Async Platform Database Connection Configurationn
  *
  * Configures how the async compute platform library will connect to its managed
  * PostgreSQL instance.
