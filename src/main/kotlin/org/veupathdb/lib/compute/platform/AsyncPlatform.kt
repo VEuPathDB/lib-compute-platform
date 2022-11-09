@@ -110,6 +110,9 @@ object AsyncPlatform {
    *
    * @throws IllegalArgumentException If the given [queue] value is not a valid
    * queue ID/name.
+   *
+   * @throws IllegalStateException If the ID of the given job already exists and
+   * belongs to another instance of this service.
    */
   @JvmStatic
   fun submitJob(queue: String, job: JobSubmission) {
@@ -118,6 +121,16 @@ object AsyncPlatform {
     // If the target queue doesn't exist, halt here.
     if (queue !in JobQueues)
       throw IllegalArgumentException("Attempted to submit a job to nonexistent queue '$queue'.")
+
+    // Lookup the job to see if it already exists.
+    getJob(job.jobID)
+      // If it does exist
+      ?.also {
+        // And it is not owned by this service instance
+        if (!it.owned)
+          // Throw an exception
+          throw IllegalStateException("Attempted to submit a job that would overwrite an existing job owned by another campus (${job.jobID})")
+      }
 
     // Record the new job in the database
     QueueDB.submitJob(queue, job.jobID, job.config?.toString(), job.inputs.keys)
