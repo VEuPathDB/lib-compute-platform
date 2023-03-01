@@ -24,8 +24,8 @@ private const val SQL = """
  */
 internal fun MarkJobQueued(con: Connection, jobID: HashID, queue: String) {
   con.prepareStatement(SQL).use { ps ->
-    ps.setBytes(1, jobID.bytes)
-    ps.setString(2, queue)
+    ps.setString(1, queue)
+    ps.setBytes(2, jobID.bytes)
     ps.execute()
   }
 }
