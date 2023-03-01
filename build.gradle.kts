@@ -1,14 +1,14 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-  kotlin("jvm") version "1.6.21"
-  id("org.jetbrains.dokka") version "1.6.21"
+  kotlin("jvm") version "1.8.0"
+  id("org.jetbrains.dokka") version "1.7.20"
   java
   `maven-publish`
 }
 
 group = "org.veupathdb.lib"
-version = "1.3.5"
+version = "1.3.6"
 
 repositories {
   mavenLocal()
@@ -29,13 +29,13 @@ dependencies {
   implementation("org.slf4j:slf4j-api:1.7.36")
 
   // Jackson
-  implementation(platform("com.fasterxml.jackson:jackson-bom:2.13.4"))
+  implementation(platform("com.fasterxml.jackson:jackson-bom:2.14.2"))
   implementation("com.fasterxml.jackson.core:jackson-databind")
   implementation("org.veupathdb.lib:jackson-singleton:3.0.0")
 
   // DB
   implementation("com.zaxxer:HikariCP:5.0.1")
-  implementation("org.postgresql:postgresql:42.5.0")
+  implementation("org.postgresql:postgresql:42.5.1")
 
   // S3
   implementation("org.veupathdb.lib.s3:s34k-minio:0.3.6+s34k-0.7.2")
