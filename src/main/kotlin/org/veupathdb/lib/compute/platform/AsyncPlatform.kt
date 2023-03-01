@@ -123,7 +123,7 @@ object AsyncPlatform {
       throw IllegalArgumentException("Attempted to submit a job to nonexistent queue '$queue'.")
 
     // Lookup the job to see if it already exists.
-    getJob(job.jobID)
+    val exists = getJob(job.jobID)
       // If it does exist
       ?.also {
         // And it is not owned by this service instance
@@ -131,9 +131,16 @@ object AsyncPlatform {
           // Throw an exception
           throw IllegalStateException("Attempted to submit a job that would overwrite an existing job owned by another campus (${job.jobID})")
       }
+      .let { it != null }
 
-    // Record the new job in the database
-    QueueDB.submitJob(queue, job.jobID, job.config?.toString(), job.inputs.keys)
+    // If the job already exists
+    if (exists)
+      // Reset the job status to queued and update the queue name
+      QueueDB.markJobAsQueued(job.jobID, queue)
+    // Else, if the job does not already exist
+    else
+      // Record the new job in the database
+      QueueDB.submitJob(queue, job.jobID, job.config?.toString(), job.inputs.keys)
 
     // Remove any previous workspace at this location
     S3.deleteWorkspace(job.jobID, false)

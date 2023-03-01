@@ -72,6 +72,11 @@ internal object QueueDB {
     return ds!!.connection.use { GetExpiredJobs(it, cutoff) }
   }
 
+  @JvmStatic
+  fun markJobAsQueued(jobID: HashID, queue: String) {
+    Log.debug("Marking job {} as queued", jobID)
+    ds!!.connection.use { MarkJobQueued(it, jobID, queue) }
+  }
 
   /**
    * Marks the target job as expired in the database.
@@ -85,7 +90,6 @@ internal object QueueDB {
     Log.debug("Marking job {} as expired", jobID)
     ds!!.connection.use { MarkJobExpired(it, jobID) }
   }
-
 
   /**
    * Marks the target job as failed in the database.
