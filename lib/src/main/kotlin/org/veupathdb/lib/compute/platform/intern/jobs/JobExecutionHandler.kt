@@ -6,9 +6,7 @@ import org.veupathdb.lib.compute.platform.intern.FileConfig
 import org.veupathdb.lib.compute.platform.intern.db.QueueDB
 import org.veupathdb.lib.compute.platform.intern.s3.S3
 import org.veupathdb.lib.compute.platform.intern.ws.ScratchSpaces
-import org.veupathdb.lib.compute.platform.job.JobExecutor
-import org.veupathdb.lib.compute.platform.job.JobFileReference
-import org.veupathdb.lib.compute.platform.job.JobResultStatus
+import org.veupathdb.lib.compute.platform.job.*
 import org.veupathdb.lib.hash_id.HashID
 
 /**
@@ -34,7 +32,7 @@ internal class JobExecutionHandler(private val executor: JobExecutor) {
    * with the `queued`, `in-progress`, `input-config`, and the job's input
    * files.
    */
-  fun execute(jobID: HashID, conf: JsonNode?): JobResultStatus {
+  fun execute(jobID: HashID, conf: JsonNode?): PlatformJobResultStatus {
 
     Log.debug("executing job {}", jobID)
 
@@ -48,7 +46,7 @@ internal class JobExecutionHandler(private val executor: JobExecutor) {
       // If the job wasn't found something has gone terribly wrong
       if (dbJob == null) {
         Log.error("db job lookup failed in job execution for job {}", jobID)
-        return JobResultStatus.Failure
+        return PlatformJobResultStatus.Failure
       }
 
       // If the job does have input files
@@ -61,7 +59,7 @@ internal class JobExecutionHandler(private val executor: JobExecutor) {
         // goofed somewhere along the line and we can't execute this job.
         if (s3Files.isEmpty()) {
           Log.error("db job specifies input files, but none were found in S3 workspace for job {}", jobID)
-          return JobResultStatus.Failure
+          return PlatformJobResultStatus.Failure
         }
 
         // index the S3 files
@@ -70,20 +68,29 @@ internal class JobExecutionHandler(private val executor: JobExecutor) {
 
         // Ensure we have all the required files in S3
         if (!validateIndex(jobID, dbJob.includedFiles, index))
-          return JobResultStatus.Failure
+          return PlatformJobResultStatus.Failure
 
         // Download all the files from S3 into the local workspace.
         try {
           dbJob.includedFiles.forEach { index[it]!!.open().use { s -> workspace.write(it, s) } }
         } catch (e: Throwable) {
           Log.error("failed to download files from s3 to local scratch workspace for job $jobID", e)
-          return JobResultStatus.Failure
+          return PlatformJobResultStatus.Failure
         }
       }
 
+      // Verify that the job is still valid (hasn't been deleted or expired
+      // while it was waiting in the queue).
+      if (!jobIsStillRunnable(jobID))
+        return PlatformJobResultStatus.Aborted
 
       // Execute the job via the given JobExecutor implementation.
       val res = executor.execute(JobContext(jobID, conf, workspace))
+
+      // Verify that the job is _still_ still valid (didn't get deleted or
+      // expired out from under us while we were running the executor).
+      if (!jobIsStillRunnable(jobID))
+        return PlatformJobResultStatus.Aborted
 
       // Persist the outputs of the job to S3.
       S3.persistFiles(jobID, workspace.getFiles(res.outputFiles))
@@ -91,9 +98,29 @@ internal class JobExecutionHandler(private val executor: JobExecutor) {
       // Record the output files on the job row
       QueueDB.setJobOutputFiles(jobID, res.outputFiles.toTypedArray())
 
+      // Verify that the job wasn't invalidated while we were busy writing files
+      // to S3.
+      if (jobWasInvalidated(jobID)) {
+        S3.wipeWorkspace(jobID)
+        return PlatformJobResultStatus.Aborted
+      }
+
       // Return the job's status
-      return res.status
+      return res.status.toPlatformStatus()
     }
+  }
+
+  private fun jobIsStillRunnable(jobID: HashID): Boolean {
+    if ((QueueDB.getJob(jobID) ?: return false).status == JobStatus.Expired)
+      return false
+    else
+      return (S3.getJob(jobID) ?: return false).status != JobStatus.Expired
+  }
+
+  private fun jobWasInvalidated(jobID: HashID): Boolean {
+    QueueDB.getJob(jobID) ?: return true
+    S3.getJob(jobID) ?: return true
+    return false
   }
 
   private fun validateIndex(jobID: HashID, files: Array<String>, index: Map<String, *>): Boolean {

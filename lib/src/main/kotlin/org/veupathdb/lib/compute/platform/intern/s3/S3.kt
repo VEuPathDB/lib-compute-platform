@@ -117,6 +117,7 @@ internal object S3 {
    *
    * @since 1.2.0
    */
+  @JvmStatic
   @JvmOverloads
   fun deleteWorkspace(jobID: HashID, throwOnNotExists: Boolean = true) {
     val ws = wsf[jobID]
@@ -125,7 +126,29 @@ internal object S3 {
       throw IllegalStateException("Attempted to delete nonexistent workspace $jobID")
     }
 
-    ws?.delete()
+    wipeWorkspace(jobID)
+  }
+
+  /**
+   * Deletes all traces of a workspace for the target job.
+   *
+   * This method skips any safety checks and removes all objects from S3 that
+   * fall under the workspace prefix, leaving no trace of the job or workspace
+   * in S3.
+   *
+   * This method should only be used directly when it is necessary to remove a
+   * broken or invalid workspace from S3.
+   *
+   * @param jobID ID of the job for which the workspace belonged.
+   *
+   * @since 1.5.0
+   */
+  @JvmStatic
+  fun wipeWorkspace(jobID: HashID) {
+    s3.buckets[BucketName(config.bucket)]!!
+      .objects
+      .list(prefix = config.rootPath.appendSlash() + jobID.toString())
+      .forEach { it.delete() }
   }
 
   /**
@@ -193,7 +216,6 @@ internal object S3 {
     // Create the expired flag.
     ws.touch(FlagExpired)
   }
-
 
   /**
    * Returns a job workspace back to its initial `queued` state (the state it

@@ -9,7 +9,7 @@ import org.veupathdb.lib.compute.platform.intern.jobs.JobExecutors
 import org.veupathdb.lib.compute.platform.intern.metrics.JobMetrics
 import org.veupathdb.lib.compute.platform.intern.metrics.QueueMetrics
 import org.veupathdb.lib.compute.platform.intern.s3.S3
-import org.veupathdb.lib.compute.platform.job.JobResultStatus
+import org.veupathdb.lib.compute.platform.job.PlatformJobResultStatus
 import org.veupathdb.lib.hash_id.HashID
 import org.veupathdb.lib.rabbit.jobs.QueueConfig
 import org.veupathdb.lib.rabbit.jobs.QueueDispatcher
@@ -96,8 +96,9 @@ internal class QueueWrapper(conf: AsyncQueueConfig) {
       S3.markWorkspaceAsInProgress(job.jobID)
 
       when (JobExecutors.new(JobExecContext(name, job.jobID, job.body)).execute(job.jobID, job.body)) {
-        JobResultStatus.Success -> handler.sendSuccess(SuccessNotification(job.jobID))
-        JobResultStatus.Failure -> handler.sendError(ErrorNotification(job.jobID, 1))
+        PlatformJobResultStatus.Success -> handler.sendSuccess(SuccessNotification(job.jobID))
+        PlatformJobResultStatus.Failure -> handler.sendError(ErrorNotification(job.jobID, 1))
+        PlatformJobResultStatus.Aborted -> { /* Job was aborted, send no notifications. */ }
       }
     } catch (e: Throwable) {
       Log.error("job execution failed with an exception for job ${job.jobID}", e)
