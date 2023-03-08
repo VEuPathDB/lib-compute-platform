@@ -232,6 +232,12 @@ object AsyncPlatform {
     S3.deleteWorkspace(jobID)
   }
 
+  /**
+   * Lists references to jobs that may or may not be owned by this service
+   * instance.
+   *
+   * @since 1.4.0
+   */
   @JvmStatic
   fun listJobReferences(): List<JobReference> {
     val ownedJobs = HashMap<HashID, JobReference>()
