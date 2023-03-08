@@ -2,6 +2,8 @@ package org.veupathdb.lib.compute.platform
 
 import org.slf4j.LoggerFactory
 import org.veupathdb.lib.compute.platform.config.AsyncPlatformConfig
+import org.veupathdb.lib.compute.platform.errors.IncompleteJobException
+import org.veupathdb.lib.compute.platform.errors.UnownedJobException
 import org.veupathdb.lib.compute.platform.intern.JobPruner
 import org.veupathdb.lib.compute.platform.intern.db.DatabaseMigrator
 import org.veupathdb.lib.compute.platform.intern.db.QueueDB
@@ -225,8 +227,8 @@ object AsyncPlatform {
 
     // Assert that the job is both owned by this process and is complete
     (QueueDB.getJob(jobID)
-      ?: throw IllegalStateException("Attempted to delete unowned job $jobID"))
-      .finished ?: throw IllegalStateException("Attempted to delete incomplete job $jobID")
+      ?: throw UnownedJobException("Attempted to delete unowned job $jobID"))
+      .finished ?: throw IncompleteJobException("Attempted to delete incomplete job $jobID")
 
     QueueDB.deleteJob(jobID)
     S3.deleteWorkspace(jobID)
@@ -259,8 +261,11 @@ object AsyncPlatform {
   /**
    * Marks the target job as expired.
    *
-   * If the target job does not exist or is not owned by this platform instance,
-   * an [IllegalStateException] will be thrown.
+   * If the target job is not owned by the current Async Platform instance, an
+   * [UnownedJobException] will be thrown.
+   *
+   * If the target job is not yet in a 'finished' state (complete or failed), an
+   * [IncompleteJobException] will be thrown.
    *
    * @param jobID ID of the job to expire.
    *
@@ -273,8 +278,8 @@ object AsyncPlatform {
     // Verify that this job exists and is owned bt the current platform
     // instance.
     (QueueDB.getJob(jobID)
-      ?: throw IllegalStateException("Attempted to expire unowned job $jobID"))
-      .finished ?: throw IllegalStateException("Attempted expire to incomplete job $jobID")
+      ?: throw UnownedJobException("Attempted to expire unowned job $jobID"))
+      .finished ?: throw IncompleteJobException("Attempted expire to incomplete job $jobID")
 
     QueueDB.markJobAsExpired(jobID)
     S3.expireWorkspace(jobID)
