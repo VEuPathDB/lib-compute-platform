@@ -195,7 +195,6 @@ $dokka.location:org.veupathdb.lib.compute.platform.job/JobWorkspace/write/#kotli
 $dokka.location:org.veupathdb.lib.compute.platform.job/JobWorkspace/write/#kotlin.String#kotlin.String/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.job/-job-workspace/write.html
 $dokka.location:org.veupathdb.lib.compute.platform.model////PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.model/index.html
 $dokka.location:org.veupathdb.lib.compute.platform.model/JobReference///PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.model/-job-reference/index.html
-$dokka.location:org.veupathdb.lib.compute.platform.model/JobReference/JobReference/#org.veupathdb.lib.hash_id.HashID#kotlin.Boolean/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.model/-job-reference/-job-reference.html
 $dokka.location:org.veupathdb.lib.compute.platform.model/JobReference/jobID/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.model/-job-reference/job-i-d.html
 $dokka.location:org.veupathdb.lib.compute.platform.model/JobReference/owned/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.model/-job-reference/owned.html
 $dokka.location:org.veupathdb.lib.compute.platform////PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform/index.html
