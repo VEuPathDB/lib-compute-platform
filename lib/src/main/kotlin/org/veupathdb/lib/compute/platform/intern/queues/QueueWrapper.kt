@@ -9,7 +9,6 @@ import org.veupathdb.lib.compute.platform.intern.jobs.JobExecutors
 import org.veupathdb.lib.compute.platform.intern.metrics.JobMetrics
 import org.veupathdb.lib.compute.platform.intern.metrics.QueueMetrics
 import org.veupathdb.lib.compute.platform.intern.s3.S3
-import org.veupathdb.lib.compute.platform.job.JobResultStatus
 import org.veupathdb.lib.compute.platform.job.PlatformJobResultStatus
 import org.veupathdb.lib.hash_id.HashID
 import org.veupathdb.lib.rabbit.jobs.QueueConfig
