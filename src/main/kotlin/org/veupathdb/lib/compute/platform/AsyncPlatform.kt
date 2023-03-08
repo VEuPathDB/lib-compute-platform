@@ -236,6 +236,8 @@ object AsyncPlatform {
    * Lists references to jobs that may or may not be owned by this service
    * instance.
    *
+   * @return List of job references.
+   *
    * @since 1.4.0
    */
   @JvmStatic
