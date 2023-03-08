@@ -29,5 +29,5 @@ jobs:
       - name: Publish Docs
         uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
-          folder: build/docs
+          folder: lib/build/docs
           branch: docs
