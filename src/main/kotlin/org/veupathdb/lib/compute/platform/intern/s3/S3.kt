@@ -10,6 +10,7 @@ import org.veupathdb.lib.hash_id.HashID
 import org.veupathdb.lib.s3.s34k.S3Api
 import org.veupathdb.lib.s3.s34k.S3Client
 import org.veupathdb.lib.s3.s34k.S3Config
+import org.veupathdb.lib.s3.s34k.fields.BucketName
 import org.veupathdb.lib.s3.workspaces.S3Workspace
 import org.veupathdb.lib.s3.workspaces.S3WorkspaceFactory
 import java.io.File
@@ -277,4 +278,18 @@ internal object S3 {
     ws.touch(FlagComplete)
   }
 
+  /**
+   * Lists the IDs of all the jobs under the root path in S3.
+   *
+   * @since 1.4.0
+   */
+  fun listJobIDs(): Sequence<HashID> {
+    return s3.buckets[BucketName(config.bucket)]!!
+      .objects
+      .listSubPaths(config.rootPath)
+      .commonPrefixes()
+      .asSequence()
+      .map { try { HashID(it) } catch (e: Throwable) { null } }
+      .filterNotNull()
+  }
 }

@@ -232,6 +232,24 @@ internal object QueueDB {
   }
 
   /**
+   * Retrieves a stream of all job records.
+   *
+   * The returned stream **MUST** be closed when the caller is done with it to
+   * prevent DB connection leaks.
+   *
+   * @return Stream of all jobs ordered by job creation date.
+   *
+   * @since 1.4.0
+   */
+  fun getAllJobs(): Stream<JobRecord> {
+    Log.debug("Getting list of all jobs.")
+
+    // Connection is not closed here as the caller is responsible for closing
+    // the stream.
+    return ListAllJobs(ds.connection)
+  }
+
+  /**
    * Retrieves the current database version.
    *
    * If there is no database version set this method returns `null`.

@@ -12,6 +12,7 @@ import org.veupathdb.lib.compute.platform.intern.ws.ScratchSpaces
 import org.veupathdb.lib.compute.platform.job.AsyncJob
 import org.veupathdb.lib.compute.platform.job.JobFileReference
 import org.veupathdb.lib.compute.platform.job.JobSubmission
+import org.veupathdb.lib.compute.platform.model.JobReference
 import org.veupathdb.lib.hash_id.HashID
 
 /**
@@ -229,5 +230,21 @@ object AsyncPlatform {
 
     QueueDB.deleteJob(jobID)
     S3.deleteWorkspace(jobID)
+  }
+
+  @JvmStatic
+  fun listJobReferences(): List<JobReference> {
+    val ownedJobs = HashMap<HashID, JobReference>()
+
+    QueueDB.getAllJobs()
+      .map { JobReference(it.jobID, true) }
+      .forEach { ownedJobs[it.jobID] = it }
+
+    S3.listJobIDs()
+      .filter { it !in ownedJobs }
+      .map { JobReference(it, false) }
+      .forEach { ownedJobs[it.jobID] = it }
+
+    return ownedJobs.values.toTypedArray().asList()
   }
 }
