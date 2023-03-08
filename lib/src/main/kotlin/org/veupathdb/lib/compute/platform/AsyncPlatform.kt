@@ -274,7 +274,7 @@ object AsyncPlatform {
     // instance.
     (QueueDB.getJob(jobID)
       ?: throw IllegalStateException("Attempted to expire unowned job $jobID"))
-      .finished ?: throw IllegalStateException("Attempted to incomplete job $jobID")
+      .finished ?: throw IllegalStateException("Attempted expire to incomplete job $jobID")
 
     QueueDB.markJobAsExpired(jobID)
     S3.expireWorkspace(jobID)
