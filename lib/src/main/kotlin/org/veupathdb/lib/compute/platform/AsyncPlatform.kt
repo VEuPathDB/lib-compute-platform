@@ -255,4 +255,28 @@ object AsyncPlatform {
 
     return ownedJobs.values.toTypedArray().asList()
   }
+
+  /**
+   * Marks the target job as expired.
+   *
+   * If the target job does not exist or is not owned by this platform instance,
+   * an [IllegalStateException] will be thrown.
+   *
+   * @param jobID ID of the job to expire.
+   *
+   * @since 1.5.0
+   */
+  @JvmStatic
+  fun expireJob(jobID: HashID) {
+    Log.debug("Expiring job {}", jobID)
+
+    // Verify that this job exists and is owned bt the current platform
+    // instance.
+    (QueueDB.getJob(jobID)
+      ?: throw IllegalStateException("Attempted to expire unowned job $jobID"))
+      .finished ?: throw IllegalStateException("Attempted to incomplete job $jobID")
+
+    QueueDB.markJobAsExpired(jobID)
+    S3.expireWorkspace(jobID)
+  }
 }
