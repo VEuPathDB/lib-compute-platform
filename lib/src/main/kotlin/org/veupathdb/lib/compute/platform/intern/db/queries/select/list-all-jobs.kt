@@ -6,12 +6,14 @@ import java.sql.Connection
 import java.sql.ResultSet
 import java.util.stream.Stream
 
+// language=postgresql
 private const val SQL = """
   SELECT
     job_id
   , status
   , queue
   , config
+  , input_files
   , created
   , last_accessed
   , grabbed

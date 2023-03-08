@@ -17,3 +17,7 @@ publish-local:
 .PHONY: docs
 docs:
 	@gradle docs
+
+run-test:
+	@./gradlew :test:shadowJar
+	@java -jar test/build/libs/test.jar

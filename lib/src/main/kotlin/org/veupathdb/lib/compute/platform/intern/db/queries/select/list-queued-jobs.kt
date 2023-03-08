@@ -12,6 +12,7 @@ private const val SQL = """
   , status
   , queue
   , config
+  , input_files
   , created
   , last_accessed
   , grabbed

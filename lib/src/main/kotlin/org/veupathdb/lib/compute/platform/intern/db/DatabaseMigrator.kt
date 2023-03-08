@@ -2,6 +2,8 @@ package org.veupathdb.lib.compute.platform.intern.db
 
 import org.slf4j.LoggerFactory
 import java.util.zip.ZipInputStream
+import kotlin.io.path.isRegularFile
+import kotlin.io.path.toPath
 
 private const val MigrationPath = "db/migrations/"
 
@@ -27,7 +29,7 @@ internal class DatabaseMigrator : Runnable {
     Log.debug("Found {} migrations", migs.size)
 
     if (migs.isNotEmpty()) {
-      QueueDB.ds!!.connection.use { con ->
+      QueueDB.ds.connection.use { con ->
         migs.forEach {
           Log.info("Executing database migration script: {}", it)
           con.createStatement().use { stmt -> stmt.execute(loadSQL(it)) }
@@ -37,6 +39,8 @@ internal class DatabaseMigrator : Runnable {
   }
 
   private fun listMigrations(version: String): List<String> {
+    Log.trace("listMigrations(version={})", version)
+
     val jarStream  = ZipInputStream(thisJar.openStream())
     val migrations = ArrayList<String>(10)
 
@@ -48,6 +52,8 @@ internal class DatabaseMigrator : Runnable {
 
       if (migVersion(entry) <= version)
         continue
+
+      Log.debug("found migration entry {}", entry)
 
       migrations.add(entry)
     }

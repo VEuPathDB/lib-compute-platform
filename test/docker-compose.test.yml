@@ -1,0 +1,29 @@
+version: "3.8"
+
+volumes:
+  minio:
+
+services:
+  minio:
+    image: minio/minio
+    ports:
+    - "9000:9000"
+    - "9001:9001"
+    volumes:
+    - type: volume
+      source: minio
+      target: /data
+    command: server /data --console-address ":9001"
+
+  postgres:
+    image: postgres:15.1-alpine3.17
+    ports:
+    - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: password
+
+  rabbit:
+    image: rabbitmq:3.11.10-management-alpine
+    ports:
+    - "5672:5672"
+

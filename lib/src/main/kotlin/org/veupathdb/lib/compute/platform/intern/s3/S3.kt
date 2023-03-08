@@ -286,10 +286,20 @@ internal object S3 {
   fun listJobIDs(): Sequence<HashID> {
     return s3.buckets[BucketName(config.bucket)]!!
       .objects
-      .listSubPaths(config.rootPath)
+      .listSubPaths(config.rootPath.appendSlash())
       .commonPrefixes()
       .asSequence()
+      .map { it.getJobID() }
       .map { try { HashID(it) } catch (e: Throwable) { null } }
       .filterNotNull()
   }
+
+  private fun String.appendSlash() =
+    if (!endsWith('/'))
+      "$this/"
+    else
+      this
+
+  private fun String.getJobID() =
+    substring(lastIndexOf('/', length - 2) + 1, length - 1)
 }
