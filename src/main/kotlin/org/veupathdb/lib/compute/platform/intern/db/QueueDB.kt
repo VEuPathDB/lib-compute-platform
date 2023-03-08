@@ -31,7 +31,7 @@ internal object QueueDB {
 
   private var initialized = false
 
-  internal var ds: HikariDataSource? = null
+  internal lateinit var ds: HikariDataSource
 
 
   /**
@@ -69,13 +69,13 @@ internal object QueueDB {
   @JvmStatic
   fun getLastAccessedBefore(cutoff: OffsetDateTime): List<HashID> {
     Log.debug("Fetching list of expired jobs.")
-    return ds!!.connection.use { GetExpiredJobs(it, cutoff) }
+    return ds.connection.use { GetExpiredJobs(it, cutoff) }
   }
 
   @JvmStatic
   fun markJobAsQueued(jobID: HashID, queue: String) {
     Log.debug("Marking job {} as queued", jobID)
-    ds!!.connection.use { MarkJobQueued(it, jobID, queue) }
+    ds.connection.use { MarkJobQueued(it, jobID, queue) }
   }
 
   /**
@@ -88,7 +88,7 @@ internal object QueueDB {
   @JvmStatic
   fun markJobAsExpired(jobID: HashID) {
     Log.debug("Marking job {} as expired", jobID)
-    ds!!.connection.use { MarkJobExpired(it, jobID) }
+    ds.connection.use { MarkJobExpired(it, jobID) }
   }
 
   /**
@@ -104,13 +104,13 @@ internal object QueueDB {
   @JvmStatic
   fun markJobAsFailed(jobID: HashID) {
     Log.debug("Marking job {} as failed", jobID)
-    ds!!.connection.use { MarkJobFinished(it, jobID, JobStatus.Failed) }
+    ds.connection.use { MarkJobFinished(it, jobID, JobStatus.Failed) }
   }
 
   @JvmStatic
   fun setJobOutputFiles(jobID: HashID, files: Array<String>) {
     Log.debug("Appending output files to job {}", jobID)
-    ds!!.connection.use { SetJobOutputFiles(it, jobID, files) }
+    ds.connection.use { SetJobOutputFiles(it, jobID, files) }
   }
 
   /**
@@ -126,7 +126,7 @@ internal object QueueDB {
   @JvmStatic
   fun markJobAsComplete(jobID: HashID) {
     Log.debug("Marking job {} as complete", jobID)
-    ds!!.connection.use { MarkJobFinished(it, jobID, JobStatus.Complete) }
+    ds.connection.use { MarkJobFinished(it, jobID, JobStatus.Complete) }
   }
 
 
@@ -143,7 +143,7 @@ internal object QueueDB {
   @JvmStatic
   fun markJobAsInProgress(jobID: HashID) {
     Log.debug("Marking job {} as in-progress", jobID)
-    ds!!.connection.use { MarkJobInProgress(it, jobID) }
+    ds.connection.use { MarkJobInProgress(it, jobID) }
   }
 
 
@@ -158,7 +158,7 @@ internal object QueueDB {
   @JvmStatic
   fun updateJobLastAccessed(jobID: HashID) {
     Log.debug("Updating last_modified timestamp for job {}", jobID)
-    ds!!.connection.use { UpdateDBLastAccessed(it, jobID) }
+    ds.connection.use { UpdateDBLastAccessed(it, jobID) }
   }
 
 
@@ -173,7 +173,7 @@ internal object QueueDB {
   @JvmStatic
   fun deleteJob(jobID: HashID) {
     Log.debug("Deleting job {}", jobID)
-    ds!!.connection.use { DeleteJob(it, jobID) }
+    ds.connection.use { DeleteJob(it, jobID) }
   }
 
   /**
@@ -188,7 +188,7 @@ internal object QueueDB {
   fun getJob(jobID: HashID) : AsyncJob? {
     Log.debug("looking up public job {}", jobID)
 
-    return ds!!.connection.use {
+    return ds.connection.use {
       val raw = LookupJob(it, jobID)
 
       if (raw != null) {
@@ -205,14 +205,14 @@ internal object QueueDB {
   @JvmStatic
   fun getJobInternal(jobID: HashID): JobRecord? {
     Log.debug("looking up raw job {}", jobID)
-    return ds!!.connection.use { LookupJob(it, jobID) }
+    return ds.connection.use { LookupJob(it, jobID) }
   }
 
   @JvmStatic
   fun submitJob(queue: String, jobID: HashID, config: String?, files: Iterable<String>) {
     Log.debug("Recording new job {} in the database.", jobID)
 
-    ds!!.connection.use { RecordNewJob(it, jobID, queue, config, files) }
+    ds.connection.use { RecordNewJob(it, jobID, queue, config, files) }
   }
 
   /**
@@ -228,7 +228,7 @@ internal object QueueDB {
 
     // Connection is not closed here as the caller is responsible for closing
     // the stream.
-    return ListQueuedJobs(ds!!.connection)
+    return ListQueuedJobs(ds.connection)
   }
 
   /**
@@ -240,7 +240,7 @@ internal object QueueDB {
    */
   fun getDatabaseVersion(): String? {
     Log.debug("Getting database version.")
-    return ds!!.connection.use(::LookupDatabaseVersion)
+    return ds.connection.use(::LookupDatabaseVersion)
   }
 
   /**
@@ -249,11 +249,11 @@ internal object QueueDB {
    */
   fun deadJobCleanup() {
     Log.debug("Executing dead job cleanup.")
-    ds!!.connection.use(::QueueDeadJobs)
+    ds.connection.use(::QueueDeadJobs)
   }
 
   fun metaTableExists(): Boolean {
     Log.debug("Testing if platform meta table exists.")
-    return ds!!.connection.use(::MetaDBTableExists)
+    return ds.connection.use(::MetaDBTableExists)
   }
 }
