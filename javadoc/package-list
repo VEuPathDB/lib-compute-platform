@@ -16,6 +16,7 @@ $dokka.location:org.veupathdb.lib.compute.platform.job/JobSubmission.Builder///P
 $dokka.location:org.veupathdb.lib.compute.platform.job/JobSubmission.Companion///PointingToDeclaration/org/veupathdb/lib/compute/platform/job/JobSubmission.Companion.html
 org.veupathdb.lib.compute.platform
 org.veupathdb.lib.compute.platform.config
+org.veupathdb.lib.compute.platform.errors
 org.veupathdb.lib.compute.platform.intern.jobs
 org.veupathdb.lib.compute.platform.job
 org.veupathdb.lib.compute.platform.model

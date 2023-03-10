@@ -104,6 +104,17 @@ $dokka.location:org.veupathdb.lib.compute.platform.config/AsyncS3Config///Pointi
 $dokka.location:org.veupathdb.lib.compute.platform.config/AsyncS3Config/AsyncS3Config/#kotlin.String#kotlin.Int#kotlin.Boolean#kotlin.String#kotlin.String#kotlin.String#kotlin.String/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.config/-async-s3-config/-async-s3-config.html
 $dokka.location:org.veupathdb.lib.compute.platform.config/AsyncS3Config/AsyncS3Config/#kotlin.String#kotlin.String#kotlin.String#kotlin.String#kotlin.String/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.config/-async-s3-config/-async-s3-config.html
 $dokka.location:org.veupathdb.lib.compute.platform.config/AsyncS3Config/AsyncS3Config/#kotlin.String#kotlin.String#kotlin.String#kotlin.String/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.config/-async-s3-config/-async-s3-config.html
+$dokka.location:org.veupathdb.lib.compute.platform.errors////PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.errors/index.html
+$dokka.location:org.veupathdb.lib.compute.platform.errors/IncompleteJobException///PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.errors/-incomplete-job-exception/index.html
+$dokka.location:org.veupathdb.lib.compute.platform.errors/IncompleteJobException/IncompleteJobException/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.errors/-incomplete-job-exception/-incomplete-job-exception.html
+$dokka.location:org.veupathdb.lib.compute.platform.errors/IncompleteJobException/IncompleteJobException/#kotlin.String#kotlin.Throwable/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.errors/-incomplete-job-exception/-incomplete-job-exception.html
+$dokka.location:org.veupathdb.lib.compute.platform.errors/IncompleteJobException/IncompleteJobException/#kotlin.String/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.errors/-incomplete-job-exception/-incomplete-job-exception.html
+$dokka.location:org.veupathdb.lib.compute.platform.errors/IncompleteJobException/IncompleteJobException/#kotlin.Throwable/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.errors/-incomplete-job-exception/-incomplete-job-exception.html
+$dokka.location:org.veupathdb.lib.compute.platform.errors/UnownedJobException///PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.errors/-unowned-job-exception/index.html
+$dokka.location:org.veupathdb.lib.compute.platform.errors/UnownedJobException/UnownedJobException/#/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.errors/-unowned-job-exception/-unowned-job-exception.html
+$dokka.location:org.veupathdb.lib.compute.platform.errors/UnownedJobException/UnownedJobException/#kotlin.String#kotlin.Throwable/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.errors/-unowned-job-exception/-unowned-job-exception.html
+$dokka.location:org.veupathdb.lib.compute.platform.errors/UnownedJobException/UnownedJobException/#kotlin.String/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.errors/-unowned-job-exception/-unowned-job-exception.html
+$dokka.location:org.veupathdb.lib.compute.platform.errors/UnownedJobException/UnownedJobException/#kotlin.Throwable/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.errors/-unowned-job-exception/-unowned-job-exception.html
 $dokka.location:org.veupathdb.lib.compute.platform.intern.jobs////PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.jobs/index.html
 $dokka.location:org.veupathdb.lib.compute.platform.intern.jobs/JobExecContext///PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.jobs/-job-exec-context/index.html
 $dokka.location:org.veupathdb.lib.compute.platform.intern.jobs/JobExecContext/JobExecContext/#kotlin.String#org.veupathdb.lib.hash_id.HashID#com.fasterxml.jackson.databind.JsonNode?/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform.intern.jobs/-job-exec-context/-job-exec-context.html
@@ -200,6 +211,7 @@ $dokka.location:org.veupathdb.lib.compute.platform.model/JobReference/owned/#/Po
 $dokka.location:org.veupathdb.lib.compute.platform////PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform/index.html
 $dokka.location:org.veupathdb.lib.compute.platform/AsyncPlatform///PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform/-async-platform/index.html
 $dokka.location:org.veupathdb.lib.compute.platform/AsyncPlatform/deleteJob/#org.veupathdb.lib.hash_id.HashID/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform/-async-platform/delete-job.html
+$dokka.location:org.veupathdb.lib.compute.platform/AsyncPlatform/expireJob/#org.veupathdb.lib.hash_id.HashID/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform/-async-platform/expire-job.html
 $dokka.location:org.veupathdb.lib.compute.platform/AsyncPlatform/getJob/#org.veupathdb.lib.hash_id.HashID/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform/-async-platform/get-job.html
 $dokka.location:org.veupathdb.lib.compute.platform/AsyncPlatform/getJobFiles/#org.veupathdb.lib.hash_id.HashID/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform/-async-platform/get-job-files.html
 $dokka.location:org.veupathdb.lib.compute.platform/AsyncPlatform/init/#kotlin.Function1[org.veupathdb.lib.compute.platform.config.AsyncPlatformConfig.Builder,kotlin.Unit]/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform/-async-platform/init.html
@@ -209,6 +221,7 @@ $dokka.location:org.veupathdb.lib.compute.platform/AsyncPlatform/submitJob/#kotl
 $dokka.location:org.veupathdb.lib.compute.platform/AsyncPlatform/submitJob/#kotlin.String#org.veupathdb.lib.compute.platform.job.JobSubmission/PointingToDeclaration/compute-platform/org.veupathdb.lib.compute.platform/-async-platform/submit-job.html
 org.veupathdb.lib.compute.platform
 org.veupathdb.lib.compute.platform.config
+org.veupathdb.lib.compute.platform.errors
 org.veupathdb.lib.compute.platform.intern.jobs
 org.veupathdb.lib.compute.platform.job
 org.veupathdb.lib.compute.platform.model
