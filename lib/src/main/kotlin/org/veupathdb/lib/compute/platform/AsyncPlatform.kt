@@ -204,6 +204,24 @@ object AsyncPlatform {
   }
 
   /**
+   * Fetches the target file for the target job.
+   *
+   * If the target file does not exist, this method returns `null`.
+   *
+   * @param jobID Hash ID of the job whose file should be retrieved.
+   *
+   * @param fileName Name of the file to retrieve.
+   *
+   * @return A reference to the target file, if it exists, otherwise `null`.
+   *
+   * @since 1.5.0
+   */
+  fun getJobFile(jobID: HashID, fileName: String): JobFileReference? {
+    Log.debug("fetching target file \"{}\" for job {}", jobID, fileName)
+    return S3.getJobFile(jobID, fileName)
+  }
+
+  /**
    * Deletes the target job only if it exists, is owned by the current service
    * or process, and is in a completed status.
    *
