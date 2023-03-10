@@ -187,6 +187,35 @@ internal object S3 {
   }
 
   /**
+   * Attempts to fetch the target file from the target workspace.
+   *
+   * If the target workspace is not found, an [IllegalStateException] will be
+   * thrown.
+   *
+   * If the target file is not found, `null` will be returned.
+   *
+   * @param jobID ID of the workspace from which the target job should be
+   * fetched.
+   *
+   * @return A handle on the target file, if it exists, or `null`.
+   *
+   * @since 1.5.0
+   */
+  @JvmStatic
+  fun getJobFile(jobID: HashID, fileName: String): JobFileReference? {
+    Log.debug("fetching target file \"{}\" for job {} in S3", fileName, jobID)
+
+    // Load the workspace
+    val ws = wsf[jobID] ?: throw IllegalStateException("attempted to fetch target file from nonexistent workspace $jobID")
+
+    // Sift through the files for one matching the target file name and return
+    // it (or null if none were found).
+    return ws.files()
+      .firstOrNull { it.name == fileName }
+      ?.let(::JobFileReferenceImpl)
+  }
+
+  /**
    * Clears out the target workspace and marks it as `expired`.
    *
    * All files apart from the flag files and config file will be deleted from
