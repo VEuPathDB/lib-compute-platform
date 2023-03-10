@@ -43,10 +43,10 @@ internal class JobExecutionHandler(private val executor: JobExecutor) {
       // Lookup the job in the DB to get the input file list.
       val dbJob = QueueDB.getJobInternal(jobID)
 
-      // If the job wasn't found something has gone terribly wrong
+      // If the job wasn't found the job was most likely deleted.
       if (dbJob == null) {
-        Log.error("db job lookup failed in job execution for job {}", jobID)
-        return PlatformJobResultStatus.Failure
+        Log.error("job {} was deleted and is being aborted", jobID)
+        return PlatformJobResultStatus.Aborted
       }
 
       // If the job does have input files
@@ -81,16 +81,20 @@ internal class JobExecutionHandler(private val executor: JobExecutor) {
 
       // Verify that the job is still valid (hasn't been deleted or expired
       // while it was waiting in the queue).
-      if (!jobIsStillRunnable(jobID))
+      if (!jobIsStillRunnable(jobID)) {
+        Log.info("aborting job {} for no longer being in a runnable state (deleted or expired)", jobID)
         return PlatformJobResultStatus.Aborted
+      }
 
       // Execute the job via the given JobExecutor implementation.
       val res = executor.execute(JobContext(jobID, conf, workspace))
 
       // Verify that the job is _still_ still valid (didn't get deleted or
       // expired out from under us while we were running the executor).
-      if (!jobIsStillRunnable(jobID))
+      if (!jobIsStillRunnable(jobID)) {
+        Log.info("aborting job {} for no longer being in a runnable state (deleted or expired)", jobID)
         return PlatformJobResultStatus.Aborted
+      }
 
       // Persist the outputs of the job to S3.
       S3.persistFiles(jobID, workspace.getFiles(res.outputFiles))
@@ -101,6 +105,7 @@ internal class JobExecutionHandler(private val executor: JobExecutor) {
       // Verify that the job wasn't invalidated while we were busy writing files
       // to S3.
       if (jobWasInvalidated(jobID)) {
+        Log.info("aborting job {} for no longer being in a runnable state (deleted or expired)", jobID)
         S3.wipeWorkspace(jobID)
         return PlatformJobResultStatus.Aborted
       }
