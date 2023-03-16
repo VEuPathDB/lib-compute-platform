@@ -2,7 +2,6 @@ package org.veupathdb.lib.compute.platform
 
 import org.slf4j.LoggerFactory
 import org.veupathdb.lib.compute.platform.config.AsyncPlatformConfig
-import org.veupathdb.lib.compute.platform.errors.IncompleteJobException
 import org.veupathdb.lib.compute.platform.errors.UnownedJobException
 import org.veupathdb.lib.compute.platform.intern.JobPruner
 import org.veupathdb.lib.compute.platform.intern.db.DatabaseMigrator
@@ -225,9 +224,8 @@ object AsyncPlatform {
    * Deletes the target job only if it exists, is owned by the current service
    * or process, and is in a completed status.
    *
-   * If the target job does not exist, is not owned by the current service or
-   * process, or is not in a completed status, this method throws an
-   * [IllegalStateException].
+   * If the target job is not owned by the current service instance, this method
+   * throws an [UnownedJobException].
    *
    * Callers should first use [getJob] to test the completion and ownership
    * statuses of the job before attempting to use this method.
@@ -244,9 +242,10 @@ object AsyncPlatform {
     Log.debug("Deleting job {}", jobID)
 
     // Assert that the job is both owned by this process and is complete
-    (QueueDB.getJob(jobID)
-      ?: throw UnownedJobException("Attempted to delete unowned job $jobID"))
-      .finished ?: throw IncompleteJobException("Attempted to delete incomplete job $jobID")
+    with(QueueDB.getJob(jobID) ?: throw UnownedJobException("Attempted to delete unowned job $jobID")) {
+      if (finished == null)
+        Log.info("deleting incomplete job {}", jobID)
+    }
 
     QueueDB.deleteJob(jobID)
     S3.deleteWorkspace(jobID)
@@ -282,9 +281,6 @@ object AsyncPlatform {
    * If the target job is not owned by the current Async Platform instance, an
    * [UnownedJobException] will be thrown.
    *
-   * If the target job is not yet in a 'finished' state (complete or failed), an
-   * [IncompleteJobException] will be thrown.
-   *
    * @param jobID ID of the job to expire.
    *
    * @since 1.5.0
@@ -295,9 +291,10 @@ object AsyncPlatform {
 
     // Verify that this job exists and is owned bt the current platform
     // instance.
-    (QueueDB.getJob(jobID)
-      ?: throw UnownedJobException("Attempted to expire unowned job $jobID"))
-      .finished ?: throw IncompleteJobException("Attempted expire to incomplete job $jobID")
+    with(QueueDB.getJob(jobID) ?: throw UnownedJobException("Attempted to expire unowned job $jobID")) {
+      if (finished == null)
+        Log.info("expiring incomplete job {}", jobID)
+    }
 
     QueueDB.markJobAsExpired(jobID)
     S3.expireWorkspace(jobID)
