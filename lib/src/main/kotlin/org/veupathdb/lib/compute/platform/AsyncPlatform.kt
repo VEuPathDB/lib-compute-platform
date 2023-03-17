@@ -114,8 +114,8 @@ object AsyncPlatform {
    * @throws IllegalArgumentException If the given [queue] value is not a valid
    * queue ID/name.
    *
-   * @throws IllegalStateException If the ID of the given job already exists and
-   * belongs to another instance of this service.
+   * @throws IllegalStateException If the ID of the given job already exists,
+   * belongs to another instance of this service, and is not expired.
    */
   @JvmStatic
   fun submitJob(queue: String, job: JobSubmission) {
