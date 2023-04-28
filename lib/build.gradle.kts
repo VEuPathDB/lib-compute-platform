@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "org.veupathdb.lib"
-version = "1.5.0"
+version = "1.5.1"
 
 
 dependencies {
@@ -23,10 +23,10 @@ dependencies {
 
   // DB
   implementation("com.zaxxer:HikariCP:5.0.1")
-  implementation("org.postgresql:postgresql:42.5.1")
+  implementation("org.postgresql:postgresql:42.5.4")
 
   // S3
-  implementation("org.veupathdb.lib.s3:s34k-minio:0.4.1+s34k-0.8.0")
+  implementation("org.veupathdb.lib.s3:s34k-minio:0.5.0+s34k-0.9.0")
   implementation("org.veupathdb.lib.s3:workspaces:4.1.1")
 
   // Rabbit
