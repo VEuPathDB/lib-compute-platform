@@ -2,6 +2,7 @@ package org.veupathdb.lib.compute.platform
 
 import org.slf4j.LoggerFactory
 import org.veupathdb.lib.compute.platform.config.AsyncPlatformConfig
+import org.veupathdb.lib.compute.platform.errors.NonexistentWorkspaceException
 import org.veupathdb.lib.compute.platform.errors.UnownedJobException
 import org.veupathdb.lib.compute.platform.intern.JobPruner
 import org.veupathdb.lib.compute.platform.intern.db.DatabaseMigrator
@@ -75,8 +76,12 @@ object AsyncPlatform {
     Log.info("Resubmitting queued jobs")
     QueueDB.getQueuedJobs().use { stream ->
       stream.forEach {
-        S3.resetWorkspace(it.jobID)
-        JobQueues.submitJob(it.queue, it.jobID, it.config)
+        try {
+          S3.resetWorkspace(it.jobID)
+          JobQueues.submitJob(it.queue, it.jobID, it.config)
+        } catch (e: NonexistentWorkspaceException) {
+          Log.error("failed to resubmit queued job ${it.jobID}", e)
+        }
       }
     }
 

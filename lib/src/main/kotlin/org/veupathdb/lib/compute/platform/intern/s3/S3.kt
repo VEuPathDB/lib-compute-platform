@@ -3,6 +3,7 @@ package org.veupathdb.lib.compute.platform.intern.s3
 import com.fasterxml.jackson.databind.JsonNode
 import org.slf4j.LoggerFactory
 import org.veupathdb.lib.compute.platform.config.AsyncS3Config
+import org.veupathdb.lib.compute.platform.errors.NonexistentWorkspaceException
 import org.veupathdb.lib.compute.platform.intern.*
 import org.veupathdb.lib.compute.platform.job.AsyncJob
 import org.veupathdb.lib.compute.platform.job.JobFileReference
@@ -258,7 +259,7 @@ internal object S3 {
   fun resetWorkspace(jobID: HashID) {
     Log.debug("Resetting workspace for job {} in S3", jobID)
 
-    val ws = wsf[jobID] ?: throw IllegalStateException("Attempted to reset nonexistent workspace $jobID")
+    val ws = wsf[jobID] ?: throw NonexistentWorkspaceException(jobID, "attempted to reset nonexistent workspace $jobID")
 
     // Iterate through the files in the workspace
     ws.files().forEach {
