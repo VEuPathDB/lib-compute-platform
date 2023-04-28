@@ -639,6 +639,51 @@ val config = AsyncPlatformConfig.build {
 }
 ----
 
+
+== Expiration
+
+Job results expire after a configured period of time via background thread.  They
+can also be manually expired in a service-specific implementation (e.g. if the service
+knows results are invalid for some reason or via a custom expiration endpoint).
+
+When a job is expired, it leaves behind a record in postgres and a (mostly empty)
+directory with an expired-status file in Minio.  A new request for that job will
+restart it, generating new results.  This model can lead to a complication when
+multiple services are managing the same Minio instance (but have their own postgres
+job status stores).  This is managed as follows:
+
+==== From a clean DB...
+
+North receives a job request
+
+- checks for existence of job in PG and Minio (Minio wins) -> not present
+- kicks off job; job status changes to one of: [ queued, running, complete, failed ]
+
+During this process, South receives same job request
+
+- checks for existence of job in PG and Minio -> present but not owned and not expired; just return status
+
+==== Job expiration...
+
+South cannot expire the job because it is not owned
+
+North receives request to expire job or expiration thread expires job
+
+- expires job in PG and Minio (South can only see Minio, South has no PG record)
+
+==== Restarting and claiming expired jobs
+
+If North receives same job request first...
+
+- North looks in PG (owns the job + is expired) and Minio (job expired); they agree, so restarts the job and retains ownership
+- If South gets request afterward, it sees the same thing as above (North owns non-expired job), so if later request comes in, does nothing
+
+If South receives same job request first...
+
+- South looks in PG (no record) and Minio (job expired); since expired, South creates new PG record, restarts job, and "steals" ownership
+- If North gets request afterward, it sees expired record in PG, but non-expired in Minio.  It must delete its PG record, giving sole ownership to South
+
+
 == Additional Topics
 
 * link:docs/reference/database.adoc[Database Details]
