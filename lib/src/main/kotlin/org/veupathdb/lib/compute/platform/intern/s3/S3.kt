@@ -247,31 +247,6 @@ internal object S3 {
   }
 
   /**
-   * Returns a job workspace back to its initial `queued` state (the state it
-   * was in just after creation).
-   *
-   * @param jobID ID of the workspace to reset/requeue.
-   *
-   * @throws IllegalStateException If the target workspace does not exist in S3.
-   */
-  @JvmStatic
-  fun resetWorkspace(jobID: HashID) {
-    Log.debug("Resetting workspace for job {} in S3", jobID)
-
-    val ws = wsf[jobID] ?: throw IllegalStateException("Attempted to reset nonexistent workspace $jobID")
-
-    // Iterate through the files in the workspace
-    ws.files().forEach {
-      // If the target file is not the input config and is not the queued flag
-      if (it.name != FileConfig && it.name != FlagQueued) {
-        // delete it
-        Log.debug("Deleting S3 object {}", it.absolutePath)
-        it.delete()
-      }
-    }
-  }
-
-  /**
    * Submits a new job workspace to the S3 store.
    *
    * The workspace will be created with an empty [FlagQueued] file marking the

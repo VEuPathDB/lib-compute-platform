@@ -71,12 +71,26 @@ object AsyncPlatform {
     Log.info("Cleaning up dead jobs")
     QueueDB.deadJobCleanup()
 
-    // Requeue everything
+    // Requeue everything that was queued.
+    // TODO: what about jobs that were running?
     Log.info("Resubmitting queued jobs")
     QueueDB.getQueuedJobs().use { stream ->
       stream.forEach {
-        S3.resetWorkspace(it.jobID)
-        JobQueues.submitJob(it.queue, it.jobID, it.config)
+        val s3Job = S3.getJob(it.jobID)
+
+        // If the job doesn't exist in S3, then the cache was cleared or
+        // something funky happened.  In this case, delete the job from
+        // postgres.  Next time they attempt to run the job it will be
+        // recreated.  This _does_ mean that in the event that the cache is
+        // cleared, all the jobs that were queued at that time will be deleted.
+        if (s3Job == null) {
+          QueueDB.deleteJob(it.jobID)
+        }
+
+        // The job does exist in S3; resubmit it to the queue.
+        else {
+          JobQueues.submitJob(it.queue, it.jobID, it.config)
+        }
       }
     }
 
