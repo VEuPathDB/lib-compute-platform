@@ -547,7 +547,7 @@ public class <span class="typeNameLabel"><a href=AsyncPlatform.html>AsyncPlatfor
                                     <li class="blockList">
                                         <h4>deleteJob</h4>
                                         <pre class="methodSignature"> final static <a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html>Unit</a> <a href=AsyncPlatform.html#deleteJob(HashID)>deleteJob</a>(HashID jobID)</pre>
-                                        <div class="block"><p>Deletes the target job only if it exists, is owned by the current service or process, and is in a completed status.</p><p>If the target job does not exist, is not owned by the current service or process, or is not in a completed status, this method throws an <a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-illegal-state-exception/index.html>IllegalStateException</a>.</p><p>Callers should first use <a href=AsyncPlatform.html#getJob(HashID)>getJob</a> to test the completion and ownership statuses of the job before attempting to use this method.</p></div>
+                                        <div class="block"><p>Deletes the target job only if it exists, is owned by the current service or process, and is in a completed status.</p><p>If the target job is not owned by the current service instance, this method throws an <a href=errors/UnownedJobException.html>UnownedJobException</a>.</p><p>Callers should first use <a href=AsyncPlatform.html#getJob(HashID)>getJob</a> to test the completion and ownership statuses of the job before attempting to use this method.</p></div>
                                         
                                         <dl>
                                             <dt><span class="paramLabel">Parameters:</span></dt>
@@ -586,7 +586,7 @@ public class <span class="typeNameLabel"><a href=AsyncPlatform.html>AsyncPlatfor
                                     <li class="blockList">
                                         <h4>expireJob</h4>
                                         <pre class="methodSignature"> final static <a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html>Unit</a> <a href=AsyncPlatform.html#expireJob(HashID)>expireJob</a>(HashID jobID)</pre>
-                                        <div class="block"><p>Marks the target job as expired.</p><p>If the target job is not owned by the current Async Platform instance, an <a href=errors/UnownedJobException.html>UnownedJobException</a> will be thrown.</p><p>If the target job is not yet in a 'finished' state (complete or failed), an <a href=errors/IncompleteJobException.html>IncompleteJobException</a> will be thrown.</p></div>
+                                        <div class="block"><p>Marks the target job as expired.</p><p>If the target job is not owned by the current Async Platform instance, an <a href=errors/UnownedJobException.html>UnownedJobException</a> will be thrown.</p></div>
                                         
                                         <dl>
                                             <dt><span class="paramLabel">Parameters:</span></dt>
