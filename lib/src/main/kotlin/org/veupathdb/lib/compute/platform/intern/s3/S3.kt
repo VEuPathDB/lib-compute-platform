@@ -323,7 +323,7 @@ internal object S3 {
   }
 
   fun markWorkspaceAsComplete(jobID: HashID) {
-    Log.debug("marking workspace for job {} as failed in s3", jobID)
+    Log.debug("marking workspace for job {} as complete in s3", jobID)
 
     val ws = wsf[jobID] ?: throw IllegalStateException("Attempted to mark nonexistent workspace $jobID as complete")
     ws.touch(FlagComplete)
