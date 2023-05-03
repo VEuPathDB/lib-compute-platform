@@ -210,7 +210,7 @@ object AsyncPlatform {
       }
 
       // The statuses did align, so we (this service instance) presumably still
-      // owns the job.
+      // own the job.
 
       Log.debug("updating last accessed date for job {}", jobID)
 
