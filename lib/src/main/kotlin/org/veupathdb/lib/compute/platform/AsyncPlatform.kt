@@ -143,6 +143,7 @@ object AsyncPlatform {
       throw IllegalArgumentException("Attempted to submit a job to nonexistent queue '$queue'.")
 
     // Lookup the job to see if it already exists.
+    // This call checks the managed DB and S3
     val existingJob = getJob(job.jobID)
       // If it does exist
       ?.also {
