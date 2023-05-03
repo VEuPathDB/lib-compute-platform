@@ -154,13 +154,18 @@ object AsyncPlatform {
       }
 
     // If the job already exists
-    if (existingJob != null && existingJob.owned)
+    if (existingJob != null && existingJob.owned) {
+      Log.debug("job {} exists and is owned by this campus, marking the job as queued in the database",  job.jobID)
       // Reset the job status to queued and update the queue name
       QueueDB.markJobAsQueued(job.jobID, queue)
+    }
+
     // Else, if the job does not already exist
-    else
+    else {
+      Log.debug("job {} does not exist, or is expired and is not owned by the current campus, submitting job to this campus' database", job.jobID)
       // Record the new job in the database
       QueueDB.submitJob(queue, job.jobID, job.config?.toString(), job.inputs.keys)
+    }
 
     // Remove any previous workspace at this location
     S3.deleteWorkspace(job.jobID, false)
@@ -188,7 +193,7 @@ object AsyncPlatform {
     // Check to see if the job exists in the managed DB
     QueueDB.getJob(jobID)?.also {
       // It does...
-      Log.debug("Job found in the managed database")
+      Log.debug("job {} found in the managed database", jobID)
 
       val s3Job = S3.getJob(jobID)
 
@@ -196,13 +201,17 @@ object AsyncPlatform {
       // status we last knew in our internal database, then another campus has
       // claimed ownership of the job.
       if (s3Job != null && s3Job.status != it.status) {
+        Log.debug("deleting job {} from queue db as it has a different status in S3 than the queue DB: s3.status = {}, db.status = {}", jobID, s3Job.status, it.status)
+
         // Delete our DB record for the job and return the S3 instance instead.
         QueueDB.deleteJob(jobID)
         return s3Job
       }
 
       // The statuses did align, so we (this service instance) presumably still
-      // own the job.
+      // owns the job.
+
+      Log.debug("updating last accessed date for job {}", jobID)
 
       // update it's last accessed date
       QueueDB.updateJobLastAccessed(jobID)
@@ -213,10 +222,12 @@ object AsyncPlatform {
     // Check to see if the job exists in S3
     S3.getJob(jobID)?.also {
       // it does
-      Log.debug("Job found in S3")
+      Log.debug("job {} found in S3", jobID)
       // return it
       return it
     }
+
+    Log.debug("job {} not found in the managed database or S3", jobID)
 
     // Job wasn't found in either the managed DB or in S3
     return null
