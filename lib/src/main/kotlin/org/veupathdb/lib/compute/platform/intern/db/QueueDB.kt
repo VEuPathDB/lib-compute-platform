@@ -185,7 +185,7 @@ internal object QueueDB {
    * @return The located job record, if it exists, otherwise `null`.
    */
   @JvmStatic
-  fun getJob(jobID: HashID) : AsyncJob? {
+  fun getJob(jobID: HashID) : AsyncDBJob? {
     Log.debug("looking up public job {}", jobID)
 
     return ds.connection.use {

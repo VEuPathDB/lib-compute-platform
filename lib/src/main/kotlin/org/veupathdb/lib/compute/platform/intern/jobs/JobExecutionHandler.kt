@@ -2,6 +2,7 @@ package org.veupathdb.lib.compute.platform.intern.jobs
 
 import com.fasterxml.jackson.databind.JsonNode
 import org.slf4j.LoggerFactory
+import org.veupathdb.lib.compute.platform.JobManager
 import org.veupathdb.lib.compute.platform.intern.FileConfig
 import org.veupathdb.lib.compute.platform.intern.db.QueueDB
 import org.veupathdb.lib.compute.platform.intern.s3.S3
@@ -116,15 +117,23 @@ internal class JobExecutionHandler(private val executor: JobExecutor) {
   }
 
   private fun jobIsStillRunnable(jobID: HashID): Boolean {
-    if ((QueueDB.getJob(jobID) ?: return false).status == JobStatus.Expired)
-      return false
+    val (dbJob, s3Job) = JobManager.getJob(jobID)
+
+    dbJob ?: return false
+    s3Job ?: return false
+
+    return if (dbJob.status == JobStatus.Expired)
+      false
     else
-      return (S3.getJob(jobID) ?: return false).status != JobStatus.Expired
+      s3Job.status != JobStatus.Expired
   }
 
   private fun jobWasInvalidated(jobID: HashID): Boolean {
-    QueueDB.getJob(jobID) ?: return true
-    S3.getJob(jobID) ?: return true
+    val (dbJob, s3Job) = JobManager.getJob(jobID)
+
+    dbJob ?: return true
+    s3Job ?: return true
+
     return false
   }
 
