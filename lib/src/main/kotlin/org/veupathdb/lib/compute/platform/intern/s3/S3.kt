@@ -73,7 +73,7 @@ internal object S3 {
    * @return The target job, if a workspace for it exists, otherwise `null`.
    */
   @JvmStatic
-  fun getJob(jobID: HashID): AsyncJob? {
+  fun getJob(jobID: HashID): AsyncS3Job? {
     Log.debug("Fetching workspace {} from S3", jobID)
     return wsf[jobID]?.let(::XS3Workspace)?.let(::AsyncS3Job)
   }
@@ -288,6 +288,13 @@ internal object S3 {
 
     val ws = wsf[jobID] ?: throw IllegalStateException("Attempted to mark nonexistent workspace $jobID as in-progress")
     ws.touch(FlagInProgress)
+  }
+
+  fun markWorkspaceAsQueued(jobID: HashID) {
+    Log.debug("marking workspace for job {} as queued in S3", jobID)
+
+    val ws = wsf[jobID] ?: throw IllegalStateException("Attempted to mark nonexistent workspace $jobID as queued")
+    ws.touch(FlagQueued)
   }
 
   fun markWorkspaceAsFailed(jobID: HashID) {

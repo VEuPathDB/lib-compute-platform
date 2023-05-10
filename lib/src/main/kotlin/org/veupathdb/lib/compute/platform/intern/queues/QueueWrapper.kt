@@ -2,6 +2,7 @@ package org.veupathdb.lib.compute.platform.intern.queues
 
 import com.fasterxml.jackson.databind.JsonNode
 import org.slf4j.LoggerFactory
+import org.veupathdb.lib.compute.platform.JobManager
 import org.veupathdb.lib.compute.platform.config.AsyncQueueConfig
 import org.veupathdb.lib.compute.platform.intern.db.QueueDB
 import org.veupathdb.lib.compute.platform.intern.jobs.JobExecContext
@@ -69,15 +70,13 @@ internal class QueueWrapper(conf: AsyncQueueConfig) {
   private fun onError(job: ErrorNotification) {
     Log.info("job {} failed", job.jobID)
     JobMetrics.Failures.labels(name).inc()
-    QueueDB.markJobAsFailed(job.jobID)
-    S3.markWorkspaceAsFailed(job.jobID)
+    JobManager.setJobFailed(job.jobID)
   }
 
   private fun onSuccess(job: SuccessNotification) {
     Log.info("job {} succeeded", job.jobID)
     JobMetrics.Successes.labels(name).inc()
-    QueueDB.markJobAsComplete(job.jobID)
-    S3.markWorkspaceAsComplete(job.jobID)
+    JobManager.setJobComplete(job.jobID)
   }
 
   private fun onJob(job: JobDispatch) {
@@ -90,10 +89,7 @@ internal class QueueWrapper(conf: AsyncQueueConfig) {
 
     // Attempt to execute the job.
     try {
-      // Mark the job as in-progress in the database.
-      QueueDB.markJobAsInProgress(job.jobID)
-      // Write the in-progress flag to S3
-      S3.markWorkspaceAsInProgress(job.jobID)
+      JobManager.setJobInProgress(job.jobID)
 
       when (JobExecutors.new(JobExecContext(name, job.jobID, job.body)).execute(job.jobID, job.body)) {
         PlatformJobResultStatus.Success -> handler.sendSuccess(SuccessNotification(job.jobID))

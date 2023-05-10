@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "org.veupathdb.lib"
-version = "1.5.2"
+version = "1.5.3"
 
 
 dependencies {
@@ -17,7 +17,7 @@ dependencies {
   implementation("org.slf4j:slf4j-api:1.7.36")
 
   // Jackson
-  implementation(platform("com.fasterxml.jackson:jackson-bom:2.14.2"))
+  implementation(platform("com.fasterxml.jackson:jackson-bom:2.15.0"))
   implementation("com.fasterxml.jackson.core:jackson-databind")
   implementation("org.veupathdb.lib:jackson-singleton:3.0.0")
 
