@@ -260,6 +260,7 @@ object AsyncPlatform {
    *
    * @since 1.5.0
    */
+  @JvmStatic
   fun getJobFile(jobID: HashID, fileName: String): JobFileReference? {
     Log.debug("fetching target file \"{}\" for job {}", jobID, fileName)
     return S3.getJobFile(jobID, fileName)
