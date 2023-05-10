@@ -158,7 +158,7 @@ object AsyncPlatform {
     if (existingJob != null && existingJob.owned) {
       Log.debug("job {} exists and is owned by this campus, marking the job as queued in the database",  job.jobID)
       // Reset the job status to queued and update the queue name
-      QueueDB.markJobAsQueued(job.jobID, queue)
+      JobManager.setJobQueued(existingJob.jobID, queue)
     }
 
     // Else, if the job does not already exist
@@ -191,18 +191,16 @@ object AsyncPlatform {
   fun getJob(jobID: HashID): AsyncJob? {
     Log.debug("Looking up job {} from either the managed DB or S3", jobID)
 
-    // Check to see if the job exists in the managed DB
-    QueueDB.getJob(jobID)?.also {
-      // It does...
-      Log.debug("job {} found in the managed database", jobID)
+    val (dbJob, s3Job) = JobManager.getJob(jobID)
 
-      val s3Job = S3.getJob(jobID)
+    if (dbJob != null) {
+      Log.debug("job {} found in the managed database", jobID)
 
       // If the status as determined by looking at S3 does not align with the
       // status we last knew in our internal database, then another campus has
       // claimed ownership of the job.
-      if (s3Job != null && s3Job.status != it.status) {
-        Log.debug("deleting job {} from queue db as it has a different status in S3 than the queue DB: s3.status = {}, db.status = {}", jobID, s3Job.status, it.status)
+      if (s3Job != null && s3Job.status != dbJob.status) {
+        Log.debug("deleting job {} from queue db as it has a different status in S3 than the queue DB: s3.status = {}, db.status = {}", jobID, s3Job.status, dbJob.status)
 
         // Delete our DB record for the job and return the S3 instance instead.
         QueueDB.deleteJob(jobID)
@@ -217,15 +215,13 @@ object AsyncPlatform {
       // update it's last accessed date
       QueueDB.updateJobLastAccessed(jobID)
       // and return it
-      return it
+      return dbJob
     }
 
-    // Check to see if the job exists in S3
-    S3.getJob(jobID)?.also {
-      // it does
+    if (s3Job != null) {
       Log.debug("job {} found in S3", jobID)
       // return it
-      return it
+      return s3Job
     }
 
     Log.debug("job {} not found in the managed database or S3", jobID)
@@ -341,7 +337,6 @@ object AsyncPlatform {
         Log.info("expiring incomplete job {}", jobID)
     }
 
-    QueueDB.markJobAsExpired(jobID)
-    S3.expireWorkspace(jobID)
+    JobManager.setJobExpired(jobID)
   }
 }

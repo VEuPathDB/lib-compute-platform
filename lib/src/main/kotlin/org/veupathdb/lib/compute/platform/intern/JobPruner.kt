@@ -1,6 +1,7 @@
 package org.veupathdb.lib.compute.platform.intern
 
 import org.slf4j.LoggerFactory
+import org.veupathdb.lib.compute.platform.JobManager
 import org.veupathdb.lib.compute.platform.config.AsyncPlatformConfig
 import org.veupathdb.lib.compute.platform.intern.db.QueueDB
 import org.veupathdb.lib.compute.platform.intern.s3.S3
@@ -34,10 +35,7 @@ internal object JobPruner : Runnable {
 
     Log.info("Found {} expired jobs", prunableJobs.size)
 
-    prunableJobs.forEach {
-      QueueDB.markJobAsExpired(it)
-      S3.expireWorkspace(it)
-    }
+    prunableJobs.forEach { JobManager.setJobExpired(it) }
 
     Log.info("Job pruning complete")
   }
