@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en"><head>
-    <title>AsyncJob 1.5.2 API </title>
+    <title>AsyncJob 1.5.4 API </title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="dc.created" content="2020-03-25">
     <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
@@ -88,7 +88,7 @@ var pathtoroot = "../../../../../../";
 
 <main role="main">
     <div class="header">
-        <div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html"></a></div>
+        <div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.veupathdb.lib.compute.platform.job</a></div>
         <h2 title="Interface AsyncJob" class="title">Interface AsyncJob</h2>
     </div>
     <div class="contentContainer">
@@ -118,6 +118,24 @@ public interface <span class="typeNameLabel"><a href=AsyncJob.html>AsyncJob</a><
 
                     </pre>
                     <div class="block"><p>Async Job</p><p>Represents a job submitted to the compute platform.</p></div>
+
+                    <dl>
+
+                    
+                        <dt><span class="sinceLabel">Since:</span></dt>
+                        
+                            <dd><p>1.0.0</p></dd>
+                        
+                    
+
+                    
+                        <dt><span class="authorLabel">Author:</span></dt>
+                        
+                            <dd><p>Elizabeth Paige Harper https://github.com/foxcapades</p></dd>
+                        
+                    
+
+                    </dl>
                 </li>
             </ul>
         </div>
@@ -355,8 +373,16 @@ public interface <span class="typeNameLabel"><a href=AsyncJob.html>AsyncJob</a><
                                         <h4>getJobID</h4>
                                         <pre class="methodSignature"> abstract HashID <a href=AsyncJob.html#getJobID()>getJobID</a>()</pre>
                                         <div class="block"><p>Hash ID of this job.</p></div>
+
+                                        <dl>
+
                                         
-                                        <!-- TODO missing return annotation -->
+
+                                        
+
+                                        
+
+                                        </dl>
                                     </li>
                                 </ul>
                                 
@@ -370,8 +396,16 @@ public interface <span class="typeNameLabel"><a href=AsyncJob.html>AsyncJob</a><
                                         <h4>getStatus</h4>
                                         <pre class="methodSignature"> abstract <a href=JobStatus.html>JobStatus</a> <a href=AsyncJob.html#getStatus()>getStatus</a>()</pre>
                                         <div class="block"><p>Status of this job.</p></div>
+
+                                        <dl>
+
                                         
-                                        <!-- TODO missing return annotation -->
+
+                                        
+
+                                        
+
+                                        </dl>
                                     </li>
                                 </ul>
                                 
@@ -385,8 +419,16 @@ public interface <span class="typeNameLabel"><a href=AsyncJob.html>AsyncJob</a><
                                         <h4>getQueuePosition</h4>
                                         <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html>Integer</a> <a href=AsyncJob.html#getQueuePosition()>getQueuePosition</a>()</pre>
                                         <div class="block"><p>Position of this job in the queue.</p><p>Will only be present if this process owns the job, and the job is currently in the <code>queued</code> status.</p></div>
+
+                                        <dl>
+
                                         
-                                        <!-- TODO missing return annotation -->
+
+                                        
+
+                                        
+
+                                        </dl>
                                     </li>
                                 </ul>
                                 
@@ -400,8 +442,16 @@ public interface <span class="typeNameLabel"><a href=AsyncJob.html>AsyncJob</a><
                                         <h4>getOwned</h4>
                                         <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/Boolean.html>Boolean</a> <a href=AsyncJob.html#getOwned()>getOwned</a>()</pre>
                                         <div class="block"><p>Indicates whether this compute platform process owns this job.</p><p>This field is used to indicate ownership in situations were there are multiple separate compute platform applications sharing a single S3 store instance.</p><p>If this job was found in the local, managed database, this value will be <code>true</code>.</p><p>If this job was not found in the local, managed database, and was instead found only in the S3 store, this value will be <code>false</code>.</p></div>
+
+                                        <dl>
+
                                         
-                                        <!-- TODO missing return annotation -->
+
+                                        
+
+                                        
+
+                                        </dl>
                                     </li>
                                 </ul>
                                 
@@ -415,8 +465,16 @@ public interface <span class="typeNameLabel"><a href=AsyncJob.html>AsyncJob</a><
                                         <h4>getConfig</h4>
                                         <pre class="methodSignature"> abstract JsonNode <a href=AsyncJob.html#getConfig()>getConfig</a>()</pre>
                                         <div class="block"><p>Optional, raw configuration for this job.</p><p>This will be present if the job was submitted with a configuration.</p><p>If the job was submitted with no configuration, this value will be <code>null</code>.</p></div>
+
+                                        <dl>
+
                                         
-                                        <!-- TODO missing return annotation -->
+
+                                        
+
+                                        
+
+                                        </dl>
                                     </li>
                                 </ul>
                                 
@@ -430,8 +488,16 @@ public interface <span class="typeNameLabel"><a href=AsyncJob.html>AsyncJob</a><
                                         <h4>getCreated</h4>
                                         <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/time/OffsetDateTime.html>OffsetDateTime</a> <a href=AsyncJob.html#getCreated()>getCreated</a>()</pre>
                                         <div class="block"><p>Timestamp for when this job was created (initially queued).</p></div>
+
+                                        <dl>
+
                                         
-                                        <!-- TODO missing return annotation -->
+
+                                        
+
+                                        
+
+                                        </dl>
                                     </li>
                                 </ul>
                                 
@@ -445,8 +511,16 @@ public interface <span class="typeNameLabel"><a href=AsyncJob.html>AsyncJob</a><
                                         <h4>getGrabbed</h4>
                                         <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/time/OffsetDateTime.html>OffsetDateTime</a> <a href=AsyncJob.html#getGrabbed()>getGrabbed</a>()</pre>
                                         <div class="block"><p>Timestamp for when this job was pulled off the queue and started.</p><p>If this job is still queued, this value will be <code>null</code>.</p></div>
+
+                                        <dl>
+
                                         
-                                        <!-- TODO missing return annotation -->
+
+                                        
+
+                                        
+
+                                        </dl>
                                     </li>
                                 </ul>
                                 
@@ -460,8 +534,16 @@ public interface <span class="typeNameLabel"><a href=AsyncJob.html>AsyncJob</a><
                                         <h4>getFinished</h4>
                                         <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/time/OffsetDateTime.html>OffsetDateTime</a> <a href=AsyncJob.html#getFinished()>getFinished</a>()</pre>
                                         <div class="block"><p>Timestamp for when this job was completed (successfully or not).</p><p>If this job</p></div>
+
+                                        <dl>
+
                                         
-                                        <!-- TODO missing return annotation -->
+
+                                        
+
+                                        
+
+                                        </dl>
                                     </li>
                                 </ul>
                                 

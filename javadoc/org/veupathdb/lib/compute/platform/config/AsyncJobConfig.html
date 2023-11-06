@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en"><head>
-    <title>AsyncJobConfig 1.5.2 API </title>
+    <title>AsyncJobConfig 1.5.4 API </title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="dc.created" content="2020-03-25">
     <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
@@ -88,7 +88,7 @@ var pathtoroot = "../../../../../../";
 
 <main role="main">
     <div class="header">
-        <div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html"></a></div>
+        <div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.veupathdb.lib.compute.platform.config</a></div>
         <h2 title="Class AsyncJobConfig" class="title">Class AsyncJobConfig</h2>
     </div>
     <div class="contentContainer">
@@ -118,6 +118,24 @@ public final class <span class="typeNameLabel"><a href=AsyncJobConfig.html>Async
 
                     </pre>
                     <div class="block"><p>Async Job Processing Configuration</p></div>
+
+                    <dl>
+
+                    
+                        <dt><span class="sinceLabel">Since:</span></dt>
+                        
+                            <dd><p>1.0.0</p></dd>
+                        
+                    
+
+                    
+                        <dt><span class="authorLabel">Author:</span></dt>
+                        
+                            <dd><p>Elizabeth Paige Harper https://github.com/foxcapades</p></dd>
+                        
+                    
+
+                    </dl>
                 </li>
             </ul>
         </div>
@@ -142,13 +160,6 @@ public final class <span class="typeNameLabel"><a href=AsyncJobConfig.html>Async
                                         </tr>
                                         
                                         <tr class="altColor">
-                                            <td class="colFirst"><code>public class</code></td>
-                                            <th class="colSecond" scope="row"><code><a href="AsyncJobConfig.Companion.html">AsyncJobConfig.Companion</a></span></code>
-                                            </th>
-                                            <td class="colLast"></td>
-                                        </tr>
-                                        
-                                        <tr class="rowColor">
                                             <td class="colFirst"><code>public final class</code></td>
                                             <th class="colSecond" scope="row"><code><a href="AsyncJobConfig.Builder.html">AsyncJobConfig.Builder</a></span></code>
                                             </th>
@@ -204,13 +215,13 @@ public final class <span class="typeNameLabel"><a href=AsyncJobConfig.html>Async
                                         
                                             <tr class="altColor">
                                                 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a
-                                                        href="#AsyncJobConfig(JobExecutorFactory)">AsyncJobConfig</a></span>(<a href=../job/JobExecutorFactory.html>JobExecutorFactory</a> executorFactory)</code></th>
+                                                        href="#AsyncJobConfig(org.veupathdb.lib.compute.platform.job.JobExecutorFactory)">AsyncJobConfig</a></span>(<a href=../job/JobExecutorFactory.html>JobExecutorFactory</a> executorFactory)</code></th>
                                                 <td class="colLast">Creates a new <a href=AsyncJobConfig.html>AsyncJobConfig</a> instance.</td>
                                             </tr>
                                         
                                             <tr class="rowColor">
                                                 <th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a
-                                                        href="#AsyncJobConfig(JobExecutorFactory,Integer)">AsyncJobConfig</a></span>(<a href=../job/JobExecutorFactory.html>JobExecutorFactory</a> executorFactory, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html>Integer</a> expirationDays)</code></th>
+                                                        href="#AsyncJobConfig(org.veupathdb.lib.compute.platform.job.JobExecutorFactory,java.lang.Integer)">AsyncJobConfig</a></span>(<a href=../job/JobExecutorFactory.html>JobExecutorFactory</a> executorFactory, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/Integer.html>Integer</a> expirationDays)</code></th>
                                                 <td class="colLast">Creates a new <a href=AsyncJobConfig.html>AsyncJobConfig</a> instance.</td>
                                             </tr>
                                         
@@ -263,6 +274,22 @@ public final class <span class="typeNameLabel"><a href=AsyncJobConfig.html>Async
                                             <th class="colLast" scope="col">Description</th>
                                         </tr>
                                         
+                                        <tr id="i0" class="altColor">
+                                            <td class="colFirst"><code>final static <a href=AsyncJobConfig.Builder.html>AsyncJobConfig.Builder</a></code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=AsyncJobConfig.html#builder()>builder</a>() </code>
+                                            </th>
+                                            <td class="colLast">Creates and returns a new <a href=AsyncJobConfig.Builder.html>Builder</a> instance.</td>
+                                        </tr>
+                                        
+                                        <tr id="i1" class="rowColor">
+                                            <td class="colFirst"><code>final static <a href=AsyncJobConfig.html>AsyncJobConfig</a></code>
+                                            </td>
+                                            <th class="colSecond" scope="row"><code><a href=AsyncJobConfig.html#build(kotlin.jvm.functions.Function1)>build</a>(Function1&lt;<a href=AsyncJobConfig.Builder.html>AsyncJobConfig.Builder</a>, <a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html>Unit</a>&gt; fn) </code>
+                                            </th>
+                                            <td class="colLast"></td>
+                                        </tr>
+                                        
                                         </tbody>
                                     </table>
                                 </div>
@@ -294,7 +321,7 @@ public final class <span class="typeNameLabel"><a href=AsyncJobConfig.html>Async
                             </a>
                                 <h3>Constructor Detail</h3>
                                 
-                                <a name="AsyncJobConfig(JobExecutorFactory)"></a>
+                                <a name="AsyncJobConfig(org.veupathdb.lib.compute.platform.job.JobExecutorFactory)"></a>
                                 <ul class="blockList">
                                     <li class="blockList">
                                         <h4>AsyncJobConfig</h4>
@@ -313,7 +340,7 @@ public final class <span class="typeNameLabel"><a href=AsyncJobConfig.html>Async
                                     </li>
                                 </ul>
                                 
-                                <a name="AsyncJobConfig(JobExecutorFactory,Integer)"></a>
+                                <a name="AsyncJobConfig(org.veupathdb.lib.compute.platform.job.JobExecutorFactory,java.lang.Integer)"></a>
                                 <ul class="blockList">
                                     <li class="blockList">
                                         <h4>AsyncJobConfig</h4>
@@ -348,6 +375,52 @@ public final class <span class="typeNameLabel"><a href=AsyncJobConfig.html>Async
                                 <!--   -->
                             </a>
                                 <h3>Method Detail</h3>
+                                
+                                <a id="builder()">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockList"
+                                          >
+                                    <li class="blockList">
+                                        <h4>builder</h4>
+                                        <pre class="methodSignature"> final static <a href=AsyncJobConfig.Builder.html>AsyncJobConfig.Builder</a> <a href=AsyncJobConfig.html#builder()>builder</a>()</pre>
+                                        <div class="block"><p>Creates and returns a new <a href=AsyncJobConfig.Builder.html>Builder</a> instance.</p></div>
+
+                                        <dl>
+
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
+                                
+                                <a id="build(kotlin.jvm.functions.Function1)">
+                                    <!--   -->
+                                </a>
+                                <ul class=
+                                              "blockListLast"
+                                          >
+                                    <li class="blockList">
+                                        <h4>build</h4>
+                                        <pre class="methodSignature"> final static <a href=AsyncJobConfig.html>AsyncJobConfig</a> <a href=AsyncJobConfig.html#build(kotlin.jvm.functions.Function1)>build</a>(Function1&lt;<a href=AsyncJobConfig.Builder.html>AsyncJobConfig.Builder</a>, <a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html>Unit</a>&gt; fn)</pre>
+                                        <div class="block"></div>
+
+                                        <dl>
+
+                                        
+
+                                        
+
+                                        
+
+                                        </dl>
+                                    </li>
+                                </ul>
                                 
                             </li>
                         </ul>

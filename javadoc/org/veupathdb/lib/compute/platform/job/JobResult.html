@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en"><head>
-    <title>JobResult 1.5.2 API </title>
+    <title>JobResult 1.5.4 API </title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="dc.created" content="2020-03-25">
     <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
@@ -88,7 +88,7 @@ var pathtoroot = "../../../../../../";
 
 <main role="main">
     <div class="header">
-        <div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html"></a></div>
+        <div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.veupathdb.lib.compute.platform.job</a></div>
         <h2 title="Interface JobResult" class="title">Interface JobResult</h2>
     </div>
     <div class="contentContainer">
@@ -118,6 +118,24 @@ public interface <span class="typeNameLabel"><a href=JobResult.html>JobResult</a
 
                     </pre>
                     <div class="block"><p>Job Execution Result</p><p>Represents the results of the execution of a single job.</p></div>
+
+                    <dl>
+
+                    
+                        <dt><span class="sinceLabel">Since:</span></dt>
+                        
+                            <dd><p>1.0.0</p></dd>
+                        
+                    
+
+                    
+                        <dt><span class="authorLabel">Author:</span></dt>
+                        
+                            <dd><p>Elizabeth Paige Harper https://github.com/foxcapades</p></dd>
+                        
+                    
+
+                    </dl>
                 </li>
             </ul>
         </div>
@@ -314,8 +332,16 @@ public interface <span class="typeNameLabel"><a href=JobResult.html>JobResult</a
                                         <h4>getStatus</h4>
                                         <pre class="methodSignature"> abstract <a href=JobResultStatus.html>JobResultStatus</a> <a href=JobResult.html#getStatus()>getStatus</a>()</pre>
                                         <div class="block"><p>Job Result Status</p></div>
+
+                                        <dl>
+
                                         
-                                        <!-- TODO missing return annotation -->
+
+                                        
+
+                                        
+
+                                        </dl>
                                     </li>
                                 </ul>
                                 
@@ -329,8 +355,16 @@ public interface <span class="typeNameLabel"><a href=JobResult.html>JobResult</a
                                         <h4>getOutputFiles</h4>
                                         <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/util/List.html>List</a>&lt;<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a>&gt; <a href=JobResult.html#getOutputFiles()>getOutputFiles</a>()</pre>
                                         <div class="block"><p>Persistable job output files.</p><p>The files in this list will be persisted to the backing S3 store (if they exist).</p></div>
+
+                                        <dl>
+
                                         
-                                        <!-- TODO missing return annotation -->
+
+                                        
+
+                                        
+
+                                        </dl>
                                     </li>
                                 </ul>
                                 

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <!-- NewPage -->
 <html lang="en"><head>
-    <title>JobWorkspace 1.5.2 API </title>
+    <title>JobWorkspace 1.5.4 API </title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="dc.created" content="2020-03-25">
     <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
@@ -88,7 +88,7 @@ var pathtoroot = "../../../../../../";
 
 <main role="main">
     <div class="header">
-        <div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html"></a></div>
+        <div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.veupathdb.lib.compute.platform.job</a></div>
         <h2 title="Interface JobWorkspace" class="title">Interface JobWorkspace</h2>
     </div>
     <div class="contentContainer">
@@ -118,6 +118,24 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
 
                     </pre>
                     <div class="block"><p>Local Scratch Workspace</p><p>Represents a handle on a local workspace and provides methods for operating on files and directories in that workspace.</p></div>
+
+                    <dl>
+
+                    
+                        <dt><span class="sinceLabel">Since:</span></dt>
+                        
+                            <dd><p>1.0.0</p></dd>
+                        
+                    
+
+                    
+                        <dt><span class="authorLabel">Author:</span></dt>
+                        
+                            <dd><p>Elizabeth Paige Harper https://github.com/foxcapades</p></dd>
+                        
+                    
+
+                    </dl>
                 </li>
             </ul>
         </div>
@@ -240,7 +258,7 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                         <tr id="i0" class="altColor">
                                             <td class="colFirst"><code>abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a></code>
                                             </td>
-                                            <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#touch(String)>touch</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path) </code>
+                                            <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#touch(java.lang.String)>touch</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path) </code>
                                             </th>
                                             <td class="colLast">Creates an empty file in this workspace at the given path.</td>
                                         </tr>
@@ -248,7 +266,7 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                         <tr id="i1" class="rowColor">
                                             <td class="colFirst"><code>abstract <a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html>Unit</a></code>
                                             </td>
-                                            <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#delete(String)>delete</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path) </code>
+                                            <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#delete(java.lang.String)>delete</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path) </code>
                                             </th>
                                             <td class="colLast">Deletes the file at the given path if such a file exists.</td>
                                         </tr>
@@ -256,7 +274,7 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                         <tr id="i2" class="altColor">
                                             <td class="colFirst"><code>abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a></code>
                                             </td>
-                                            <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#mkdir(String)>mkdir</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path) </code>
+                                            <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#mkdir(java.lang.String)>mkdir</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path) </code>
                                             </th>
                                             <td class="colLast">Creates an empty directory at the given path.</td>
                                         </tr>
@@ -264,7 +282,7 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                         <tr id="i3" class="rowColor">
                                             <td class="colFirst"><code>abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a></code>
                                             </td>
-                                            <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#write(String,InputStream)>write</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path, <a href=https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html>InputStream</a> data) </code>
+                                            <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#write(java.lang.String,java.io.InputStream)>write</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path, <a href=https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html>InputStream</a> data) </code>
                                             </th>
                                             <td class="colLast">Writes the contents of the given stream to the file at the given path.</td>
                                         </tr>
@@ -272,7 +290,7 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                         <tr id="i4" class="altColor">
                                             <td class="colFirst"><code>abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a></code>
                                             </td>
-                                            <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#write(String,Consumer)>write</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path, <a href=https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html>Consumer</a>&lt;<a href=https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html>OutputStream</a>&gt; consumer) </code>
+                                            <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#write(java.lang.String,java.util.function.Consumer)>write</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path, <a href=https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html>Consumer</a>&lt;<a href=https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html>OutputStream</a>&gt; consumer) </code>
                                             </th>
                                             <td class="colLast">Opens an output stream to the given path and passes it to the consumer, which can write arbitrary data to the file, then closes the stream.</td>
                                         </tr>
@@ -280,7 +298,7 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                         <tr id="i5" class="rowColor">
                                             <td class="colFirst"><code>abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a></code>
                                             </td>
-                                            <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#write(String,Reader)>write</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path, <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html>Reader</a> data) </code>
+                                            <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#write(java.lang.String,java.io.Reader)>write</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path, <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html>Reader</a> data) </code>
                                             </th>
                                             <td class="colLast">Writes the contents of the given reader to the file at the given path.</td>
                                         </tr>
@@ -288,7 +306,7 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                         <tr id="i6" class="altColor">
                                             <td class="colFirst"><code>abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a></code>
                                             </td>
-                                            <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#write(String,String)>write</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> data) </code>
+                                            <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#write(java.lang.String,java.lang.String)>write</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> data) </code>
                                             </th>
                                             <td class="colLast">Writes the given string to the file at the given path.</td>
                                         </tr>
@@ -296,7 +314,7 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                         <tr id="i7" class="rowColor">
                                             <td class="colFirst"><code>abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a></code>
                                             </td>
-                                            <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#write(String,JsonNode)>write</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path, JsonNode data) </code>
+                                            <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#write(java.lang.String,com.fasterxml.jackson.databind.JsonNode)>write</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path, JsonNode data) </code>
                                             </th>
                                             <td class="colLast">Writes the given JsonNode to the file at the given path.</td>
                                         </tr>
@@ -304,41 +322,41 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                         <tr id="i8" class="altColor">
                                             <td class="colFirst"><code>abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a></code>
                                             </td>
-                                            <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#copy(String,String)>copy</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> fromPath, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> toPath) </code>
+                                            <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#copy(java.lang.String,java.lang.String)>copy</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> fromPath, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> toPath) </code>
                                             </th>
-                                            <td class="colLast">Copies the file at the given <a href=JobWorkspace.html#copy(String,String)>fromPath</a> to the given <a href=JobWorkspace.html#copy(String,String)>toPath</a>.</td>
+                                            <td class="colLast">Copies the file at the given <a href=JobWorkspace.html#copy(java.lang.String,java.lang.String)>fromPath</a> to the given <a href=JobWorkspace.html#copy(java.lang.String,java.lang.String)>toPath</a>.</td>
                                         </tr>
                                         
                                         <tr id="i9" class="rowColor">
                                             <td class="colFirst"><code>abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html>InputStream</a></code>
                                             </td>
-                                            <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#openStream(String)>openStream</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path) </code>
+                                            <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#openStream(java.lang.String)>openStream</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path) </code>
                                             </th>
-                                            <td class="colLast">Opens an <a href=https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html>InputStream</a> over the contents of the file at the given <a href=JobWorkspace.html#openStream(String)>path</a>.</td>
+                                            <td class="colLast">Opens an <a href=https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html>InputStream</a> over the contents of the file at the given <a href=JobWorkspace.html#openStream(java.lang.String)>path</a>.</td>
                                         </tr>
                                         
                                         <tr id="i10" class="altColor">
                                             <td class="colFirst"><code>abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html>Reader</a></code>
                                             </td>
-                                            <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#openReader(String)>openReader</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path) </code>
+                                            <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#openReader(java.lang.String)>openReader</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path) </code>
                                             </th>
-                                            <td class="colLast">Opens a <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html>Reader</a> over the contents of the file at the given <a href=JobWorkspace.html#openReader(String)>path</a>.</td>
+                                            <td class="colLast">Opens a <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html>Reader</a> over the contents of the file at the given <a href=JobWorkspace.html#openReader(java.lang.String)>path</a>.</td>
                                         </tr>
                                         
                                         <tr id="i11" class="rowColor">
                                             <td class="colFirst"><code>abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a></code>
                                             </td>
-                                            <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#readAsString(String)>readAsString</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path) </code>
+                                            <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#readAsString(java.lang.String)>readAsString</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path) </code>
                                             </th>
-                                            <td class="colLast">Reads the contents of the file at the given <a href=JobWorkspace.html#readAsString(String)>path</a> into a <a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html>String</a> and returns it.</td>
+                                            <td class="colLast">Reads the contents of the file at the given <a href=JobWorkspace.html#readAsString(java.lang.String)>path</a> into a <a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html>String</a> and returns it.</td>
                                         </tr>
                                         
                                         <tr id="i12" class="altColor">
                                             <td class="colFirst"><code>abstract JsonNode</code>
                                             </td>
-                                            <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#readAsJson(String)>readAsJson</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path) </code>
+                                            <th class="colSecond" scope="row"><code><a href=JobWorkspace.html#readAsJson(java.lang.String)>readAsJson</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path) </code>
                                             </th>
-                                            <td class="colLast">Reads the contents of the file at the given <a href=JobWorkspace.html#readAsJson(String)>path</a> as a JSON value and returns it.</td>
+                                            <td class="colLast">Reads the contents of the file at the given <a href=JobWorkspace.html#readAsJson(java.lang.String)>path</a> as a JSON value and returns it.</td>
                                         </tr>
                                         
                                         <tr id="i13" class="rowColor">
@@ -393,7 +411,7 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                             </a>
                                 <h3>Method Detail</h3>
                                 
-                                <a id="touch(String)">
+                                <a id="touch(java.lang.String)">
                                     <!--   -->
                                 </a>
                                 <ul class=
@@ -401,23 +419,32 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                           >
                                     <li class="blockList">
                                         <h4>touch</h4>
-                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a> <a href=JobWorkspace.html#touch(String)>touch</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path)</pre>
+                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a> <a href=JobWorkspace.html#touch(java.lang.String)>touch</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path)</pre>
                                         <div class="block"><p>Creates an empty file in this workspace at the given path.</p></div>
-                                        
+
                                         <dl>
+
+                                        
                                             <dt><span class="paramLabel">Parameters:</span></dt>
                                             
                                             
                                             <dd><code>path</code> - Relative path at which the empty file will be created.</dd>
                                             
                                             
-                                        </dl>
                                         
-                                        <!-- TODO missing return annotation -->
+
+                                        
+                                            <dt><span class="returnLabel">Returns:</span></dt>
+                                            <dd><p>Path to the created file.</p></dd>
+                                        
+
+                                        
+
+                                        </dl>
                                     </li>
                                 </ul>
                                 
-                                <a id="delete(String)">
+                                <a id="delete(java.lang.String)">
                                     <!--   -->
                                 </a>
                                 <ul class=
@@ -425,23 +452,29 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                           >
                                     <li class="blockList">
                                         <h4>delete</h4>
-                                        <pre class="methodSignature"> abstract <a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html>Unit</a> <a href=JobWorkspace.html#delete(String)>delete</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path)</pre>
+                                        <pre class="methodSignature"> abstract <a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-unit/index.html>Unit</a> <a href=JobWorkspace.html#delete(java.lang.String)>delete</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path)</pre>
                                         <div class="block"><p>Deletes the file at the given path if such a file exists.</p><p>If the target file does not exist, this method does nothing.</p></div>
-                                        
+
                                         <dl>
+
+                                        
                                             <dt><span class="paramLabel">Parameters:</span></dt>
                                             
                                             
                                             <dd><code>path</code> - Relative path to the file that should be deleted.</dd>
                                             
                                             
-                                        </dl>
                                         
-                                        <!-- TODO missing return annotation -->
+
+                                        
+
+                                        
+
+                                        </dl>
                                     </li>
                                 </ul>
                                 
-                                <a id="mkdir(String)">
+                                <a id="mkdir(java.lang.String)">
                                     <!--   -->
                                 </a>
                                 <ul class=
@@ -449,23 +482,32 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                           >
                                     <li class="blockList">
                                         <h4>mkdir</h4>
-                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a> <a href=JobWorkspace.html#mkdir(String)>mkdir</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path)</pre>
+                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a> <a href=JobWorkspace.html#mkdir(java.lang.String)>mkdir</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path)</pre>
                                         <div class="block"><p>Creates an empty directory at the given path.</p></div>
-                                        
+
                                         <dl>
+
+                                        
                                             <dt><span class="paramLabel">Parameters:</span></dt>
                                             
                                             
                                             <dd><code>path</code> - Relative path at which the directory will be created.</dd>
                                             
                                             
-                                        </dl>
                                         
-                                        <!-- TODO missing return annotation -->
+
+                                        
+                                            <dt><span class="returnLabel">Returns:</span></dt>
+                                            <dd><p>Path to the created directory.</p></dd>
+                                        
+
+                                        
+
+                                        </dl>
                                     </li>
                                 </ul>
                                 
-                                <a id="write(String,InputStream)">
+                                <a id="write(java.lang.String,java.io.InputStream)">
                                     <!--   -->
                                 </a>
                                 <ul class=
@@ -473,10 +515,12 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                           >
                                     <li class="blockList">
                                         <h4>write</h4>
-                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a> <a href=JobWorkspace.html#write(String,InputStream)>write</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path, <a href=https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html>InputStream</a> data)</pre>
+                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a> <a href=JobWorkspace.html#write(java.lang.String,java.io.InputStream)>write</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path, <a href=https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html>InputStream</a> data)</pre>
                                         <div class="block"><p>Writes the contents of the given stream to the file at the given path.</p><p>If the given path points to a file that already exists, it will be truncated before writing.</p><p>If the given path points to a file that does not yet exist, it will be created.</p></div>
-                                        
+
                                         <dl>
+
+                                        
                                             <dt><span class="paramLabel">Parameters:</span></dt>
                                             
                                             
@@ -487,13 +531,20 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                             <dd><code>data</code> - Input stream over the data that will be written to the target file.</dd>
                                             
                                             
-                                        </dl>
                                         
-                                        <!-- TODO missing return annotation -->
+
+                                        
+                                            <dt><span class="returnLabel">Returns:</span></dt>
+                                            <dd><p>Path to the written file.</p></dd>
+                                        
+
+                                        
+
+                                        </dl>
                                     </li>
                                 </ul>
                                 
-                                <a id="write(String,Consumer)">
+                                <a id="write(java.lang.String,java.util.function.Consumer)">
                                     <!--   -->
                                 </a>
                                 <ul class=
@@ -501,10 +552,12 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                           >
                                     <li class="blockList">
                                         <h4>write</h4>
-                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a> <a href=JobWorkspace.html#write(String,Consumer)>write</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path, <a href=https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html>Consumer</a>&lt;<a href=https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html>OutputStream</a>&gt; consumer)</pre>
+                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a> <a href=JobWorkspace.html#write(java.lang.String,java.util.function.Consumer)>write</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path, <a href=https://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html>Consumer</a>&lt;<a href=https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html>OutputStream</a>&gt; consumer)</pre>
                                         <div class="block"><p>Opens an output stream to the given path and passes it to the consumer, which can write arbitrary data to the file, then closes the stream.</p><p>If the given path points to a file that already exists, it will be truncated before writing.</p><p>If the given path points to a file that does not yet exist, it will be created.</p></div>
-                                        
+
                                         <dl>
+
+                                        
                                             <dt><span class="paramLabel">Parameters:</span></dt>
                                             
                                             
@@ -515,13 +568,20 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                             <dd><code>consumer</code> - Consumer of the created output stream which will write data to the target file via the stream.</dd>
                                             
                                             
-                                        </dl>
                                         
-                                        <!-- TODO missing return annotation -->
+
+                                        
+                                            <dt><span class="returnLabel">Returns:</span></dt>
+                                            <dd><p>Path to the written file.</p></dd>
+                                        
+
+                                        
+
+                                        </dl>
                                     </li>
                                 </ul>
                                 
-                                <a id="write(String,Reader)">
+                                <a id="write(java.lang.String,java.io.Reader)">
                                     <!--   -->
                                 </a>
                                 <ul class=
@@ -529,10 +589,12 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                           >
                                     <li class="blockList">
                                         <h4>write</h4>
-                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a> <a href=JobWorkspace.html#write(String,Reader)>write</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path, <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html>Reader</a> data)</pre>
+                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a> <a href=JobWorkspace.html#write(java.lang.String,java.io.Reader)>write</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path, <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html>Reader</a> data)</pre>
                                         <div class="block"><p>Writes the contents of the given reader to the file at the given path.</p><p>If the given path points to a file that already exists, it will be truncated before writing.</p><p>If the given path points to a file that does not yet exist, it will be created.</p></div>
-                                        
+
                                         <dl>
+
+                                        
                                             <dt><span class="paramLabel">Parameters:</span></dt>
                                             
                                             
@@ -543,13 +605,20 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                             <dd><code>data</code> - Reader over the data that will be written to the target file.</dd>
                                             
                                             
-                                        </dl>
                                         
-                                        <!-- TODO missing return annotation -->
+
+                                        
+                                            <dt><span class="returnLabel">Returns:</span></dt>
+                                            <dd><p>Path to the written file.</p></dd>
+                                        
+
+                                        
+
+                                        </dl>
                                     </li>
                                 </ul>
                                 
-                                <a id="write(String,String)">
+                                <a id="write(java.lang.String,java.lang.String)">
                                     <!--   -->
                                 </a>
                                 <ul class=
@@ -557,10 +626,12 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                           >
                                     <li class="blockList">
                                         <h4>write</h4>
-                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a> <a href=JobWorkspace.html#write(String,String)>write</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> data)</pre>
+                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a> <a href=JobWorkspace.html#write(java.lang.String,java.lang.String)>write</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> data)</pre>
                                         <div class="block"><p>Writes the given string to the file at the given path.</p><p>If the given path points to a file that already exists, it will be truncated before writing.</p><p>If the given path points to a file that does not yet exist, it will be created.</p></div>
-                                        
+
                                         <dl>
+
+                                        
                                             <dt><span class="paramLabel">Parameters:</span></dt>
                                             
                                             
@@ -571,13 +642,20 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                             <dd><code>data</code> - String that will be written to the target file.</dd>
                                             
                                             
-                                        </dl>
                                         
-                                        <!-- TODO missing return annotation -->
+
+                                        
+                                            <dt><span class="returnLabel">Returns:</span></dt>
+                                            <dd><p>Path to the written file.</p></dd>
+                                        
+
+                                        
+
+                                        </dl>
                                     </li>
                                 </ul>
                                 
-                                <a id="write(String,JsonNode)">
+                                <a id="write(java.lang.String,com.fasterxml.jackson.databind.JsonNode)">
                                     <!--   -->
                                 </a>
                                 <ul class=
@@ -585,10 +663,12 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                           >
                                     <li class="blockList">
                                         <h4>write</h4>
-                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a> <a href=JobWorkspace.html#write(String,JsonNode)>write</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path, JsonNode data)</pre>
+                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a> <a href=JobWorkspace.html#write(java.lang.String,com.fasterxml.jackson.databind.JsonNode)>write</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path, JsonNode data)</pre>
                                         <div class="block"><p>Writes the given JsonNode to the file at the given path.</p><p>If the given path points to a file that already exists, it will be truncated before writing.</p><p>If the given path points to a file that does not yet exist, it will be created.</p></div>
-                                        
+
                                         <dl>
+
+                                        
                                             <dt><span class="paramLabel">Parameters:</span></dt>
                                             
                                             
@@ -599,13 +679,20 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                             <dd><code>data</code> - Json data that will be written to the target file.</dd>
                                             
                                             
-                                        </dl>
                                         
-                                        <!-- TODO missing return annotation -->
+
+                                        
+                                            <dt><span class="returnLabel">Returns:</span></dt>
+                                            <dd><p>Path to the written file.</p></dd>
+                                        
+
+                                        
+
+                                        </dl>
                                     </li>
                                 </ul>
                                 
-                                <a id="copy(String,String)">
+                                <a id="copy(java.lang.String,java.lang.String)">
                                     <!--   -->
                                 </a>
                                 <ul class=
@@ -613,10 +700,12 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                           >
                                     <li class="blockList">
                                         <h4>copy</h4>
-                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a> <a href=JobWorkspace.html#copy(String,String)>copy</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> fromPath, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> toPath)</pre>
-                                        <div class="block"><p>Copies the file at the given <a href=JobWorkspace.html#copy(String,String)>fromPath</a> to the given <a href=JobWorkspace.html#copy(String,String)>toPath</a>.</p></div>
-                                        
+                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a> <a href=JobWorkspace.html#copy(java.lang.String,java.lang.String)>copy</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> fromPath, <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> toPath)</pre>
+                                        <div class="block"><p>Copies the file at the given <a href=JobWorkspace.html#copy(java.lang.String,java.lang.String)>fromPath</a> to the given <a href=JobWorkspace.html#copy(java.lang.String,java.lang.String)>toPath</a>.</p></div>
+
                                         <dl>
+
+                                        
                                             <dt><span class="paramLabel">Parameters:</span></dt>
                                             
                                             
@@ -627,13 +716,20 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                             <dd><code>toPath</code> - Relative path to where the file should be copied.</dd>
                                             
                                             
-                                        </dl>
                                         
-                                        <!-- TODO missing return annotation -->
+
+                                        
+                                            <dt><span class="returnLabel">Returns:</span></dt>
+                                            <dd><p>Path to the new file copy.</p></dd>
+                                        
+
+                                        
+
+                                        </dl>
                                     </li>
                                 </ul>
                                 
-                                <a id="openStream(String)">
+                                <a id="openStream(java.lang.String)">
                                     <!--   -->
                                 </a>
                                 <ul class=
@@ -641,23 +737,32 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                           >
                                     <li class="blockList">
                                         <h4>openStream</h4>
-                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html>InputStream</a> <a href=JobWorkspace.html#openStream(String)>openStream</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path)</pre>
-                                        <div class="block"><p>Opens an <a href=https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html>InputStream</a> over the contents of the file at the given <a href=JobWorkspace.html#openStream(String)>path</a>.</p></div>
-                                        
+                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html>InputStream</a> <a href=JobWorkspace.html#openStream(java.lang.String)>openStream</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path)</pre>
+                                        <div class="block"><p>Opens an <a href=https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html>InputStream</a> over the contents of the file at the given <a href=JobWorkspace.html#openStream(java.lang.String)>path</a>.</p></div>
+
                                         <dl>
+
+                                        
                                             <dt><span class="paramLabel">Parameters:</span></dt>
                                             
                                             
                                             <dd><code>path</code> - Relative path to the file that will be opened.</dd>
                                             
                                             
-                                        </dl>
                                         
-                                        <!-- TODO missing return annotation -->
+
+                                        
+                                            <dt><span class="returnLabel">Returns:</span></dt>
+                                            <dd><p>An <a href=https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html>InputStream</a> over the contents of the target file.</p></dd>
+                                        
+
+                                        
+
+                                        </dl>
                                     </li>
                                 </ul>
                                 
-                                <a id="openReader(String)">
+                                <a id="openReader(java.lang.String)">
                                     <!--   -->
                                 </a>
                                 <ul class=
@@ -665,23 +770,32 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                           >
                                     <li class="blockList">
                                         <h4>openReader</h4>
-                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html>Reader</a> <a href=JobWorkspace.html#openReader(String)>openReader</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path)</pre>
-                                        <div class="block"><p>Opens a <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html>Reader</a> over the contents of the file at the given <a href=JobWorkspace.html#openReader(String)>path</a>.</p></div>
-                                        
+                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html>Reader</a> <a href=JobWorkspace.html#openReader(java.lang.String)>openReader</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path)</pre>
+                                        <div class="block"><p>Opens a <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html>Reader</a> over the contents of the file at the given <a href=JobWorkspace.html#openReader(java.lang.String)>path</a>.</p></div>
+
                                         <dl>
+
+                                        
                                             <dt><span class="paramLabel">Parameters:</span></dt>
                                             
                                             
                                             <dd><code>path</code> - Relative path to the file that will be opened.</dd>
                                             
                                             
-                                        </dl>
                                         
-                                        <!-- TODO missing return annotation -->
+
+                                        
+                                            <dt><span class="returnLabel">Returns:</span></dt>
+                                            <dd><p>A <a href=https://docs.oracle.com/javase/8/docs/api/java/io/Reader.html>Reader</a> over the contents of the target file.</p></dd>
+                                        
+
+                                        
+
+                                        </dl>
                                     </li>
                                 </ul>
                                 
-                                <a id="readAsString(String)">
+                                <a id="readAsString(java.lang.String)">
                                     <!--   -->
                                 </a>
                                 <ul class=
@@ -689,23 +803,32 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                           >
                                     <li class="blockList">
                                         <h4>readAsString</h4>
-                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> <a href=JobWorkspace.html#readAsString(String)>readAsString</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path)</pre>
-                                        <div class="block"><p>Reads the contents of the file at the given <a href=JobWorkspace.html#readAsString(String)>path</a> into a <a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html>String</a> and returns it.</p></div>
-                                        
+                                        <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> <a href=JobWorkspace.html#readAsString(java.lang.String)>readAsString</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path)</pre>
+                                        <div class="block"><p>Reads the contents of the file at the given <a href=JobWorkspace.html#readAsString(java.lang.String)>path</a> into a <a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html>String</a> and returns it.</p></div>
+
                                         <dl>
+
+                                        
                                             <dt><span class="paramLabel">Parameters:</span></dt>
                                             
                                             
                                             <dd><code>path</code> - Relative path to the file that will be read.</dd>
                                             
                                             
-                                        </dl>
                                         
-                                        <!-- TODO missing return annotation -->
+
+                                        
+                                            <dt><span class="returnLabel">Returns:</span></dt>
+                                            <dd><p>The <a href=https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-string/index.html>String</a> contents of the target file.</p></dd>
+                                        
+
+                                        
+
+                                        </dl>
                                     </li>
                                 </ul>
                                 
-                                <a id="readAsJson(String)">
+                                <a id="readAsJson(java.lang.String)">
                                     <!--   -->
                                 </a>
                                 <ul class=
@@ -713,19 +836,28 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                           >
                                     <li class="blockList">
                                         <h4>readAsJson</h4>
-                                        <pre class="methodSignature"> abstract JsonNode <a href=JobWorkspace.html#readAsJson(String)>readAsJson</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path)</pre>
-                                        <div class="block"><p>Reads the contents of the file at the given <a href=JobWorkspace.html#readAsJson(String)>path</a> as a JSON value and returns it.</p></div>
-                                        
+                                        <pre class="methodSignature"> abstract JsonNode <a href=JobWorkspace.html#readAsJson(java.lang.String)>readAsJson</a>(<a href=https://docs.oracle.com/javase/8/docs/api/java/lang/String.html>String</a> path)</pre>
+                                        <div class="block"><p>Reads the contents of the file at the given <a href=JobWorkspace.html#readAsJson(java.lang.String)>path</a> as a JSON value and returns it.</p></div>
+
                                         <dl>
+
+                                        
                                             <dt><span class="paramLabel">Parameters:</span></dt>
                                             
                                             
                                             <dd><code>path</code> - Relative path to the file that will be read.</dd>
                                             
                                             
-                                        </dl>
                                         
-                                        <!-- TODO missing return annotation -->
+
+                                        
+                                            <dt><span class="returnLabel">Returns:</span></dt>
+                                            <dd><p>The parsed JsonNode contents of the target file.</p></dd>
+                                        
+
+                                        
+
+                                        </dl>
                                     </li>
                                 </ul>
                                 
@@ -739,8 +871,16 @@ public interface <span class="typeNameLabel"><a href=JobWorkspace.html>JobWorksp
                                         <h4>getPath</h4>
                                         <pre class="methodSignature"> abstract <a href=https://docs.oracle.com/javase/8/docs/api/java/nio/file/Path.html>Path</a> <a href=JobWorkspace.html#getPath()>getPath</a>()</pre>
                                         <div class="block"><p>Absolute path to this workspace on the local filesystem.</p></div>
+
+                                        <dl>
+
                                         
-                                        <!-- TODO missing return annotation -->
+
+                                        
+
+                                        
+
+                                        </dl>
                                     </li>
                                 </ul>
                                 
