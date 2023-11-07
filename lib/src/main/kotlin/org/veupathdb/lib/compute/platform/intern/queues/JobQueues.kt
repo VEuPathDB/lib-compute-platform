@@ -31,7 +31,7 @@ internal object JobQueues {
     Log.debug("initializing job queue manager")
 
     config.queues.forEach {
-      queues[it.id] = QueueWrapper(it)
+      queues[it.id] = QueueWrapper(it, config.jobConfig)
     }
   }
 

@@ -3,13 +3,12 @@ package org.veupathdb.lib.compute.platform.intern.queues
 import com.fasterxml.jackson.databind.JsonNode
 import org.slf4j.LoggerFactory
 import org.veupathdb.lib.compute.platform.JobManager
+import org.veupathdb.lib.compute.platform.config.AsyncJobConfig
 import org.veupathdb.lib.compute.platform.config.AsyncQueueConfig
-import org.veupathdb.lib.compute.platform.intern.db.QueueDB
 import org.veupathdb.lib.compute.platform.intern.jobs.JobExecContext
 import org.veupathdb.lib.compute.platform.intern.jobs.JobExecutors
 import org.veupathdb.lib.compute.platform.intern.metrics.JobMetrics
 import org.veupathdb.lib.compute.platform.intern.metrics.QueueMetrics
-import org.veupathdb.lib.compute.platform.intern.s3.S3
 import org.veupathdb.lib.compute.platform.job.PlatformJobResultStatus
 import org.veupathdb.lib.hash_id.HashID
 import org.veupathdb.lib.rabbit.jobs.QueueConfig
@@ -27,8 +26,8 @@ import java.time.temporal.ChronoUnit
  * Wraps both the dispatch and worker ends of a queue to execute jobs and handle
  * their results.
  */
-internal class QueueWrapper(conf: AsyncQueueConfig) {
-
+internal class QueueWrapper(conf: AsyncQueueConfig,
+                            val jobConfig: AsyncJobConfig) {
   private val Log = LoggerFactory.getLogger(this::class.java)
 
   val name = conf.id
@@ -69,8 +68,18 @@ internal class QueueWrapper(conf: AsyncQueueConfig) {
 
   private fun onError(job: ErrorNotification) {
     Log.info("job {} failed", job.jobID)
-    JobMetrics.Failures.labels(name).inc()
-    JobManager.setJobFailed(job.jobID)
+    val attemptCount = job.attemptCount ?: 0
+    if (attemptCount < jobConfig.maxAttempts) {
+      // Re-queue job until success or retries exhausted.
+      JobMetrics.Retries.labels(name).inc()
+      dispatch.dispatch(JobDispatch(jobID=job.jobID,
+        body=job.body,
+        attemptCount=attemptCount + 1
+      ))
+    } else {
+      JobMetrics.Failures.labels(name).inc()
+      JobManager.setJobFailed(job.jobID)
+    }
   }
 
   private fun onSuccess(job: SuccessNotification) {
@@ -93,12 +102,12 @@ internal class QueueWrapper(conf: AsyncQueueConfig) {
 
       when (JobExecutors.new(JobExecContext(name, job.jobID, job.body)).execute(job.jobID, job.body)) {
         PlatformJobResultStatus.Success -> handler.sendSuccess(SuccessNotification(job.jobID))
-        PlatformJobResultStatus.Failure -> handler.sendError(ErrorNotification(job.jobID, 1))
+        PlatformJobResultStatus.Failure -> handler.sendError(ErrorNotification(jobID=job.jobID, code=1, body=job.body, attemptCount=job.attemptCount))
         PlatformJobResultStatus.Aborted -> { /* Job was aborted, send no notifications. */ }
       }
     } catch (e: Throwable) {
       Log.error("job execution failed with an exception for job ${job.jobID}", e)
-      handler.sendError(ErrorNotification(job.jobID, 1, e.message))
+      handler.sendError(ErrorNotification(job.jobID, 1, job.attemptCount + 1, e.message))
     }
   }
 }

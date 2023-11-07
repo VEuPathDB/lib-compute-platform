@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "org.veupathdb.lib"
-version = "1.5.3"
+version = "1.6.0"
 
 
 dependencies {
@@ -30,7 +30,7 @@ dependencies {
   implementation("org.veupathdb.lib.s3:workspaces:4.1.1")
 
   // Rabbit
-  implementation("org.veupathdb.lib:rabbit-job-queue:1.2.0")
+  implementation("org.veupathdb.lib:rabbit-job-queue:1.3.0")
 
   // Metrics
   implementation("io.prometheus:simpleclient:0.16.0")
