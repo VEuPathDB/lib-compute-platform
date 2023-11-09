@@ -12,6 +12,7 @@ version = "1.6.0"
 
 
 dependencies {
+  implementation(kotlin("stdlib-jdk8"))
 
   // Logging
   implementation("org.slf4j:slf4j-api:1.7.36")
@@ -19,7 +20,7 @@ dependencies {
   // Jackson
   implementation(platform("com.fasterxml.jackson:jackson-bom:2.15.3"))
   implementation("com.fasterxml.jackson.core:jackson-databind")
-  implementation("org.veupathdb.lib:jackson-singleton:3.0.0")
+  implementation("org.veupathdb.lib:jackson-singleton:3.1.1")
 
   // DB
   implementation("com.zaxxer:HikariCP:5.0.1")
@@ -37,7 +38,7 @@ dependencies {
   implementation("io.prometheus:simpleclient_common:0.16.0")
 
   // Misc & Utils
-  api("org.veupathdb.lib:hash-id:1.0.2")
+  api("org.veupathdb.lib:hash-id:1.1.0")
 
   // Testing
   testImplementation(kotlin("test"))
