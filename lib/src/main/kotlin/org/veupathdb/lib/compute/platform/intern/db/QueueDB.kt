@@ -248,6 +248,21 @@ internal object QueueDB {
   }
 
   /**
+   * Retrieves a stream of failed job records.
+   *
+   * The returned stream **MUST** be closed when the caller is done with it to
+   * prevent DB connection leaks.
+   *
+   * @return Stream of queued jobs ordered by job creation date.
+   */
+  fun getFailedJobs(): Stream<JobRecord> {
+    Log.debug("Getting list of queued jobs.")
+
+    // Connection is not closed here as the caller is responsible for closing
+    // the stream.
+    return ListFailedJobs(ds.connection)
+  }
+  /**
    * Retrieves a stream of all job records.
    *
    * The returned stream **MUST** be closed when the caller is done with it to

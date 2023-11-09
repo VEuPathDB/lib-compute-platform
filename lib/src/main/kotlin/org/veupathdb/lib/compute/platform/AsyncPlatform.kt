@@ -4,6 +4,7 @@ import org.slf4j.LoggerFactory
 import org.veupathdb.lib.compute.platform.config.AsyncPlatformConfig
 import org.veupathdb.lib.compute.platform.errors.UnownedJobException
 import org.veupathdb.lib.compute.platform.intern.JobPruner
+import org.veupathdb.lib.compute.platform.intern.db.AsyncDBJob
 import org.veupathdb.lib.compute.platform.intern.db.DatabaseMigrator
 import org.veupathdb.lib.compute.platform.intern.db.QueueDB
 import org.veupathdb.lib.compute.platform.intern.jobs.JobExecutors
@@ -274,13 +275,17 @@ object AsyncPlatform {
    *
    * @param jobID Hash ID of the job that should be deleted.
    *
+   * @param throwOnNotExists Whether an exception should be thrown if the target
+   * job does not exist in S3.
+   *
    * @throws IllegalStateException If the target job does not exist, is not
    * owned by the current service or process, or is not in a completed status.
    *
    * @since 1.2.0
    */
   @JvmStatic
-  fun deleteJob(jobID: HashID) {
+  @JvmOverloads
+  fun deleteJob(jobID: HashID, throwOnNotExists: Boolean = true) {
     Log.debug("Deleting job {}", jobID)
 
     // Assert that the job is both owned by this process and is complete
@@ -290,7 +295,7 @@ object AsyncPlatform {
     }
 
     QueueDB.deleteJob(jobID)
-    S3.deleteWorkspace(jobID)
+    S3.deleteWorkspace(jobID, throwOnNotExists)
   }
 
   /**
@@ -339,5 +344,20 @@ object AsyncPlatform {
     }
 
     JobManager.setJobExpired(jobID)
+  }
+
+  /**
+   * Fetches a list of jobs owned by the current campus that are in the `failed`
+   * status.
+   *
+   * @return The retrieved list of broken jobs.
+   *
+   * @since 1.6.0
+   */
+  @JvmStatic
+  fun getOwnedBrokenJobs(): List<AsyncJob> {
+    Log.debug("Listing broken jobs owned by the current campus")
+    return QueueDB.getFailedJobs()
+      .use { stream -> stream.map { AsyncDBJob(it, -1) }.toList() }
   }
 }
