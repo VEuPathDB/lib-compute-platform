@@ -351,6 +351,8 @@ object AsyncPlatform {
    * status.
    *
    * @return The retrieved list of broken jobs.
+   *
+   * @since 1.6.0
    */
   @JvmStatic
   fun getOwnedBrokenJobs(): List<AsyncJob> {
