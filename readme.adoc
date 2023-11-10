@@ -399,7 +399,8 @@ AsyncS3Config.build {
 ----
 class AsyncJobConfig(
   internal val executorFactory: JobExecutorFactory,
-  internal val expirationDays: Int = 30
+  internal val expirationDays: Int = 30,
+  internal val maxAttempts: Int
 )
 ----
 
@@ -423,12 +424,21 @@ Each time a job is accessed, its last accessed date will be updated and its
 expiration will be this number of days out from the updated last accessed date.
 --
 
+`maxAttempts`::
++
+--
+Defines the maximum number of times a job should be attempted before being
+marked as failed.
+--
+
+
 .Builder Java
 [source, java]
 ----
 AsyncJobConfig.builder()
   .executorFactory(...)
   .expirationDays(...)
+  .maxAttempts(...)
   .build()
 ----
 
@@ -438,6 +448,7 @@ AsyncJobConfig.builder()
 AsyncJobConfig.build {
   executorFactory = ...
   expirationDays = ...
+  maxAttempts = ...
 }
 ----
 
