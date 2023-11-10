@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   kotlin("jvm")
-  id("org.jetbrains.dokka") version "1.7.20"
+  id("org.jetbrains.dokka") version "1.9.10"
   java
   `maven-publish`
 }
@@ -12,21 +12,22 @@ version = "1.6.0"
 
 
 dependencies {
+  implementation(kotlin("stdlib-jdk8"))
 
   // Logging
   implementation("org.slf4j:slf4j-api:1.7.36")
 
   // Jackson
-  implementation(platform("com.fasterxml.jackson:jackson-bom:2.15.0"))
+  implementation(platform("com.fasterxml.jackson:jackson-bom:2.15.3"))
   implementation("com.fasterxml.jackson.core:jackson-databind")
-  implementation("org.veupathdb.lib:jackson-singleton:3.0.0")
+  implementation("org.veupathdb.lib:jackson-singleton:3.1.1")
 
   // DB
   implementation("com.zaxxer:HikariCP:5.0.1")
   implementation("org.postgresql:postgresql:42.5.4")
 
   // S3
-  implementation("org.veupathdb.lib.s3:s34k-minio:0.5.0+s34k-0.9.0")
+  implementation("org.veupathdb.lib.s3:s34k-minio:0.6.0+s34k-0.10.1")
   implementation("org.veupathdb.lib.s3:workspaces:4.1.1")
 
   // Rabbit
@@ -37,7 +38,7 @@ dependencies {
   implementation("io.prometheus:simpleclient_common:0.16.0")
 
   // Misc & Utils
-  api("org.veupathdb.lib:hash-id:1.0.2")
+  api("org.veupathdb.lib:hash-id:1.1.0")
 
   // Testing
   testImplementation(kotlin("test"))
