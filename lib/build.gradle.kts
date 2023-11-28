@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "org.veupathdb.lib"
-version = "1.6.0"
+version = "1.6.1"
 
 
 dependencies {
@@ -18,16 +18,16 @@ dependencies {
   implementation("org.slf4j:slf4j-api:1.7.36")
 
   // Jackson
-  implementation(platform("com.fasterxml.jackson:jackson-bom:2.15.3"))
+  implementation(platform("com.fasterxml.jackson:jackson-bom:2.16.0"))
   implementation("com.fasterxml.jackson.core:jackson-databind")
   implementation("org.veupathdb.lib:jackson-singleton:3.1.1")
 
   // DB
   implementation("com.zaxxer:HikariCP:5.0.1")
-  implementation("org.postgresql:postgresql:42.5.4")
+  implementation("org.postgresql:postgresql:42.7.0")
 
   // S3
-  implementation("org.veupathdb.lib.s3:s34k-minio:0.6.0+s34k-0.10.1")
+  implementation("org.veupathdb.lib.s3:s34k-minio:0.6.1+s34k-0.10.3")
   implementation("org.veupathdb.lib.s3:workspaces:4.1.1")
 
   // Rabbit
