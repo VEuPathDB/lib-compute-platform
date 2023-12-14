@@ -83,7 +83,7 @@ internal class JobExecutionHandler(private val executor: JobExecutor) {
       // Verify that the job is still valid (hasn't been deleted or expired
       // while it was waiting in the queue).
       if (!jobIsStillRunnable(jobID)) {
-        Log.info("aborting job {} for no longer being in a runnable state (deleted or expired)", jobID)
+        Log.info("Aborting job {} before job execution for no longer being in a runnable state (deleted or expired)", jobID)
         return PlatformJobResultStatus.Aborted
       }
 
@@ -93,7 +93,7 @@ internal class JobExecutionHandler(private val executor: JobExecutor) {
       // Verify that the job is _still_ still valid (didn't get deleted or
       // expired out from under us while we were running the executor).
       if (!jobIsStillRunnable(jobID)) {
-        Log.info("aborting job {} for no longer being in a runnable state (deleted or expired)", jobID)
+        Log.info("Aborting job {} after job execution for no longer being in a runnable state (deleted or expired)", jobID)
         return PlatformJobResultStatus.Aborted
       }
 
@@ -106,7 +106,7 @@ internal class JobExecutionHandler(private val executor: JobExecutor) {
       // Verify that the job wasn't invalidated while we were busy writing files
       // to S3.
       if (jobWasInvalidated(jobID)) {
-        Log.info("aborting job {} for no longer being in a runnable state (deleted or expired)", jobID)
+        Log.info("Aborting job {} for being invalidated.", jobID)
         S3.wipeWorkspace(jobID)
         return PlatformJobResultStatus.Aborted
       }
@@ -119,13 +119,26 @@ internal class JobExecutionHandler(private val executor: JobExecutor) {
   private fun jobIsStillRunnable(jobID: HashID): Boolean {
     val (dbJob, s3Job) = JobManager.getJob(jobID)
 
-    dbJob ?: return false
-    s3Job ?: return false
+    if (dbJob == null) {
+      Log.debug("While checking whether job {} is still runnable the, job could not be located in the queue database; returning false", jobID)
+      return false
+    }
 
-    return if (dbJob.status == JobStatus.Expired)
+    if (s3Job == null) {
+      Log.debug("While checking whether job {} is still runnable, the job could not be located in S3; returning false", jobID)
+      return false
+    }
+
+    return if (dbJob.status == JobStatus.Expired) {
+      Log.debug("While checking whether job {} is still runnable, the job status in the queue db was found to be expired; returning false", jobID)
       false
-    else
-      s3Job.status != JobStatus.Expired
+    } else if (s3Job.status == JobStatus.Expired) {
+      Log.debug("While checking whether job {} is still runnable, the job status in S3 was found to be expired; returning false", jobID)
+      false
+    } else {
+      Log.debug("Job {} was found to still be runnable", jobID)
+      true
+    }
   }
 
   private fun jobWasInvalidated(jobID: HashID): Boolean {
