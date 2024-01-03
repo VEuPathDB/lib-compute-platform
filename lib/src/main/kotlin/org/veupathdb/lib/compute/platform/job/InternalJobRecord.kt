@@ -1,7 +1,6 @@
-package org.veupathdb.lib.compute.platform.intern.db.model
+package org.veupathdb.lib.compute.platform.job
 
 import com.fasterxml.jackson.databind.JsonNode
-import org.veupathdb.lib.compute.platform.job.JobStatus
 import org.veupathdb.lib.hash_id.HashID
 import java.time.OffsetDateTime
 
@@ -13,7 +12,7 @@ import java.time.OffsetDateTime
  * @author Elizabeth Paige Harper [https://github.com/foxcapades]
  * @since 1.0.0
  *
- * @constructor Creates a new [JobRecord] instance.
+ * @constructor Creates a new [InternalJobRecord] instance.
  *
  * @param jobID Hash ID of the job this record represents.
  *
@@ -41,7 +40,7 @@ import java.time.OffsetDateTime
  *
  * This will be `null` if the job has not yet finished.
  */
-internal class JobRecord (
+class InternalJobRecord (
   val jobID:         HashID,
   val status:        JobStatus,
   val queue:         String,
