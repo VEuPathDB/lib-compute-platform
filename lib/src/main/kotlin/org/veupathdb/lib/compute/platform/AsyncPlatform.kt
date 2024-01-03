@@ -7,6 +7,7 @@ import org.veupathdb.lib.compute.platform.intern.JobPruner
 import org.veupathdb.lib.compute.platform.intern.db.AsyncDBJob
 import org.veupathdb.lib.compute.platform.intern.db.DatabaseMigrator
 import org.veupathdb.lib.compute.platform.intern.db.QueueDB
+import org.veupathdb.lib.compute.platform.job.InternalJobRecord
 import org.veupathdb.lib.compute.platform.intern.jobs.JobExecutors
 import org.veupathdb.lib.compute.platform.intern.queues.JobQueues
 import org.veupathdb.lib.compute.platform.intern.s3.S3
@@ -320,6 +321,26 @@ object AsyncPlatform {
       .forEach { ownedJobs[it.jobID] = it }
 
     return ownedJobs.values.toTypedArray().asList()
+  }
+
+  /**
+   * Look up the given Job ID in the internal QueueDB and return it if present.
+   *
+   * @return Internal job record if it exists in the internal QueueDB.
+   */
+  @JvmStatic
+  fun getJobInternal(jobID: HashID): InternalJobRecord? {
+    return QueueDB.getJobInternal(jobID)
+  }
+
+  /**
+   * Looks up all jobs available in the Queue.
+   *
+   * @return Internal job record if it exists in the internal QueueDB.
+   */
+  @JvmStatic
+  fun listJobsInternal(): List<InternalJobRecord> {
+    return QueueDB.getAllJobs().toList()
   }
 
   /**

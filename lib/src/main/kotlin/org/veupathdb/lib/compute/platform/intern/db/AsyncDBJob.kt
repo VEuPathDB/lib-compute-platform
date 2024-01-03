@@ -1,10 +1,10 @@
 package org.veupathdb.lib.compute.platform.intern.db
 
-import org.veupathdb.lib.compute.platform.intern.db.model.JobRecord
+import org.veupathdb.lib.compute.platform.job.InternalJobRecord
 import org.veupathdb.lib.compute.platform.job.AsyncJob
 
 internal class AsyncDBJob(
-  private val raw: JobRecord,
+  private val raw: InternalJobRecord,
   override val queuePosition: Int?
 ) : AsyncJob {
   override val jobID
