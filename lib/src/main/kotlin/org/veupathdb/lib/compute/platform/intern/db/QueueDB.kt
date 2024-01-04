@@ -5,12 +5,11 @@ import com.zaxxer.hikari.HikariDataSource
 import org.postgresql.Driver
 import org.slf4j.LoggerFactory
 import org.veupathdb.lib.compute.platform.config.AsyncPlatformConfig
-import org.veupathdb.lib.compute.platform.intern.db.model.JobRecord
+import org.veupathdb.lib.compute.platform.job.InternalJobRecord
 import org.veupathdb.lib.compute.platform.intern.db.queries.delete.DeleteJob
 import org.veupathdb.lib.compute.platform.intern.db.queries.insert.RecordNewJob
 import org.veupathdb.lib.compute.platform.intern.db.queries.select.*
 import org.veupathdb.lib.compute.platform.intern.db.queries.update.*
-import org.veupathdb.lib.compute.platform.job.AsyncJob
 import org.veupathdb.lib.compute.platform.job.JobStatus
 import org.veupathdb.lib.hash_id.HashID
 import java.time.OffsetDateTime
@@ -203,7 +202,7 @@ internal object QueueDB {
   }
 
   @JvmStatic
-  fun getJobInternal(jobID: HashID): JobRecord? {
+  fun getJobInternal(jobID: HashID): InternalJobRecord? {
     Log.debug("looking up raw job {}", jobID)
     return ds.connection.use { LookupJob(it, jobID) }
   }
@@ -223,7 +222,7 @@ internal object QueueDB {
    *
    * @return Stream of queued jobs ordered by job creation date.
    */
-  fun getQueuedJobs(): Stream<JobRecord> {
+  fun getQueuedJobs(): Stream<InternalJobRecord> {
     Log.debug("Getting list of queued jobs.")
 
     // Connection is not closed here as the caller is responsible for closing
@@ -239,7 +238,7 @@ internal object QueueDB {
    *
    * @return Stream of queued jobs ordered by job creation date.
    */
-  fun getRunningJobs(): Stream<JobRecord> {
+  fun getRunningJobs(): Stream<InternalJobRecord> {
     Log.debug("Getting list of queued jobs.")
 
     // Connection is not closed here as the caller is responsible for closing
@@ -255,7 +254,7 @@ internal object QueueDB {
    *
    * @return Stream of queued jobs ordered by job creation date.
    */
-  fun getFailedJobs(): Stream<JobRecord> {
+  fun getFailedJobs(): Stream<InternalJobRecord> {
     Log.debug("Getting list of queued jobs.")
 
     // Connection is not closed here as the caller is responsible for closing
@@ -272,7 +271,7 @@ internal object QueueDB {
    *
    * @since 1.4.0
    */
-  fun getAllJobs(): Stream<JobRecord> {
+  fun getAllJobs(): Stream<InternalJobRecord> {
     Log.debug("Getting list of all jobs.")
 
     // Connection is not closed here as the caller is responsible for closing

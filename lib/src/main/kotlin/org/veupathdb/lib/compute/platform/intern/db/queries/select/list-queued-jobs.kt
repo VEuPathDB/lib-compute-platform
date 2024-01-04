@@ -1,6 +1,6 @@
 package org.veupathdb.lib.compute.platform.intern.db.queries.select
 
-import org.veupathdb.lib.compute.platform.intern.db.model.JobRecord
+import org.veupathdb.lib.compute.platform.job.InternalJobRecord
 import org.veupathdb.lib.compute.platform.intern.db.util.stream
 import java.sql.Connection
 import java.sql.ResultSet
@@ -39,7 +39,7 @@ private const val SQL = """
  * **WARNING**: The returned stream **MUST** be closed on completion to avoid DB
  * connection leaks.
  */
-internal fun ListQueuedJobs(con: Connection): Stream<JobRecord> {
+internal fun ListQueuedJobs(con: Connection): Stream<InternalJobRecord> {
   // Nothing is closed in this method as the caller is responsible for closing
   // the returned stream (which will close the connection, statement, and
   // result-set)
