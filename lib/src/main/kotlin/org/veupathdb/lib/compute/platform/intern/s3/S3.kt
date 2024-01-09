@@ -120,6 +120,7 @@ internal object S3 {
   @JvmStatic
   @JvmOverloads
   fun deleteWorkspace(jobID: HashID, throwOnNotExists: Boolean = true) {
+    Log.info("Deleting workspace with ID {}.", jobID)
     val ws = wsf[jobID]
 
     if (ws == null && throwOnNotExists) {
