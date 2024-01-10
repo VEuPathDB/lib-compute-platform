@@ -16,7 +16,7 @@ import kotlin.concurrent.withLock
 internal object JobManager {
   private val Log = LoggerFactory.getLogger(javaClass)
   private val LocksByJobID: Cache<String, ReentrantLock> = Caffeine.newBuilder()
-    .expireAfterWrite(30L, TimeUnit.MINUTES)
+    .expireAfterWrite(30L, TimeUnit.MINUTES) // Expire after 30 minutes to free up memory.
     .build()
 
   fun getJob(jobID: HashID): Pair<AsyncDBJob?, AsyncS3Job?> {
