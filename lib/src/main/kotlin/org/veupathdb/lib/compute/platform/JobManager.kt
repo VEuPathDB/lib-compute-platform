@@ -1,5 +1,7 @@
 package org.veupathdb.lib.compute.platform
 
+import com.github.benmanes.caffeine.cache.Cache
+import com.github.benmanes.caffeine.cache.Caffeine
 import org.slf4j.LoggerFactory
 import org.veupathdb.lib.compute.platform.intern.db.AsyncDBJob
 import org.veupathdb.lib.compute.platform.intern.db.QueueDB
@@ -7,13 +9,15 @@ import org.veupathdb.lib.compute.platform.intern.s3.AsyncS3Job
 import org.veupathdb.lib.compute.platform.intern.s3.S3
 import org.veupathdb.lib.compute.platform.job.AsyncJob
 import org.veupathdb.lib.hash_id.HashID
-import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.TimeUnit
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
 
 internal object JobManager {
   private val Log = LoggerFactory.getLogger(javaClass)
-  private val LocksByJobID = ConcurrentHashMap<String, ReentrantLock>()
+  private val LocksByJobID: Cache<String, ReentrantLock> = Caffeine.newBuilder()
+    .expireAfterWrite(30L, TimeUnit.MINUTES)
+    .build()
 
   fun getJob(jobID: HashID): Pair<AsyncDBJob?, AsyncS3Job?> {
     val lock = ensureLock(jobID)
@@ -98,6 +102,6 @@ internal object JobManager {
   }
 
   private fun ensureLock(jobID: HashID): ReentrantLock {
-    return LocksByJobID.computeIfAbsent(jobID.string) { ReentrantLock() }
+    return LocksByJobID.get(jobID.string) { ReentrantLock() }
   }
 }

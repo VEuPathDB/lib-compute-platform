@@ -39,6 +39,7 @@ dependencies {
 
   // Misc & Utils
   api("org.veupathdb.lib:hash-id:1.1.0")
+  implementation("com.github.ben-manes.caffeine:caffeine:3.1.8") // Used for self-expiring cache.
 
   // Testing
   testImplementation(kotlin("test"))
