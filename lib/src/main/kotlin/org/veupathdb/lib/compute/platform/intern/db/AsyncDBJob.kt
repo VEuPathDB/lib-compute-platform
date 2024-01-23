@@ -10,8 +10,7 @@ internal class AsyncDBJob(
   override val jobID
     get() = raw.jobID
 
-  override val status
-    get() = raw.status
+  override val status by lazy { QueueDB.getJobInternal(jobID)!!.status }
 
   override val owned = true
 

@@ -8,7 +8,7 @@ internal class AsyncS3Job(private val raw: XS3Workspace) : AsyncJob {
     get() = raw.id
 
   override val status by lazy { raw.deriveStatus() }
-
+  
   override val queuePosition = null
 
   override val owned = false

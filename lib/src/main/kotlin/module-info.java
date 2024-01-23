@@ -19,5 +19,6 @@ module veupath.compute.platform {
   requires rabbit.job.queue;
   requires workspaces;
   requires jackson.singleton;
+  requires com.github.benmanes.caffeine;
 
 }
