@@ -41,6 +41,15 @@ internal object JobManager {
         return s3Job
       }
 
+      // If job is not in S3, but is in the database, something has gone wrong. Remove the job from the internal DB.
+      // Otherwise, the job will be stuck indefinitely.
+      if (lock.withLock { s3Job == null }) {
+        Log.debug("Job {} is missing in S3 but is present in queue db. Deleting job from queue db to start fresh.")
+
+        QueueDB.deleteJob(jobID)
+        return null
+      }
+
       // The statuses did align, so we (this service instance) presumably still
       // own the job.
 
