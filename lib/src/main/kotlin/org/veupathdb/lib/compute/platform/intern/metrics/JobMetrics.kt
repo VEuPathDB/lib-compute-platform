@@ -15,6 +15,17 @@ internal object JobMetrics {
     .register()
 
   /**
+   * Counter of the number of jobs that have been retried since last startup.
+   */
+  @JvmStatic
+  val Retries: Counter = Counter.build()
+    .name("job_retries")
+    .help("Counter of jobs that failed")
+    .labelNames("queue")
+    .register()
+
+
+  /**
    * Counter of the number of jobs that completed successfully since last
    * startup.
    */

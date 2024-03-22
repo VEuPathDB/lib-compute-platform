@@ -27,6 +27,11 @@ class AsyncJobConfig {
   internal val expirationDays: Int
 
   /**
+   * Max job execution attempts before job is failed.
+   */
+  internal val maxAttempts: Int
+
+  /**
    * Creates a new [AsyncJobConfig] instance.
    *
    * @param executorFactory Provider for [JobExecutor] instances that will be
@@ -44,9 +49,10 @@ class AsyncJobConfig {
    * @param expirationDays Number of days after a job was last accessed that it
    * may be expired and pruned.
    */
-  constructor(executorFactory: JobExecutorFactory, expirationDays: Int) {
+  constructor(executorFactory: JobExecutorFactory, expirationDays: Int, maxAttempts: Int = 5) {
     this.executorFactory = executorFactory
     this.expirationDays = expirationDays
+    this.maxAttempts = maxAttempts
   }
 
 
@@ -83,6 +89,11 @@ class AsyncJobConfig {
     var expirationDays = 30
 
     /**
+     * Max job execution attempts before job is failed.
+     */
+    var maxAttempts: Int = 5
+
+    /**
      * Sets the provider for [JobExecutor] instances that will be used to
      * process individual jobs.
      */
@@ -100,11 +111,19 @@ class AsyncJobConfig {
       return this
     }
 
+    /**
+     * Sets the max job execution attempts before job is failed.
+     */
+    fun maxAttempts(d: Int): Builder {
+      maxAttempts = d
+      return this
+    }
+
     fun build(): AsyncJobConfig {
       if (executorFactory == null)
         throw IllegalStateException("Cannot build an AsyncJobConfig instance with no executor factory set!")
 
-      return AsyncJobConfig(executorFactory!!, expirationDays)
+      return AsyncJobConfig(executorFactory!!, expirationDays, maxAttempts)
     }
   }
 }
