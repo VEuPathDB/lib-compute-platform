@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode
 import org.slf4j.LoggerFactory
 import org.veupathdb.lib.compute.platform.config.AsyncS3Config
 import org.veupathdb.lib.compute.platform.intern.*
-import org.veupathdb.lib.compute.platform.job.AsyncJob
 import org.veupathdb.lib.compute.platform.job.JobFileReference
 import org.veupathdb.lib.hash_id.HashID
 import org.veupathdb.lib.s3.s34k.S3Api
@@ -127,6 +126,8 @@ internal object S3 {
       throw IllegalStateException("Attempted to delete nonexistent workspace $jobID")
     }
 
+    // Use our own custom deletion method in case the workspace is invalid (in
+    // which case `ws` would be null)
     wipeWorkspace(jobID)
   }
 
@@ -146,9 +147,16 @@ internal object S3 {
    */
   @JvmStatic
   fun wipeWorkspace(jobID: HashID) {
+    // Create a prefix for the objects to delete based on the root path in MinIO
+    // plus the job ID.
+    //
+    // Because the s3 workspaces lib allows for leading slash but MinIO itself
+    // does not, remove any leading slash.
+    val searchPrefix = config.rootPath.stripLeadingSlash().appendSlash() + jobID.toString()
+
     s3.buckets[BucketName(config.bucket)]!!
       .objects
-      .list(prefix = config.rootPath.appendSlash() + jobID.toString())
+      .list(searchPrefix)
       .forEach { it.delete() }
   }
 
@@ -327,6 +335,8 @@ internal object S3 {
       .map { try { HashID(it) } catch (e: Throwable) { null } }
       .filterNotNull()
   }
+
+  private fun String.stripLeadingSlash() = if (startsWith('/')) this.substring(1) else this
 
   private fun String.appendSlash() =
     if (!endsWith('/'))
