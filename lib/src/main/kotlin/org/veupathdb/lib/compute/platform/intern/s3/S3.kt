@@ -147,16 +147,9 @@ internal object S3 {
    */
   @JvmStatic
   fun wipeWorkspace(jobID: HashID) {
-    // Create a prefix for the objects to delete based on the root path in MinIO
-    // plus the job ID.
-    //
-    // Because the s3 workspaces lib allows for leading slash but MinIO itself
-    // does not, remove any leading slash.
-    val searchPrefix = config.rootPath.stripLeadingSlash().appendSlash() + jobID.toString()
-
     s3.buckets[BucketName(config.bucket)]!!
       .objects
-      .list(searchPrefix)
+      .list(jobID.toS3Prefix())
       .forEach { it.delete() }
   }
 
@@ -336,7 +329,18 @@ internal object S3 {
       .filterNotNull()
   }
 
-  private fun String.stripLeadingSlash() = if (startsWith('/')) this.substring(1) else this
+  private fun HashID.toS3Prefix() =
+    // If the whole root path is just a slash, ignore it, leading slashes are
+    // not allowed in raw s3 prefix queries
+    if (config.rootPath == "/" || config.rootPath.isBlank())
+      toString()
+    // If the root path starts with a slash, remove it, leading slashes are not
+    // allowed in raw s3 prefix queries
+    else if (config.rootPath[0] == '/')
+      config.rootPath.substring(1).appendSlash() + toString()
+    else
+      config.rootPath.appendSlash() + toString()
+
 
   private fun String.appendSlash() =
     if (!endsWith('/'))
