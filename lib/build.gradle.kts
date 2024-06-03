@@ -24,11 +24,11 @@ dependencies {
 
   // DB
   implementation("com.zaxxer:HikariCP:5.0.1")
-  implementation("org.postgresql:postgresql:42.7.0")
+  implementation("org.postgresql:postgresql:42.7.3")
 
   // S3
-  implementation("org.veupathdb.lib.s3:s34k-minio:0.6.1+s34k-0.10.3")
-  implementation("org.veupathdb.lib.s3:workspaces:4.1.1")
+  api("org.veupathdb.lib.s3:s34k-minio:0.7.2+s34k-0.11.0")
+  api("org.veupathdb.lib.s3:workspaces:4.1.2")
 
   // Rabbit
   implementation("org.veupathdb.lib:rabbit-job-queue:1.2.1")
