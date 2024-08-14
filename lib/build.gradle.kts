@@ -23,7 +23,7 @@ dependencies {
   implementation("org.veupathdb.lib:jackson-singleton:3.1.1")
 
   // DB
-  implementation("com.zaxxer:HikariCP:5.0.1")
+  implementation("com.zaxxer:HikariCP:5.1.0")
   implementation("org.postgresql:postgresql:42.7.3")
 
   // S3
@@ -31,7 +31,7 @@ dependencies {
   api("org.veupathdb.lib.s3:workspaces:4.1.2")
 
   // Rabbit
-  implementation("org.veupathdb.lib:rabbit-job-queue:1.2.1")
+  implementation("org.veupathdb.lib:rabbit-job-queue:2.0.0")
 
   // Metrics
   implementation("io.prometheus:simpleclient:0.16.0")
