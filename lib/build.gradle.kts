@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "org.veupathdb.lib"
-version = "1.7.5"
+version = "1.8.0"
 
 
 dependencies {
