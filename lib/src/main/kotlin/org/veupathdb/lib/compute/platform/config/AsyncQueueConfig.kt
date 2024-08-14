@@ -1,7 +1,11 @@
 package org.veupathdb.lib.compute.platform.config
 
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.minutes
+
 private const val DefaultRabbitMQPort = 5672
 private const val DefaultWorkerCount  = 5
+private const val DefaultMessageAckTimeoutMinutes = 30
 
 /**
  * Configuration entry for a single RabbitMQ queue.
@@ -29,6 +33,14 @@ private const val DefaultWorkerCount  = 5
  * queue.
  *
  * Default value is `5`.
+ *
+ * @param messageAckTimeout Timeout window in which a queue message must be
+ * acknowledged.  RabbitMQ will kill channels on which a message has not been
+ * acknowledged within this window.
+ *
+ * This value *MUST* be at least 5 minutes.
+ *
+ * Default value is 30 minutes.
  */
 class AsyncQueueConfig(
   internal val id: String,
@@ -37,6 +49,7 @@ class AsyncQueueConfig(
   internal val host: String,
   internal val port: Int,
   internal val workers: Int,
+  internal val messageAckTimeout: Duration,
 ) {
 
   /**
@@ -55,7 +68,7 @@ class AsyncQueueConfig(
    * @param host Hostname for the target RabbitMQ instance.
    */
   constructor(id: String, username: String, password: String, host: String) :
-    this(id, username, password, host, DefaultRabbitMQPort, DefaultWorkerCount)
+    this(id, username, password, host, DefaultRabbitMQPort, DefaultWorkerCount, DefaultMessageAckTimeoutMinutes.minutes)
 
   /**
    * Constructs a new [AsyncQueueConfig] instance.
@@ -78,7 +91,7 @@ class AsyncQueueConfig(
    * Default value is `5`.
    */
   constructor(id: String, username: String, password: String, host: String, workers: Int) :
-    this(id, username, password, host, DefaultRabbitMQPort, workers)
+    this(id, username, password, host, DefaultRabbitMQPort, workers, DefaultMessageAckTimeoutMinutes.minutes)
 
   companion object {
     @JvmStatic
@@ -136,6 +149,17 @@ class AsyncQueueConfig(
     var workers = DefaultWorkerCount
 
     /**
+     * Message acknowledgement timeout value to set for this queue.
+     *
+     * This value should be long enough to accommodate the longest expected job
+     * runtimes for the queue.  RabbitMQ itself will disconnect the queue if a
+     * message is not acknowledged within the configured timeout window.
+     *
+     * Default value is 30 minutes.
+     */
+    var messageAckTimeout = DefaultMessageAckTimeoutMinutes.minutes
+
+    /**
      * Sets the unique identifier for the queue.
      */
     fun id(id: String): Builder {
@@ -183,6 +207,17 @@ class AsyncQueueConfig(
       return this
     }
 
+    /**
+     * Sets the [messageAckTimeout] value to the given duration.
+     */
+    fun messageAckTimeout(timeout: Duration) = apply { this.messageAckTimeout = timeout }
+
+    /**
+     * Sets the [messageAckTimeout] value to a duration of the given value in
+     * minutes.
+     */
+    fun messageAckTimeoutMinutes(timeout: Int) = apply { this.messageAckTimeout = timeout.minutes }
+
     fun build(): AsyncQueueConfig {
       // We check null and blank because these are likely coming from env vars
       // and docker compose will set blank values for vars defined in the
@@ -208,7 +243,11 @@ class AsyncQueueConfig(
       if (host!!.isBlank())
         throw IllegalStateException("Cannot build an AsyncQueueConfig instance with a blank host!")
 
-      return AsyncQueueConfig(id!!, username!!, password!!, host!!, port, workers)
+      if (messageAckTimeout < 5.minutes)
+        throw IllegalStateException("Message ack timeout values less than 5 minutes are likely to cause undefined" +
+          " behavior in RabbitMQ")
+
+      return AsyncQueueConfig(id!!, username!!, password!!, host!!, port, workers, messageAckTimeout)
     }
   }
 }
