@@ -4,17 +4,15 @@ import com.fasterxml.jackson.databind.JsonNode
 import org.slf4j.LoggerFactory
 import org.veupathdb.lib.compute.platform.JobManager
 import org.veupathdb.lib.compute.platform.config.AsyncQueueConfig
-import org.veupathdb.lib.compute.platform.intern.db.QueueDB
 import org.veupathdb.lib.compute.platform.intern.jobs.JobExecContext
 import org.veupathdb.lib.compute.platform.intern.jobs.JobExecutors
 import org.veupathdb.lib.compute.platform.intern.metrics.JobMetrics
 import org.veupathdb.lib.compute.platform.intern.metrics.QueueMetrics
-import org.veupathdb.lib.compute.platform.intern.s3.S3
 import org.veupathdb.lib.compute.platform.job.PlatformJobResultStatus
 import org.veupathdb.lib.hash_id.HashID
-import org.veupathdb.lib.rabbit.jobs.QueueConfig
-import org.veupathdb.lib.rabbit.jobs.QueueDispatcher
-import org.veupathdb.lib.rabbit.jobs.QueueWorker
+import org.veupathdb.lib.rabbit.jobs.JobQueueDispatcher
+import org.veupathdb.lib.rabbit.jobs.JobQueueExecutor
+import org.veupathdb.lib.rabbit.jobs.config.QueueConfig
 import org.veupathdb.lib.rabbit.jobs.model.ErrorNotification
 import org.veupathdb.lib.rabbit.jobs.model.JobDispatch
 import org.veupathdb.lib.rabbit.jobs.model.SuccessNotification
@@ -33,31 +31,36 @@ internal class QueueWrapper(conf: AsyncQueueConfig) {
 
   val name = conf.id
 
-  private val dispatch: QueueDispatcher
-  private val handler: QueueWorker
+  private val dispatch: JobQueueDispatcher
+  private val handler: JobQueueExecutor
 
   init {
     Log.info("initializing queue wrapper for queue {}", name)
 
-    val qc = QueueConfig().also {
-      it.hostname = conf.host
-      it.hostPort = conf.port
-      it.username = conf.username
-      it.password = conf.password
-      it.workers  = conf.workers
-
-      it.jobQueueName = "${conf.id}_jobs"
-      it.successQueueName = "${conf.id}_success"
-      it.errorQueueName = "${conf.id}_error"
-    }
+    val qc = QueueConfig()
+      .connection {
+        hostname = conf.host
+        hostPort = conf.port
+        username = conf.username
+        password = conf.password
+      }
+      .executor {
+        workers  = conf.workers
+        maxJobExecutionTime = conf.messageAckTimeout
+      }
+      .apply {
+        jobQueueName = "${conf.id}_jobs"
+        successQueueName = "${conf.id}_success"
+        errorQueueName = "${conf.id}_error"
+      }
 
     // Setup dispatch end of queue the wrapper
-    dispatch = QueueDispatcher(qc)
+    dispatch = JobQueueDispatcher(qc)
     dispatch.onError(this::onError)
     dispatch.onSuccess(this::onSuccess)
 
     // Setup worker end of the queue wrapper
-    handler  = QueueWorker(qc)
+    handler  = JobQueueExecutor(qc)
     handler.onJob(this::onJob)
   }
 
@@ -98,7 +101,7 @@ internal class QueueWrapper(conf: AsyncQueueConfig) {
       }
     } catch (e: Throwable) {
       Log.error("job execution failed with an exception for job ${job.jobID}", e)
-      handler.sendError(ErrorNotification(job.jobID, 1, e.message))
+      handler.sendError(ErrorNotification(jobID = job.jobID, code = 1, message = e.message))
     }
   }
 }
