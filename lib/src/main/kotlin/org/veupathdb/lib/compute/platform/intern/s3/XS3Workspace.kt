@@ -5,7 +5,7 @@ import org.veupathdb.lib.compute.platform.intern.*
 import org.veupathdb.lib.compute.platform.job.JobStatus
 import org.veupathdb.lib.jackson.Json
 import org.veupathdb.lib.s3.s34k.errors.S34KError
-import org.veupathdb.lib.s3.workspaces.S3Workspace
+import org.veupathdb.lib.s3.workspaces.java.S3Workspace
 
 /**
  * Extended S3 Workspace

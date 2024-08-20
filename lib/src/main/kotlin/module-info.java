@@ -17,8 +17,8 @@ module veupath.compute.platform {
   requires hash.id;
   requires s34k;
   requires rabbit.job.queue;
-  requires workspaces;
   requires jackson.singleton;
   requires com.github.benmanes.caffeine;
+  requires workspaces.java;
 
 }

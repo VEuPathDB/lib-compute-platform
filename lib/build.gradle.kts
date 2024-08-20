@@ -1,8 +1,6 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
   kotlin("jvm")
-  id("org.jetbrains.dokka") version "1.9.10"
+  id("org.jetbrains.dokka") version "1.9.20"
   java
   `maven-publish`
 }
@@ -15,7 +13,7 @@ dependencies {
   implementation(kotlin("stdlib-jdk8"))
 
   // Logging
-  implementation("org.slf4j:slf4j-api:1.7.36")
+  api("org.slf4j:slf4j-api:1.7.36")
 
   // Jackson
   implementation(platform("com.fasterxml.jackson:jackson-bom:2.16.0"))
@@ -27,8 +25,8 @@ dependencies {
   implementation("org.postgresql:postgresql:42.7.3")
 
   // S3
-  api("org.veupathdb.lib.s3:s34k-minio:0.7.2+s34k-0.11.0")
-  api("org.veupathdb.lib.s3:workspaces:4.1.2")
+  api("org.veupathdb.lib.s3:s34k:0.11.0")
+  api("org.veupathdb.lib.s3:workspaces-java:5.1.0")
 
   // Rabbit
   implementation("org.veupathdb.lib:rabbit-job-queue:2.0.0")

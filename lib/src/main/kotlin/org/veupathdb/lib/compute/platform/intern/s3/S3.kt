@@ -10,8 +10,8 @@ import org.veupathdb.lib.s3.s34k.S3Api
 import org.veupathdb.lib.s3.s34k.S3Client
 import org.veupathdb.lib.s3.s34k.S3Config
 import org.veupathdb.lib.s3.s34k.fields.BucketName
-import org.veupathdb.lib.s3.workspaces.S3Workspace
-import org.veupathdb.lib.s3.workspaces.S3WorkspaceFactory
+import org.veupathdb.lib.s3.workspaces.java.S3Workspace
+import org.veupathdb.lib.s3.workspaces.java.S3WorkspaceFactory
 import java.io.File
 import java.io.InputStream
 import java.nio.file.Path
@@ -74,7 +74,7 @@ internal object S3 {
   @JvmStatic
   fun getJob(jobID: HashID): AsyncS3Job? {
     Log.debug("Fetching workspace {} from S3", jobID)
-    return wsf[jobID]?.let(::XS3Workspace)?.let(::AsyncS3Job)
+    return wsf.get(jobID)?.let(::XS3Workspace)?.let(::AsyncS3Job)
   }
 
 
@@ -89,7 +89,7 @@ internal object S3 {
   fun persistFiles(jobID: HashID, files: List<Path>) {
     Log.debug("persisting {} files to workspace {} in S3", files.size, jobID)
 
-    val ws = wsf[jobID] ?: throw IllegalStateException("Attempted to write result files to nonexistent workspace $jobID")
+    val ws = wsf.get(jobID) ?: throw IllegalStateException("Attempted to write result files to nonexistent workspace $jobID")
 
     files.forEach {
       persistFile(ws, it.toFile())
@@ -120,7 +120,7 @@ internal object S3 {
   @JvmOverloads
   fun deleteWorkspace(jobID: HashID, throwOnNotExists: Boolean = true) {
     Log.info("Deleting workspace with ID {}.", jobID)
-    val ws = wsf[jobID]
+    val ws = wsf.get(jobID)
 
     if (ws == null && throwOnNotExists) {
       throw IllegalStateException("Attempted to delete nonexistent workspace $jobID")
@@ -168,7 +168,7 @@ internal object S3 {
     Log.debug("Fetching result files from workspace {} in S3", jobID)
 
     // Load the workspace
-    val ws = wsf[jobID] ?: throw IllegalStateException("Attempted to lookup result files from nonexistent workspace $jobID")
+    val ws = wsf.get(jobID) ?: throw IllegalStateException("Attempted to lookup result files from nonexistent workspace $jobID")
 
     // Fetch the list of files from the workspace
     val files = ws.files()
@@ -208,7 +208,7 @@ internal object S3 {
     Log.debug("fetching target file \"{}\" for job {} in S3", fileName, jobID)
 
     // Load the workspace
-    val ws = wsf[jobID] ?: throw IllegalStateException("attempted to fetch target file from nonexistent workspace $jobID")
+    val ws = wsf.get(jobID) ?: throw IllegalStateException("attempted to fetch target file from nonexistent workspace $jobID")
 
     // Sift through the files for one matching the target file name and return
     // it (or null if none were found).
@@ -232,7 +232,7 @@ internal object S3 {
     Log.debug("Expiring workspace for job {} in S3", jobID)
 
     // Load the workspace
-    val ws = wsf[jobID] ?: throw IllegalStateException("Attempted to expire nonexistent workspace $jobID")
+    val ws = wsf.get(jobID) ?: throw IllegalStateException("Attempted to expire nonexistent workspace $jobID")
 
     // Iterate through the files in the workspace
     ws.files().forEach {
@@ -288,28 +288,28 @@ internal object S3 {
   fun markWorkspaceAsInProgress(jobID: HashID) {
     Log.debug("marking workspace for job {} as in-progress in s3", jobID)
 
-    val ws = wsf[jobID] ?: throw IllegalStateException("Attempted to mark nonexistent workspace $jobID as in-progress")
+    val ws = wsf.get(jobID) ?: throw IllegalStateException("Attempted to mark nonexistent workspace $jobID as in-progress")
     ws.touch(FlagInProgress)
   }
 
   fun markWorkspaceAsQueued(jobID: HashID) {
     Log.debug("marking workspace for job {} as queued in S3", jobID)
 
-    val ws = wsf[jobID] ?: throw IllegalStateException("Attempted to mark nonexistent workspace $jobID as queued")
+    val ws = wsf.get(jobID) ?: throw IllegalStateException("Attempted to mark nonexistent workspace $jobID as queued")
     ws.touch(FlagQueued)
   }
 
   fun markWorkspaceAsFailed(jobID: HashID) {
     Log.debug("marking workspace for job {} as failed in s3", jobID)
 
-    val ws = wsf[jobID] ?: throw IllegalStateException("Attempted to mark nonexistent workspace $jobID as failed")
+    val ws = wsf.get(jobID) ?: throw IllegalStateException("Attempted to mark nonexistent workspace $jobID as failed")
     ws.touch(FlagFailed)
   }
 
   fun markWorkspaceAsComplete(jobID: HashID) {
     Log.debug("marking workspace for job {} as complete in s3", jobID)
 
-    val ws = wsf[jobID] ?: throw IllegalStateException("Attempted to mark nonexistent workspace $jobID as complete")
+    val ws = wsf.get(jobID) ?: throw IllegalStateException("Attempted to mark nonexistent workspace $jobID as complete")
     ws.touch(FlagComplete)
   }
 
