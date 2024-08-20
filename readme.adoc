@@ -29,7 +29,7 @@ image::docs/assets/overview.png[]
 [source, kotlin]
 ----
 dependencies {
-  implementation("org.veupathdb.lib:compute-platform:1.8.0")
+  implementation("org.veupathdb.lib:compute-platform:1.8.1")
 }
 ----
 
