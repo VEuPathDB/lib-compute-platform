@@ -10,11 +10,13 @@ import org.veupathdb.lib.s3.s34k.S3Api
 import org.veupathdb.lib.s3.s34k.S3Client
 import org.veupathdb.lib.s3.s34k.S3Config
 import org.veupathdb.lib.s3.s34k.fields.BucketName
+import org.veupathdb.lib.s3.s34k.objects.S3Object
 import org.veupathdb.lib.s3.workspaces.java.S3Workspace
 import org.veupathdb.lib.s3.workspaces.java.S3WorkspaceFactory
 import java.io.File
 import java.io.InputStream
 import java.nio.file.Path
+import kotlin.time.Duration.Companion.milliseconds
 
 /**
  * S3 Manager
@@ -150,7 +152,35 @@ internal object S3 {
     s3.buckets[BucketName(config.bucket)]!!
       .objects
       .list(jobID.toS3Prefix())
-      .forEach { it.delete() }
+      .forEach(::minioObjectDeleteHack)
+  }
+
+  // TODO: remove this if/when S34K is updated to allow suspend functions
+  private fun minioObjectDeleteHack(obj: S3Object) {
+    obj.delete()
+
+    val sleepMillis = 100L
+    val maxSleeps = 15  // 1.5 seconds
+
+    var sleepCounter = 0
+
+    // while MinIO is still reporting that the object exists, sleep on it.
+    while (obj.exists()) {
+      if (sleepCounter > maxSleeps) {
+        // DON'T THROW HERE, IT MAY LEAVE THE WORKSPACE IN A WONKY STATE, IF THE
+        // CALLER ATTEMPTS TO RECREATE THE WORKSPACE THEY WILL GET AN EXCEPTION
+        // AT THAT POINT
+        Log.error(
+          "waited {} seconds for MinIO to acknowledge the deletion of object {} but it never did",
+          (sleepMillis*maxSleeps).milliseconds,
+          obj.path
+        )
+        break
+      }
+
+      Thread.sleep(sleepMillis)
+      sleepCounter++
+    }
   }
 
   /**
