@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "org.veupathdb.lib"
-version = "1.8.2"
+version = "1.8.3"
 
 
 dependencies {
@@ -18,7 +18,7 @@ dependencies {
   // Jackson
   implementation(platform("com.fasterxml.jackson:jackson-bom:2.16.0"))
   implementation("com.fasterxml.jackson.core:jackson-databind")
-  implementation("org.veupathdb.lib:jackson-singleton:3.1.1")
+  implementation("org.veupathdb.lib:jackson-singleton:3.2.0")
 
   // DB
   implementation("com.zaxxer:HikariCP:5.1.0")
@@ -29,7 +29,7 @@ dependencies {
   api("org.veupathdb.lib.s3:workspaces-java:5.1.0")
 
   // Rabbit
-  implementation("org.veupathdb.lib:rabbit-job-queue:2.0.0")
+  implementation("org.veupathdb.lib:rabbit-job-queue:2.0.1")
 
   // Metrics
   implementation("io.prometheus:simpleclient:0.16.0")
@@ -48,7 +48,10 @@ tasks.test {
 }
 
 kotlin {
-  jvmToolchain(17)
+  jvmToolchain {
+    languageVersion = JavaLanguageVersion.of(21)
+    vendor = JvmVendorSpec.AMAZON
+  }
 }
 
 java {
