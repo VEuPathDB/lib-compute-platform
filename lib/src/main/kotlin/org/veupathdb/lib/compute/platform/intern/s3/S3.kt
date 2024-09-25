@@ -159,8 +159,8 @@ internal object S3 {
   private fun minioObjectDeleteHack(obj: S3Object) {
     obj.delete()
 
-    val sleepMillis = 100L
-    val maxSleeps = 15  // 1.5 seconds
+    val sleepMillis = 1000L
+    val maxSleeps = 15  // 15 seconds
 
     var sleepCounter = 0
 

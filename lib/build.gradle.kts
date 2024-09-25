@@ -1,12 +1,11 @@
 plugins {
   kotlin("jvm")
   id("org.jetbrains.dokka") version "1.9.20"
-  java
   `maven-publish`
 }
 
 group = "org.veupathdb.lib"
-version = "1.8.3"
+version = "1.8.4"
 
 
 dependencies {
@@ -16,9 +15,7 @@ dependencies {
   api("org.slf4j:slf4j-api:1.7.36")
 
   // Jackson
-  implementation(platform("com.fasterxml.jackson:jackson-bom:2.16.0"))
-  implementation("com.fasterxml.jackson.core:jackson-databind")
-  implementation("org.veupathdb.lib:jackson-singleton:3.2.0")
+  implementation("org.veupathdb.lib:jackson-singleton:3.2.1")
 
   // DB
   implementation("com.zaxxer:HikariCP:5.1.0")
