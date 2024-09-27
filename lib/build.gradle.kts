@@ -9,8 +9,6 @@ version = "1.8.4"
 
 
 dependencies {
-  implementation(kotlin("stdlib-jdk8"))
-
   // Logging
   api("org.slf4j:slf4j-api:1.7.36")
 

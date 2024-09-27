@@ -162,7 +162,9 @@ internal object S3 {
     val sleepMillis = 1000L
     val maxSleeps = 15  // 15 seconds
 
-    var sleepCounter = 0
+    Thread.sleep(sleepMillis)
+
+    var sleepCounter = 1
 
     // while MinIO is still reporting that the object exists, sleep on it.
     while (obj.exists()) {

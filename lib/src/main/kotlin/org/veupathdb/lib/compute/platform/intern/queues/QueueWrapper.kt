@@ -99,6 +99,9 @@ internal class QueueWrapper(conf: AsyncQueueConfig) {
         PlatformJobResultStatus.Failure -> handler.sendError(ErrorNotification(job.jobID, 1))
         PlatformJobResultStatus.Aborted -> { /* Job was aborted, send no notifications. */ }
       }
+    } catch (e: InterruptedException) {
+      Log.error("job execution for ${job.jobID} was interrupted; likely timed out", e)
+      handler.sendError(ErrorNotification(jobID = job.jobID, code = 1, message = e.message ?: "job timed out"))
     } catch (e: Throwable) {
       Log.error("job execution failed with an exception for job ${job.jobID}", e)
       handler.sendError(ErrorNotification(jobID = job.jobID, code = 1, message = e.message))
