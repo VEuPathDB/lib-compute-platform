@@ -19,7 +19,7 @@ metrics-prometheus-api = { module = "io.prometheus:simpleclient", version = "0.1
 metrics-prometheus-client = { module = "io.prometheus:simpleclient_common", version = "0.16.0" }
 
 util-hashid = { module = "org.veupathdb.lib:hash-id", version = "1.1.0" }
-util-cache = { module = "com.github.ben-manes.caffeine:caffeine", version = "3.1.8" }
+util-cache = { module = "com.github.ben-manes.caffeine:caffeine", version = "3.2.3" }
 
 
 [bundles]
