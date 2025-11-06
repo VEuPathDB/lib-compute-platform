@@ -40,25 +40,25 @@ internal object MinIOHax {
    */
   context(log: Logger)
   fun <T> withRetries(actionMsg: () -> String, action: () -> T): T {
-    var lastError: S34KError? = null
+    val errors = ArrayList<S34KError>(RetryCount)
+    var msg: String? = null
 
     for (i in 1..RetryCount) {
       try {
         return action()
       } catch (e: S34KError) {
-        log.warn("failed {} time(s) to {}", i, actionMsg())
+        if (msg == null)
+          msg = actionMsg()
 
-        if (lastError != null)
-          e.addSuppressed(lastError)
-
-        lastError = e
-
+        log.warn("failed {} time(s) to {}", i, msg)
+        errors.add(e)
         sleep()
       }
     }
 
-    log.error("failed {} time(s) to {}", RetryCount, actionMsg())
-    throw lastError!!
+    log.error("failed {} time(s) to {}", RetryCount, msg)
+    throw errors.last()
+      .apply { errors.forEach { if (it != this) addSuppressed(it) } }
   }
 
   /**
