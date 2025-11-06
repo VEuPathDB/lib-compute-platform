@@ -338,7 +338,7 @@ internal object S3 {
       .map {
         try {
           HashID(it)
-        } catch (e: Throwable) {
+        } catch (_: Throwable) {
           null
         }
       }
