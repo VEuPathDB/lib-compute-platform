@@ -14,4 +14,5 @@ import org.veupathdb.lib.hash_id.HashID
  *
  * @param owned Whether the current platform instance owns the job.
  */
+@ConsistentCopyVisibility
 data class JobReference internal constructor(val jobID: HashID, val owned: Boolean)
