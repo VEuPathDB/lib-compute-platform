@@ -4,19 +4,19 @@ import com.fasterxml.jackson.databind.JsonNode
 import org.slf4j.LoggerFactory
 import org.veupathdb.lib.compute.platform.config.AsyncS3Config
 import org.veupathdb.lib.compute.platform.intern.*
+import org.veupathdb.lib.compute.platform.intern.minio.FuglyMinIOWorkspaceFactory
+import org.veupathdb.lib.compute.platform.intern.minio.MinIOHax
 import org.veupathdb.lib.compute.platform.job.JobFileReference
 import org.veupathdb.lib.hash_id.HashID
 import org.veupathdb.lib.s3.s34k.S3Api
 import org.veupathdb.lib.s3.s34k.S3Client
 import org.veupathdb.lib.s3.s34k.S3Config
 import org.veupathdb.lib.s3.s34k.fields.BucketName
-import org.veupathdb.lib.s3.s34k.objects.S3Object
 import org.veupathdb.lib.s3.workspaces.java.S3Workspace
 import org.veupathdb.lib.s3.workspaces.java.S3WorkspaceFactory
 import java.io.File
 import java.io.InputStream
 import java.nio.file.Path
-import kotlin.time.Duration.Companion.milliseconds
 
 /**
  * S3 Manager
@@ -41,7 +41,7 @@ internal object S3 {
 
   private lateinit var config: AsyncS3Config
 
-  private lateinit var wsf: S3WorkspaceFactory
+  private lateinit var wsf: FuglyMinIOWorkspaceFactory
 
   @JvmStatic
   fun init(conf: AsyncS3Config) {
@@ -52,15 +52,17 @@ internal object S3 {
 
     Log.debug("initializing S3 manager")
 
-    s3 = S3Api.newClient(S3Config(
-      conf.host,
-      conf.port.toUShort(),
-      conf.https,
-      conf.accessToken,
-      conf.secretKey
-    ))
+    s3 = S3Api.newClient(
+      S3Config(
+        conf.host,
+        conf.port.toUShort(),
+        conf.https,
+        conf.accessToken,
+        conf.secretKey
+      )
+    )
 
-    wsf = S3WorkspaceFactory(s3, conf.bucket, conf.rootPath)
+    wsf = FuglyMinIOWorkspaceFactory(S3WorkspaceFactory(s3, conf.bucket, conf.rootPath))
 
     config = conf
   }
@@ -91,7 +93,8 @@ internal object S3 {
   fun persistFiles(jobID: HashID, files: List<Path>) {
     Log.debug("persisting {} files to workspace {} in S3", files.size, jobID)
 
-    val ws = wsf.get(jobID) ?: throw IllegalStateException("Attempted to write result files to nonexistent workspace $jobID")
+    val ws = wsf.get(jobID)
+      ?: throw IllegalStateException("Attempted to write result files to nonexistent workspace $jobID")
 
     files.forEach {
       persistFile(ws, it.toFile())
@@ -149,39 +152,11 @@ internal object S3 {
    */
   @JvmStatic
   fun wipeWorkspace(jobID: HashID) {
-    s3.buckets[BucketName(config.bucket)]!!
-      .objects
-      .list(jobID.toS3Prefix())
-      .forEach(::minioObjectDeleteHack)
-  }
-
-  // TODO: remove this if/when S34K is updated to allow suspend functions
-  private fun minioObjectDeleteHack(obj: S3Object) {
-    obj.delete()
-
-    val sleepMillis = 1000L
-    val maxSleeps = 15  // 15 seconds
-
-    Thread.sleep(sleepMillis)
-
-    var sleepCounter = 1
-
-    // while MinIO is still reporting that the object exists, sleep on it.
-    while (obj.exists()) {
-      if (sleepCounter > maxSleeps) {
-        // DON'T THROW HERE, IT MAY LEAVE THE WORKSPACE IN A WONKY STATE, IF THE
-        // CALLER ATTEMPTS TO RECREATE THE WORKSPACE THEY WILL GET AN EXCEPTION
-        // AT THAT POINT
-        Log.error(
-          "waited {} seconds for MinIO to acknowledge the deletion of object {} but it never did",
-          (sleepMillis*maxSleeps).milliseconds,
-          obj.path
-        )
-        break
-      }
-
-      Thread.sleep(sleepMillis)
-      sleepCounter++
+    context(Log) {
+      s3.buckets[BucketName(config.bucket)]!!
+        .objects
+        .list(jobID.toS3Prefix())
+        .forEach { MinIOHax.delete(it) }
     }
   }
 
@@ -200,7 +175,8 @@ internal object S3 {
     Log.debug("Fetching result files from workspace {} in S3", jobID)
 
     // Load the workspace
-    val ws = wsf.get(jobID) ?: throw IllegalStateException("Attempted to lookup result files from nonexistent workspace $jobID")
+    val ws = wsf.get(jobID)
+      ?: throw IllegalStateException("Attempted to lookup result files from nonexistent workspace $jobID")
 
     // Fetch the list of files from the workspace
     val files = ws.files()
@@ -240,7 +216,8 @@ internal object S3 {
     Log.debug("fetching target file \"{}\" for job {} in S3", fileName, jobID)
 
     // Load the workspace
-    val ws = wsf.get(jobID) ?: throw IllegalStateException("attempted to fetch target file from nonexistent workspace $jobID")
+    val ws: S3Workspace = wsf.get(jobID)
+      ?: throw IllegalStateException("attempted to fetch target file from nonexistent workspace $jobID")
 
     // Sift through the files for one matching the target file name and return
     // it (or null if none were found).
@@ -320,7 +297,8 @@ internal object S3 {
   fun markWorkspaceAsInProgress(jobID: HashID) {
     Log.debug("marking workspace for job {} as in-progress in s3", jobID)
 
-    val ws = wsf.get(jobID) ?: throw IllegalStateException("Attempted to mark nonexistent workspace $jobID as in-progress")
+    val ws =
+      wsf.get(jobID) ?: throw IllegalStateException("Attempted to mark nonexistent workspace $jobID as in-progress")
     ws.touch(FlagInProgress)
   }
 
@@ -357,12 +335,18 @@ internal object S3 {
       .commonPrefixes()
       .asSequence()
       .map { it.getJobID() }
-      .map { try { HashID(it) } catch (e: Throwable) { null } }
+      .map {
+        try {
+          HashID(it)
+        } catch (e: Throwable) {
+          null
+        }
+      }
       .filterNotNull()
   }
 
   private fun HashID.toS3Prefix() =
-    // If the whole root path is just a slash, ignore it, leading slashes are
+  // If the whole root path is just a slash, ignore it, leading slashes are
     // not allowed in raw s3 prefix queries
     if (config.rootPath == "/" || config.rootPath.isBlank())
       toString()

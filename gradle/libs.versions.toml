@@ -1,0 +1,28 @@
+[plugins]
+kotlin = { id = "org.jetbrains.kotlin.jvm", version = "2.2.21" }
+dokka  = { id = "org.jetbrains.dokka", version = "2.1.0" }
+
+[libraries]
+logging = { module = "org.slf4j:slf4j-api", version = "2.0.17" }
+
+jackson = { module = "org.veupathdb.lib:jackson-singleton-json", version = "4.0.5" }
+
+db-pool = { module = "com.zaxxer:HikariCP", version = "5.1.0" }
+db-driver = { module = "org.postgresql:postgresql", version = "42.7.3" }
+
+s3-api = { module = "org.veupathdb.lib.s3:s34k", version = "0.11.0" }
+s3-dirs = { module = "org.veupathdb.lib.s3:workspaces-java", version = "5.1.0" }
+
+queue = { module = "org.veupathdb.lib:rabbit-job-queue", version = "2.0.1" }
+
+metrics-prometheus-api = { module = "io.prometheus:simpleclient", version = "0.16.0" }
+metrics-prometheus-client = { module = "io.prometheus:simpleclient_common", version = "0.16.0" }
+
+util-hashid = { module = "org.veupathdb.lib:hash-id", version = "1.1.0" }
+util-cache = { module = "com.github.ben-manes.caffeine:caffeine", version = "3.1.8" }
+
+
+[bundles]
+database = ["db-pool", "db-driver"]
+metrics = ["metrics-prometheus-api", "metrics-prometheus-client"]
+minio = ["s3-api", "s3-dirs"]

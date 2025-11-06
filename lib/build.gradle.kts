@@ -1,40 +1,27 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
-  kotlin("jvm")
-  id("org.jetbrains.dokka") version "1.9.20"
+  alias(libs.plugins.kotlin)
+  alias(libs.plugins.dokka)
   `maven-publish`
 }
 
 group = "org.veupathdb.lib"
-version = "1.8.5"
+version = "1.8.6"
 
 
 dependencies {
-  // Logging
-  api("org.slf4j:slf4j-api:1.7.36")
+  api(libs.logging)
+  api(libs.util.hashid)
+  api(libs.bundles.minio)
 
-  // Jackson
-  implementation("org.veupathdb.lib:jackson-singleton:3.2.1")
+  implementation(libs.bundles.database)
+  implementation(libs.bundles.metrics)
 
-  // DB
-  implementation("com.zaxxer:HikariCP:5.1.0")
-  implementation("org.postgresql:postgresql:42.7.3")
+  implementation(libs.jackson)
+  implementation(libs.queue)
+  implementation(libs.util.cache)
 
-  // S3
-  api("org.veupathdb.lib.s3:s34k:0.11.0")
-  api("org.veupathdb.lib.s3:workspaces-java:5.1.0")
-
-  // Rabbit
-  implementation("org.veupathdb.lib:rabbit-job-queue:2.0.1")
-
-  // Metrics
-  implementation("io.prometheus:simpleclient:0.16.0")
-  implementation("io.prometheus:simpleclient_common:0.16.0")
-
-  // Misc & Utils
-  api("org.veupathdb.lib:hash-id:1.1.0")
-  implementation("com.github.ben-manes.caffeine:caffeine:3.1.8") // Used for self-expiring cache.
-
-  // Testing
   testImplementation(kotlin("test"))
 }
 
@@ -107,4 +94,9 @@ publishing {
       }
     }
   }
+}
+
+val compileKotlin: KotlinCompile by tasks
+compileKotlin.compilerOptions {
+  freeCompilerArgs.set(listOf("-Xcontext-parameters"))
 }

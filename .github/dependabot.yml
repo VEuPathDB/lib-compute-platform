@@ -1,0 +1,20 @@
+version: 2
+
+updates:
+- package-ecosystem: gradle
+  directory: "/"
+  registries:
+  - github-packages
+  schedule:
+    interval: weekly
+  commit-message:
+  open-pull-request-limit: 20
+  ignore:
+    dependency-name: org.gusdb:fgputil*
+
+registries:
+  github-packages:
+    type: maven-repository
+    url: https://maven.pkg.github.com/veupathdb/maven-packages
+    username: ${{ secrets.PACKAGES_USER }}
+    password: ${{ secrets.PACKAGES_KEY }}
