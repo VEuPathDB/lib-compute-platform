@@ -7,7 +7,6 @@ updates:
   - github-packages
   schedule:
     interval: weekly
-  commit-message:
   open-pull-requests-limit: 20
 
 registries:
