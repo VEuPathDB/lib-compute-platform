@@ -111,6 +111,7 @@ internal object MinIOHax {
       sleep()
       delta = currentSystemMillis() - startTime
 
+      // If minio says the object no longer exists, then exit the function here
       if (!withRetries({ "stat object $path" }, statFn))
         return
 
