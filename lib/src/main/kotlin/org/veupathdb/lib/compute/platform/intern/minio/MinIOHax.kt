@@ -6,7 +6,6 @@ import org.veupathdb.lib.s3.s34k.objects.S3Object
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
-@Suppress("NOTHING_TO_INLINE")
 internal object MinIOHax {
   /**
    * Maximum amount of time that the [delete] method should wait for an object's
