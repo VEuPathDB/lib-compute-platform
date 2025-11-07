@@ -2,6 +2,7 @@ package org.veupathdb.lib.compute.platform.intern.db
 
 import org.veupathdb.lib.compute.platform.job.InternalJobRecord
 import org.veupathdb.lib.compute.platform.job.AsyncJob
+import org.veupathdb.lib.compute.platform.job.JobStatus
 
 internal class AsyncDBJob(
   private val raw: InternalJobRecord,
@@ -10,7 +11,7 @@ internal class AsyncDBJob(
   override val jobID
     get() = raw.jobID
 
-  override val status by lazy { QueueDB.getJobInternal(jobID)!!.status }
+  override val status by lazy { QueueDB.getJobInternal(jobID)?.status ?: JobStatus.Expired }
 
   override val owned = true
 

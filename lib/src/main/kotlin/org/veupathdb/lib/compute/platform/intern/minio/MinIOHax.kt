@@ -66,7 +66,7 @@ internal object MinIOHax {
    */
   context(log: Logger)
   fun sleep() {
-    log.debug("sleeping for {}", { RetrySleepTime })
+    log.trace("sleeping for {}", RetrySleepTime)
     Thread.sleep(RetrySleepTime.inWholeMilliseconds)
   }
 

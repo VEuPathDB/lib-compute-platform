@@ -86,6 +86,7 @@ class AsyncPlatformConfig private constructor(
     /**
      * Adds the given queue configuration to this [Builder].
      */
+    @Suppress("unused")
     inline fun addQueue(fn: AsyncQueueConfig.Builder.() -> Unit) {
       queues.add(AsyncQueueConfig.build(fn))
     }
@@ -93,6 +94,7 @@ class AsyncPlatformConfig private constructor(
     /**
      * Adds the given queue configurations to this [Builder].
      */
+    @Suppress("unused")
     fun addQueues(vararg conf: AsyncQueueConfig): Builder {
       conf.forEach(queues::add)
       return this
@@ -107,6 +109,7 @@ class AsyncPlatformConfig private constructor(
       return this
     }
 
+    @Suppress("unused")
     inline fun jobConfig(fn: AsyncJobConfig.Builder.() -> Unit) {
       jobConfig = AsyncJobConfig.build(fn)
     }
@@ -120,6 +123,7 @@ class AsyncPlatformConfig private constructor(
       return this
     }
 
+    @Suppress("unused")
     inline fun dbConfig(fn: AsyncDBConfig.Builder.() -> Unit) {
       dbConfig = AsyncDBConfig.build(fn)
     }
@@ -133,6 +137,7 @@ class AsyncPlatformConfig private constructor(
       return this
     }
 
+    @Suppress("unused")
     inline fun s3Config(fn: AsyncS3Config.Builder.() -> Unit) {
       s3Config = AsyncS3Config.build(fn)
     }

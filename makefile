@@ -18,6 +18,14 @@ publish-local:
 docs:
 	@gradle docs
 
+.PHONY: start-test-containers
+start-test-containers:
+	@docker compose -f test/docker-compose.test.yml up -d
+
+.PHONY: stop-test-containers
+stop-test-containers:
+	@docker compose -f test/docker-compose.test.yml down
+
 run-test:
 	@./gradlew :test:shadowJar
 	@java -jar test/build/libs/test.jar

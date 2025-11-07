@@ -2,7 +2,14 @@
 <Configuration status="WARN">
   <Appenders>
     <Console name="Console" target="SYSTEM_OUT">
-      <PatternLayout pattern="%highlight{%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %c{1.} - %m%n}"/>
+      <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight{%level{length=1} %c{1} %notEmpty{[%markerSimpleName] }- %m%n}{
+        TRACE=white,
+        DEBUG=green,
+        INFO=bright_green,
+        WARN=bright_yellow,
+        ERROR=bright_red,
+        FATAL=red
+      }"/>
     </Console>
   </Appenders>
   <Loggers>

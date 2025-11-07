@@ -1,9 +1,5 @@
 package org.veupathdb.lib.compute.platform.config
 
-private const val DefaultPort = 80
-private const val DefaultHTTPS = false
-private const val DefaultRootPath = "/"
-
 /**
  * S3 Store Connection Configuration
  *
@@ -34,7 +30,7 @@ private const val DefaultRootPath = "/"
  *
  * Defaults to the root of the bucket.
  */
-class AsyncS3Config(
+open class AsyncS3Config(
   internal val host: String,
   internal val port: Int,
   internal val https: Boolean,
@@ -43,6 +39,18 @@ class AsyncS3Config(
   internal val secretKey: String,
   internal val rootPath: String,
 ) {
+  companion object {
+    protected const val DefaultPort = 80
+    protected const val DefaultHTTPS = false
+    protected const val DefaultRootPath = "/"
+
+    @JvmStatic
+    @Suppress("unused")
+    fun builder() = Builder()
+
+    @JvmStatic
+    inline fun build(fn: Builder.() -> Unit) = Builder().also(fn).build()
+  }
 
   /**
    * Returns a new [AsyncS3Config] instance.
@@ -56,6 +64,7 @@ class AsyncS3Config(
    *
    * @param secret Secret key for the S3 store.
    */
+  @Suppress("unused")
   constructor(host: String, bucket: String, access: String, secret: String) :
     this(host, DefaultPort, DefaultHTTPS, bucket, access, secret, DefaultRootPath)
 
@@ -75,19 +84,11 @@ class AsyncS3Config(
    *
    * Defaults to the root of the bucket.
    */
+  @Suppress("unused")
   constructor(host: String, bucket: String, access: String, secret: String, root: String) :
     this(host, DefaultPort, DefaultHTTPS, bucket, access, secret, root)
 
-
-  companion object {
-    @JvmStatic
-    fun builder() = Builder()
-
-    @JvmStatic
-    inline fun build(fn: Builder.() -> Unit) = Builder().also(fn).build()
-  }
-
-  class Builder {
+  open class Builder {
 
     var host: String? = null
 
@@ -106,6 +107,7 @@ class AsyncS3Config(
     /**
      * Sets the hostname for the S3 store.
      */
+    @Suppress("unused")
     fun host(h: String): Builder {
       host = h
       return this
@@ -114,6 +116,7 @@ class AsyncS3Config(
     /**
      * Sets the port number for the S3 store.
      */
+    @Suppress("unused")
     fun port(p: Int): Builder {
       port = p
       return this
@@ -122,6 +125,7 @@ class AsyncS3Config(
     /**
      * Sets the access token for the S3 store.
      */
+    @Suppress("unused")
     fun accessToken(u: String): Builder {
       accessToken = u
       return this
@@ -130,6 +134,7 @@ class AsyncS3Config(
     /**
      * Sets the secret key for the S3 store.
      */
+    @Suppress("unused")
     fun secretKey(p: String): Builder {
       secretKey = p
       return this
@@ -138,6 +143,7 @@ class AsyncS3Config(
     /**
      * Sets the root 'directory' in which job workspaces will be created.
      */
+    @Suppress("unused")
     fun rootPath(r: String): Builder {
       rootPath = r
       return this
@@ -154,6 +160,7 @@ class AsyncS3Config(
     /**
      * Sets the name of the S3 bucket this application will operate on.
      */
+    @Suppress("unused")
     fun bucket(b: String): Builder {
       bucket = b
       return this
@@ -165,7 +172,7 @@ class AsyncS3Config(
      *
      * @return A new, configured [AsyncS3Config] instance.
      */
-    fun build(): AsyncS3Config {
+    open fun build(): AsyncS3Config {
       // We check null and blank because these are likely coming from env vars
       // and docker compose will set blank values for vars defined in the
       // docker-compose.yml file.

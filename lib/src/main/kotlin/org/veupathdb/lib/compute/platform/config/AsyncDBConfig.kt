@@ -55,6 +55,7 @@ class AsyncDBConfig {
    *
    * @param dbName PostgreSQL database name.
    */
+  @Suppress("unused")
   constructor(dbName: String, username: String, password: String, host: String) :
     this(dbName, username, password, host, DefaultPort, DefaultPoolSize)
 
@@ -73,6 +74,7 @@ class AsyncDBConfig {
    *
    * Defaults to `10`.
    */
+  @Suppress("unused")
   constructor(dbName: String, username: String, password: String, host: String, poolSize: Int) :
     this(dbName, username, password, host, DefaultPort, poolSize)
 

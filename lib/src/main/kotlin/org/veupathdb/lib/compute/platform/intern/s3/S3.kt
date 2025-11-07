@@ -6,6 +6,7 @@ import org.veupathdb.lib.compute.platform.config.AsyncS3Config
 import org.veupathdb.lib.compute.platform.intern.*
 import org.veupathdb.lib.compute.platform.intern.minio.FuglyMinIOWorkspaceFactory
 import org.veupathdb.lib.compute.platform.intern.minio.MinIOHax
+import org.veupathdb.lib.compute.platform.intern.util.errorToNull
 import org.veupathdb.lib.compute.platform.job.JobFileReference
 import org.veupathdb.lib.hash_id.HashID
 import org.veupathdb.lib.s3.s34k.S3Api
@@ -52,15 +53,13 @@ internal object S3 {
 
     Log.debug("initializing S3 manager")
 
-    s3 = S3Api.newClient(
-      S3Config(
-        conf.host,
-        conf.port.toUShort(),
-        conf.https,
-        conf.accessToken,
-        conf.secretKey
-      )
-    )
+    s3 = S3Api.newClient(S3Config(
+      conf.host,
+      conf.port.toUShort(),
+      conf.https,
+      conf.accessToken,
+      conf.secretKey
+    ))
 
     wsf = FuglyMinIOWorkspaceFactory(S3WorkspaceFactory(s3, conf.bucket, conf.rootPath))
 
@@ -335,13 +334,7 @@ internal object S3 {
       .commonPrefixes()
       .asSequence()
       .map { it.getJobID() }
-      .map {
-        try {
-          HashID(it)
-        } catch (_: Throwable) {
-          null
-        }
-      }
+      .map { errorToNull { HashID(it) } }
       .filterNotNull()
   }
 

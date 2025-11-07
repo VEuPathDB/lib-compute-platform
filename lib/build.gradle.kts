@@ -2,7 +2,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
   alias(libs.plugins.kotlin)
-  alias(libs.plugins.dokka)
+  alias(libs.plugins.dokka.base)
+  alias(libs.plugins.dokka.java)
   `maven-publish`
 }
 
@@ -46,15 +47,17 @@ tasks.javadoc {
   exclude("module-info.java")
 }
 
-tasks.dokkaHtml {
-  outputDirectory.set(file("build/docs/dokka"))
+dokka {
+  dokkaPublications.html {
+    outputDirectory.set(file("build/docs/dokka"))
+  }
+
+  dokkaPublications.javadoc {
+    outputDirectory.set(file("build/docs/javadoc"))
+  }
 }
 
-tasks.dokkaJavadoc {
-  outputDirectory.set(file("build/docs/javadoc"))
-}
-
-task("docs") {
+tasks.register("docs") {
   dependsOn("dokkaHtml", "dokkaJavadoc")
 }
 

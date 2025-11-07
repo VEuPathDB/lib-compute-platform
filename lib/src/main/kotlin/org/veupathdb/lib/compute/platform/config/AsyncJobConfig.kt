@@ -32,6 +32,7 @@ class AsyncJobConfig {
    * @param executorFactory Provider for [JobExecutor] instances that will be
    * used to process individual jobs.
    */
+  @Suppress("unused")
   constructor(executorFactory: JobExecutorFactory) :
     this(executorFactory, DefaultExpirationDays)
 
@@ -55,6 +56,7 @@ class AsyncJobConfig {
      * Creates and returns a new [Builder] instance.
      */
     @JvmStatic
+    @Suppress("unused")
     fun builder() = Builder()
 
     @JvmStatic
@@ -86,6 +88,7 @@ class AsyncJobConfig {
      * Sets the provider for [JobExecutor] instances that will be used to
      * process individual jobs.
      */
+    @Suppress("unused")
     fun executorFactory(fac: JobExecutorFactory): Builder {
       executorFactory = fac
       return this
@@ -95,6 +98,7 @@ class AsyncJobConfig {
      * Sets the number of days a job can go without being accessed before being
      * considered expired and pruned.
      */
+    @Suppress("unused")
     fun expirationDays(d: Int): Builder {
       expirationDays = d
       return this

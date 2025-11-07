@@ -67,6 +67,7 @@ class AsyncQueueConfig(
    *
    * @param host Hostname for the target RabbitMQ instance.
    */
+  @Suppress("unused")
   constructor(id: String, username: String, password: String, host: String) :
     this(id, username, password, host, DefaultRabbitMQPort, DefaultWorkerCount, DefaultMessageAckTimeoutMinutes.minutes)
 
@@ -90,11 +91,13 @@ class AsyncQueueConfig(
    *
    * Default value is `5`.
    */
+  @Suppress("unused")
   constructor(id: String, username: String, password: String, host: String, workers: Int) :
     this(id, username, password, host, DefaultRabbitMQPort, workers, DefaultMessageAckTimeoutMinutes.minutes)
 
   companion object {
     @JvmStatic
+    @Suppress("unused")
     fun builder() = Builder()
 
     @JvmStatic
@@ -170,6 +173,7 @@ class AsyncQueueConfig(
     /**
      * Sets the RabbitMQ credentials username for the queue.
      */
+    @Suppress("unused")
     fun username(username: String): Builder {
       this.username = username
       return this
@@ -178,6 +182,7 @@ class AsyncQueueConfig(
     /**
      * Sets the RabbitMQ credentials password for the queue.
      */
+    @Suppress("unused")
     fun password(password: String): Builder {
       this.password = password
       return this
@@ -194,6 +199,7 @@ class AsyncQueueConfig(
     /**
      * Sets the RabbitMQ host port for the queue.
      */
+    @Suppress("unused")
     fun port(port: Int): Builder {
       this.port = port
       return this
@@ -202,6 +208,7 @@ class AsyncQueueConfig(
     /**
      * Sets the number of worker threads to use as consumers for this queue.
      */
+    @Suppress("unused")
     fun workers(workers: Int): Builder {
       this.workers = workers
       return this
@@ -216,6 +223,7 @@ class AsyncQueueConfig(
      * Sets the [messageAckTimeout] value to a duration of the given value in
      * minutes.
      */
+    @Suppress("unused")
     fun messageAckTimeoutMinutes(timeout: Int) = apply { this.messageAckTimeout = timeout.minutes }
 
     fun build(): AsyncQueueConfig {
