@@ -1,5 +1,5 @@
 [plugins]
-kotlin = { id = "org.jetbrains.kotlin.jvm", version = "2.3.0" }
+kotlin = { id = "org.jetbrains.kotlin.jvm", version = "2.3.10" }
 dokka-base  = { id = "org.jetbrains.dokka", version = "2.1.0" }
 dokka-java  = { id = "org.jetbrains.dokka-javadoc", version = "2.1.0" }
 
