@@ -4,7 +4,7 @@ dokka-base  = { id = "org.jetbrains.dokka", version = "2.2.0" }
 dokka-java  = { id = "org.jetbrains.dokka-javadoc", version = "2.2.0" }
 
 [libraries]
-logging = { module = "org.slf4j:slf4j-api", version = "2.0.17" }
+logging = { module = "org.slf4j:slf4j-api", version = "2.0.18" }
 
 jackson = { module = "org.veupathdb.lib:jackson-singleton-json", version = "4.0.5" }
 
