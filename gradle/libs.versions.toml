@@ -6,7 +6,7 @@ dokka-java  = { id = "org.jetbrains.dokka-javadoc", version = "2.2.0" }
 [libraries]
 logging = { module = "org.slf4j:slf4j-api", version = "2.0.20" }
 
-jackson = { module = "org.veupathdb.lib:jackson-singleton-json", version = "4.0.5" }
+jackson = { module = "org.veupathdb.lib:jackson-singleton-json", version = "4.2.0" }
 
 db-pool = { module = "com.zaxxer:HikariCP", version = "7.1.0" }
 db-driver = { module = "org.postgresql:postgresql", version = "42.7.12" }
