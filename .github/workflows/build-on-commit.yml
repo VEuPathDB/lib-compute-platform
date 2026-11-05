@@ -6,7 +6,7 @@ on:
     - lib/src/**
     branches:
     - main
-  pull_request:
+  pull_request_target:
     branches:
     - main
 
@@ -28,5 +28,5 @@ jobs:
     - name: Gradle Build
       run: ./gradlew clean build
       env:
-        GITHUB_USERNAME: ${{ secrets.GH_USERNAME }}
-        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        GH_USERNAME: ${{ secrets.GH_USERNAME }}
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
